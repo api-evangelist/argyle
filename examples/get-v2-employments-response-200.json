@@ -1,0 +1,42 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/employments?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "0186a27d-e5c6-735a-a359-6315b34d544c",
+      "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+      "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+      "created_at": "2023-01-30T12:53:24.561Z",
+      "employer": "Whole Goods",
+      "employment_status": "active",
+      "origin": "retrieved"
+    },
+    {
+      "id": "0183d52a-d3b2-331d-c753-3662a20e352b",
+      "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+      "account": "0183d52b-a0c3-599a-e901-3676a20a533f",
+      "created_at": "2023-01-30T12:53:24.561Z",
+      "employer": "Double Double",
+      "employment_status": "inactive",
+      "origin": "acquired"
+    },
+    {
+      "id": "0183d52a-d3b2-331d-c753-3662a20e352b",
+      "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+      "account": "0175a40a-b3b4-622b-a339-8855c57b226e",
+      "created_at": "2023-01-30T12:53:24.561Z",
+      "employer": "Half Bads",
+      "employment_status": "inactive",
+      "origin": "retrieved"
+    },
+    {
+      "id": "0183d52a-d3b2-331d-c753-3662a20e352b",
+      "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+      "account": "0175a40a-b3b4-622b-a339-8855c57b226e",
+      "created_at": "2023-01-30T12:53:24.561Z",
+      "employer": "Stardollars LLC",
+      "employment_status": "inactive",
+      "origin": "retrieved"
+    }
+  ]
+}

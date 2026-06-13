@@ -1,0 +1,30 @@
+{
+  "id": "cde25bb1-5cf4-4544-9df8-04212a781e1b",
+  "user": "01975b3b-5ba6-3ec1-2148-f595b6d92614",
+  "reference_id": "cde25bb1-5cf4-4544-9df8-04212a781e1b",
+  "generated_at": "2025-06-10T20:39:35.000Z",
+  "created_at": "2025-06-10T20:39:35.000Z",
+  "type": "voai",
+  "status": "generating",
+  "file_url": "www.argyle.com/storagename/pdf",
+  "json_url": "www.argyle.com/storagename/json",
+  "accounts": [],
+  "last_synced_at": null,
+  "external_id": null,
+  "source": "open-banking",
+  "metadata": {
+    "origin_report_id": "5u6fx59dnw4b",
+    "bank_accounts_requested": [
+      "8057637863"
+    ],
+    "from_date": "1970-01-19T17:30:50.000Z",
+    "report_custom_fields": [
+      {
+        "label": "loanID",
+        "value": "12345",
+        "shown": true
+      }
+    ],
+    "income_stream_confidence_minimum": 50
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.argyle.com/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "argyle": "https://schema.argyle.com/",
+
+    "Account": {
+      "@id": "argyle:Account",
+      "@type": "@id",
+      "@comment": "A payroll connection made through Argyle Link between a user and an employer or gig platform."
+    },
+    "Employment": {
+      "@id": "argyle:Employment",
+      "@type": "@id",
+      "@comment": "Employment record including job title, status, dates, and compensation details."
+    },
+    "Identity": {
+      "@id": "argyle:Identity",
+      "@type": "@id",
+      "@comment": "Worker identity information as recorded in the payroll system."
+    },
+    "Gig": {
+      "@id": "argyle:Gig",
+      "@type": "@id",
+      "@comment": "A single gig task or trip completed on a gig platform."
+    },
+    "Paystub": {
+      "@id": "argyle:Paystub",
+      "@type": "@id",
+      "@comment": "A pay stub record containing earnings, deductions, and taxes for a pay period."
+    },
+    "PayrollDocument": {
+      "@id": "argyle:PayrollDocument",
+      "@type": "@id",
+      "@comment": "A payroll-related document such as a W-2, 1099, or other tax form."
+    },
+    "DepositDestination": {
+      "@id": "argyle:DepositDestination",
+      "@type": "@id",
+      "@comment": "A bank account configured as a direct deposit destination."
+    },
+    "Vehicle": {
+      "@id": "argyle:Vehicle",
+      "@type": "@id",
+      "@comment": "A vehicle registered with a gig platform by the worker."
+    },
+    "Shift": {
+      "@id": "argyle:Shift",
+      "@type": "@id",
+      "@comment": "A work shift record for hourly or scheduled workers."
+    },
+    "Rating": {
+      "@id": "argyle:Rating",
+      "@type": "@id",
+      "@comment": "A performance rating given to or by a gig worker."
+    },
+    "Report": {
+      "@id": "argyle:Report",
+      "@type": "@id",
+      "@comment": "A generated verification or income report."
+    },
+    "Item": {
+      "@id": "argyle:Item",
+      "@type": "@id",
+      "@comment": "An Argyle platform item representing a supported employer or gig platform."
+    },
+    "Verification": {
+      "@id": "argyle:Verification",
+      "@type": "@id",
+      "@comment": "An income or employment verification request and its result."
+    },
+    "UserToken": {
+      "@id": "argyle:UserToken",
+      "@type": "@id",
+      "@comment": "A short-lived token used to initialize Argyle Link for a user session."
+    },
+    "Receipt": {
+      "@id": "argyle:Receipt",
+      "@type": "@id",
+      "@comment": "An expense receipt associated with a gig."
+    },
+
+    "id": {
+      "@id": "argyle:id",
+      "@type": "xsd:string",
+      "@comment": "Unique resource identifier (UUID)."
+    },
+    "user": {
+      "@id": "argyle:user",
+      "@type": "xsd:string",
+      "@comment": "Argyle user ID."
+    },
+    "account": {
+      "@id": "argyle:account",
+      "@type": "xsd:string",
+      "@comment": "Argyle account ID."
+    },
+    "source": {
+      "@id": "argyle:source",
+      "@type": "xsd:string",
+      "@comment": "Payroll platform source key."
+    },
+    "item": {
+      "@id": "argyle:item",
+      "@type": "xsd:string",
+      "@comment": "Argyle item (employer/platform) ID."
+    },
+    "status": {
+      "@id": "argyle:status",
+      "@type": "xsd:string",
+      "@comment": "Current resource status."
+    },
+    "created_at": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updated_at": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "scanned_at": {
+      "@id": "argyle:scannedAt",
+      "@type": "xsd:dateTime"
+    },
+    "employer": {
+      "@id": "schema:legalName",
+      "@type": "xsd:string"
+    },
+    "employment_type": {
+      "@id": "schema:employmentType",
+      "@type": "xsd:string"
+    },
+    "employment_status": {
+      "@id": "argyle:employmentStatus",
+      "@type": "xsd:string"
+    },
+    "start_date": {
+      "@id": "schema:startDate",
+      "@type": "xsd:date"
+    },
+    "end_date": {
+      "@id": "schema:endDate",
+      "@type": "xsd:date"
+    },
+    "job_title": {
+      "@id": "schema:jobTitle",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "schema:givenName",
+      "@type": "xsd:string"
+    },
+    "last_name": {
+      "@id": "schema:familyName",
+      "@type": "xsd:string"
+    },
+    "full_name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "phone_number": {
+      "@id": "schema:telephone",
+      "@type": "xsd:string"
+    },
+    "birth_date": {
+      "@id": "schema:birthDate",
+      "@type": "xsd:date"
+    },
+    "address": {
+      "@id": "schema:address",
+      "@type": "schema:PostalAddress"
+    },
+    "gross_pay": {
+      "@id": "argyle:grossPay",
+      "@type": "argyle:MonetaryAmount"
+    },
+    "net_pay": {
+      "@id": "argyle:netPay",
+      "@type": "argyle:MonetaryAmount"
+    },
+    "base_pay": {
+      "@id": "argyle:basePay",
+      "@type": "argyle:BasePay"
+    },
+    "deductions": {
+      "@id": "argyle:deductions",
+      "@container": "@list"
+    },
+    "earnings": {
+      "@id": "argyle:earnings",
+      "@container": "@list"
+    },
+    "taxes": {
+      "@id": "argyle:taxes",
+      "@container": "@list"
+    },
+    "period_start": {
+      "@id": "argyle:periodStart",
+      "@type": "xsd:date"
+    },
+    "period_end": {
+      "@id": "argyle:periodEnd",
+      "@type": "xsd:date"
+    },
+    "check_date": {
+      "@id": "argyle:checkDate",
+      "@type": "xsd:date"
+    },
+    "bank_name": {
+      "@id": "argyle:bankName",
+      "@type": "xsd:string"
+    },
+    "bank_account": {
+      "@id": "argyle:bankAccount",
+      "@type": "xsd:string"
+    },
+    "routing_number": {
+      "@id": "argyle:routingNumber",
+      "@type": "xsd:string"
+    },
+    "deposit_type": {
+      "@id": "argyle:depositType",
+      "@type": "xsd:string"
+    },
+    "deposit_value": {
+      "@id": "argyle:depositValue",
+      "@type": "xsd:string"
+    },
+    "payout": {
+      "@id": "argyle:payout",
+      "@type": "argyle:MonetaryAmount"
+    },
+    "tips": {
+      "@id": "argyle:tips",
+      "@type": "argyle:MonetaryAmount"
+    },
+    "distance": {
+      "@id": "argyle:distance",
+      "@type": "xsd:decimal"
+    },
+    "duration": {
+      "@id": "argyle:duration",
+      "@type": "xsd:integer"
+    },
+    "make": {
+      "@id": "schema:brand",
+      "@type": "xsd:string"
+    },
+    "model": {
+      "@id": "schema:model",
+      "@type": "xsd:string"
+    },
+    "year": {
+      "@id": "schema:modelDate",
+      "@type": "xsd:integer"
+    },
+    "license_plate": {
+      "@id": "argyle:licensePlate",
+      "@type": "xsd:string"
+    },
+    "score": {
+      "@id": "schema:ratingValue",
+      "@type": "xsd:decimal"
+    },
+    "report_url": {
+      "@id": "argyle:reportUrl",
+      "@type": "@id"
+    },
+    "expires_at": {
+      "@id": "argyle:expiresAt",
+      "@type": "xsd:dateTime"
+    },
+    "next": {
+      "@id": "argyle:nextPage",
+      "@type": "@id"
+    },
+    "previous": {
+      "@id": "argyle:previousPage",
+      "@type": "@id"
+    },
+    "count": {
+      "@id": "argyle:totalCount",
+      "@type": "xsd:integer"
+    },
+    "results": {
+      "@id": "argyle:results",
+      "@container": "@list"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "0183b2c1-02e5-a5e5-38f2-ecd51a5cf3d6",
+  "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+  "document_number": "ced46eb3-7586-3cd7-2418-8eb9482bc3ec",
+  "available_date": "2019-03-14T17:46:25Z",
+  "expiration_date": "2027-03-12T17:46:25Z",
+  "employer": "GigAndGo",
+  "employment": "42d6531c-520a-26b9-35c3-b7137a6d205a",
+  "document_type": "drivers-licence",
+  "document_type_description": "Driver's license",
+  "file_url": "api.argyle.com/partners/v2/payroll-documents/{id}/file",
+  "created_at": "2023-03-13T17:46:28.240Z",
+  "updated_at": "2023-03-13T17:46:28.240Z",
+  "ocr_data": {},
+  "metadata": {}
+}

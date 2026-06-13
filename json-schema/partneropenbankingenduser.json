@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partneropenbankingenduser.json",
+  "title": "PartnerOpenBankingEndUser",
+  "type": "object",
+  "description": "Contains details about the person or entity making the lending decision.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the lender or entity."
+    },
+    "address": {
+      "type": "string",
+      "description": "Street address or P.O. Box information (include apartment or unit numbers)."
+    },
+    "city": {
+      "type": "string",
+      "description": "Name of the city, town, district, or similar regional entity."
+    },
+    "state": {
+      "type": "string",
+      "description": "State, county, province, region, or equivalent."
+    },
+    "zip": {
+      "type": "string",
+      "description": "Zip code, or equivalent."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number of the lender or entity."
+    }
+  }
+}

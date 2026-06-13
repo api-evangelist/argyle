@@ -50,6 +50,16 @@ apis:
         url: https://docs.argyle.com/api-guide/webhooks
       - type: Authentication
         url: https://docs.argyle.com/api-guide/overview
+      - type: OpenAPI
+        url: openapi/argyle-api-openapi.yml
+      - type: JSONSchema
+        url: json-schema/
+      - type: Examples
+        url: examples/
+      - type: Vocabulary
+        url: vocabulary/argyle-vocabulary.yml
+      - type: JSONLDContext
+        url: json-ld/argyle-context.jsonld
 common:
   - type: Website
     url: https://www.argyle.com/

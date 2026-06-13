@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnersessioncreaterequest.json",
+  "title": "PartnerSessionCreateRequest",
+  "type": "object",
+  "properties": {
+    "verification": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the verification used to initialize the session."
+    },
+    "configuration": {
+      "$ref": "#/components/schemas/PartnerSessionCreateConfiguration"
+    }
+  },
+  "required": [
+    "verification"
+  ]
+}

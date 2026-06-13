@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationreport.json",
+  "title": "PartnerVerificationReport",
+  "type": "object",
+  "description": "Report information.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "nullable": true,
+      "description": "Unique ID of the report.\n\nOnly available when verification state is `COMPLETED`.\n"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "voie",
+        "voe",
+        "voa",
+        "voi",
+        "voai",
+        "voe-transactions",
+        "doc-voi-mortgage"
+      ],
+      "description": "The type of report.\n\nPayroll:\n- `voie` - Verification of Income and Employment.\n- `voe` - Verification of Employment.\n\nBanking:\n- `voa` - Banking verification of assets.\n- `voi` - Banking verification of income.\n- `voai` - Banking verification of income and assets.\n- `voe-transactions` - Banking verification of employment.\n\nDocuments:\n- `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac's AIM Check."
+    },
+    "file_url": {
+      "type": "string",
+      "nullable": true,
+      "example": "www.argyle.com/storagename/pdf",
+      "description": "Download link to the report PDF.\n\nRequires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.\n"
+    },
+    "json_url": {
+      "type": "string",
+      "nullable": true,
+      "example": "www.argyle.com/storagename/json",
+      "description": "Download link to the report in JSON.\n\nRequires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.\n"
+    },
+    "configuration": {
+      "$ref": "#/components/schemas/PartnerVerificationReportConfiguration"
+    }
+  }
+}

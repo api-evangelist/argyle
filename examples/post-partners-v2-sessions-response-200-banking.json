@@ -1,0 +1,10 @@
+{
+  "verification": "43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b",
+  "configuration": {
+    "experience": "97f1eccb-241d-4052-8409-fab9e27a589b",
+    "single_use_url": false,
+    "redirect_url": "https://your-application.com/return"
+  },
+  "link": "https://connect2.finicity.com?...",
+  "data_source": "banking"
+}

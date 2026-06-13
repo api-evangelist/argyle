@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientsessionconfiguration.json",
+  "title": "ClientSessionConfiguration",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ClientSessionCreateConfiguration"
+    }
+  ]
+}

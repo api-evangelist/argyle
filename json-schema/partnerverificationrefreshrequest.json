@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationrefreshrequest.json",
+  "title": "PartnerVerificationRefreshRequest",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "User ID for the verification refresh."
+    },
+    "report": {
+      "$ref": "#/components/schemas/PartnerVerificationRefreshReportRequest"
+    },
+    "loan": {
+      "$ref": "#/components/schemas/PartnerVerificationLoan"
+    },
+    "billing": {
+      "$ref": "#/components/schemas/PartnerVerificationBilling"
+    }
+  },
+  "required": [
+    "user",
+    "report"
+  ]
+}

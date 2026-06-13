@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationbilling.json",
+  "title": "PartnerVerificationBilling",
+  "type": "object",
+  "description": "Optional billing details.",
+  "properties": {
+    "cost_center": {
+      "type": "string",
+      "description": "Cost center identifier."
+    }
+  }
+}

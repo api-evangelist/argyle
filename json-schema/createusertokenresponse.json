@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/createusertokenresponse.json",
+  "title": "CreateUserTokenResponse",
+  "type": "object",
+  "properties": {
+    "user_token": {
+      "type": "string",
+      "description": "The generated user token."
+    }
+  }
+}

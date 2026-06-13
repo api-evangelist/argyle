@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientverificationerrorresource.json",
+  "title": "ClientVerificationErrorResource",
+  "type": "object",
+  "description": "Verification error resource details.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of the associated resource, if available."
+    },
+    "type": {
+      "type": "string",
+      "description": "Resource type."
+    },
+    "name": {
+      "type": "string",
+      "description": "Resource name."
+    }
+  }
+}

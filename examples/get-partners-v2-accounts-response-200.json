@@ -1,0 +1,121 @@
+{
+  "next": "https://api-sandbox.argyle.com/partners/v2/accounts?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "0185a8b8-60eb-80ca-7482-5f24504573f7",
+      "user": "0186c5b8-8fa1-67b3-39af-14b3e18da8a7",
+      "employers": [
+        "Half Bads"
+      ],
+      "item": "item_000000001",
+      "source": "payrollcorp",
+      "created_at": "2023-01-30T18:25:13.491Z",
+      "updated_at": "2023-01-30T18:46:44.034Z",
+      "scanned_at": "2023-01-30T18:46:43.446Z",
+      "connection": {
+        "status": "connected",
+        "error_code": null,
+        "error_message": null,
+        "updated_at": "2023-01-30T18:25:30.334956Z",
+        "direct_deposit_switch": {
+          "status": "error",
+          "error_code": "confirmation_timeout",
+          "error_message": "This user did not finish confirming the direct deposit switch.",
+          "updated_at": "2023-01-30T18:35:31.961Z"
+        }
+      },
+      "availability": {
+        "shifts": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:46:43Z",
+          "available_count": 132,
+          "available_from": "2020-03-03T18:25:30Z",
+          "available_to": "2023-01-28T00:00:00Z"
+        },
+        "gigs": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:46:43Z",
+          "available_count": 242,
+          "available_from": "2020-03-03T18:25:30Z",
+          "available_to": "2023-01-28T00:00:00Z"
+        },
+        "paystubs": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:46:43Z",
+          "available_count": 40,
+          "available_from": "2020-03-03T18:25:30Z",
+          "available_to": "2023-01-02T00:00:00Z"
+        },
+        "payroll_documents": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:45:35.228Z"
+        },
+        "identities": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:45:34.960Z"
+        },
+        "ratings": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:45:35.235Z"
+        },
+        "vehicles": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:45:35.237Z"
+        },
+        "deposit_destinations": {
+          "status": "synced",
+          "updated_at": "2023-01-30T18:25:31.438Z"
+        },
+        "user_forms": null,
+        "user_uploads": null
+      },
+      "ongoing_refresh": {
+        "status": "enabled"
+      }
+    },
+    {
+      "id": "01856c65-43b6-8b5d-b32a-56b8fbda5c28",
+      "user": "0186c5b8-8fa1-67b3-39af-14b3e18da8a7",
+      "employers": [],
+      "item": "item_000012271",
+      "source": "doc_upload_item",
+      "created_at": "2023-01-30T15:15:53.176Z",
+      "updated_at": "2023-01-30T15:16:12.042Z",
+      "scanned_at": null,
+      "connection": {
+        "status": "connecting",
+        "error_code": null,
+        "error_message": null,
+        "updated_at": "2023-01-30T15:16:14.695Z"
+      },
+      "direct_deposit_switch": {
+        "status": "idle",
+        "error_code": null,
+        "error_message": null,
+        "updated_at": "2023-01-30T15:16:11.703Z"
+      },
+      "availability": {
+        "shifts": null,
+        "gigs": null,
+        "paystubs": null,
+        "payroll_documents": null,
+        "identities": null,
+        "ratings": null,
+        "vehicles": null,
+        "deposit_destinations": null,
+        "user_forms": {
+          "status": "synced",
+          "updated_at": "2023-01-30T15:16:12.012Z",
+          "available_count": 1,
+          "files_count": 3,
+          "in_progress_count": 0
+        },
+        "user_uploads": null
+      },
+      "ongoing_refresh": {
+        "status": "idle"
+      }
+    }
+  ]
+}

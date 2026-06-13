@@ -1,0 +1,51 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/shifts?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "0183c13c-5d3d-2d36-4d6d-5ac7a7eb2b2d",
+      "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+      "employer": "Bullseye",
+      "created_at": "2023-04-27T17:37:43.977Z",
+      "updated_at": "2023-04-27T17:37:43.977Z",
+      "status": "completed",
+      "type": "hourly",
+      "start_datetime": "2023-04-26T00:00:00Z",
+      "end_datetime": "2023-04-26T10:00:00Z",
+      "all_datetimes": {
+        "shift_start": "2023-04-26T00:00:00Z",
+        "shift_end": "2023-04-26T10:00:00Z",
+        "breaks": [
+          {
+            "break_start": "2023-04-26T04:30:00Z",
+            "break_end": "2023-04-26T05:30:00Z"
+          }
+        ]
+      },
+      "hours": "9.0",
+      "timezone": "America/New_York",
+      "location": "605 Far West Ave Suite 970, New York, NY 10019, US",
+      "metadata": {}
+    },
+    {
+      "id": "0183c5c3-2c9e-f2d1-3c7d-3ac5b73d3a5d",
+      "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+      "employer": "Bullseye",
+      "created_at": "2023-04-28T17:38:43.977Z",
+      "updated_at": "2023-04-28T17:38:43.977Z",
+      "status": "scheduled",
+      "type": "hourly",
+      "start_datetime": "2023-04-29T00:00:00Z",
+      "end_datetime": "2023-04-29T10:00:00Z",
+      "all_datetimes": {
+        "shift_start": "2023-04-29T00:00:00Z",
+        "shift_end": "2023-04-29T10:00:00Z",
+        "breaks": []
+      },
+      "hours": "10.0",
+      "timezone": "America/New_York",
+      "location": "605 Far West Ave Suite 970, New York, NY 10019, US",
+      "metadata": {}
+    }
+  ]
+}

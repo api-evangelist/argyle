@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientverificationrefreshreportrequest.json",
+  "title": "ClientVerificationRefreshReportRequest",
+  "type": "object",
+  "description": "Report request configuration for refresh requests.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "voie",
+        "voe",
+        "voa",
+        "voi",
+        "voai",
+        "voe-transactions",
+        "doc-voi-mortgage"
+      ],
+      "description": "Payroll, banking, or Doc VOI report type to generate.\n\nPayroll:\n- `voie` - Verification of Income and Employment.\n- `voe` - Verification of Employment.\n\nBanking:\n- `voa` - Banking verification of assets.\n- `voi` - Banking verification of income.\n- `voai` - Banking verification of income and assets.\n- `voe-transactions` - Banking verification of employment.\n\nDocuments:\n- `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac's AIM Check."
+    },
+    "configuration": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ClientVerificationReportConfiguration"
+        },
+        {
+          "description": "Optional banking report configurations."
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

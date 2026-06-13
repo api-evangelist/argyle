@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/bankingreportrequest.json",
+  "title": "BankingReportRequest",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user."
+    },
+    "webhook": {
+      "type": "string",
+      "format": "uri",
+      "description": "Webhook URL to receive report-related [Connect Events](/api-reference/banking-overview#connect-events)."
+    },
+    "bank_accounts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of [bank account](/api-reference/bank-accounts) IDs to be included in the report."
+    },
+    "from_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n\n- `VOAI` reports - controls the length of asset history\n- `VOA` reports - controls the length of asset history\n- `VOI` reports - controls the length of income history\n"
+    },
+    "income_from_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n\n- `VOAI` reports - controls the length of income history\n- Does not apply to `VOA` or `VOI` reports.\n"
+    },
+    "report_custom_fields": {
+      "type": "array",
+      "maxItems": 5,
+      "description": "Include up to `5` custom objects in the report metadata. Often used for identifying information.",
+      "items": {
+        "$ref": "#/components/schemas/BankingReportCustomField"
+      }
+    },
+    "income_stream_confidence_minimum": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Limit income streams used in the report to those above this confidence value (`0-100` accepted).\n\nOnly available for `VOI` and `VOAI` report types.\n"
+    }
+  },
+  "required": [
+    "user"
+  ]
+}

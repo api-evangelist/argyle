@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/shift.json",
+  "title": "Shift",
+  "type": "object",
+  "example": {
+    "id": "0183d245-b5c1-2a6d-5e37-1b831d765c5d",
+    "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+    "employer": "Whole Goods",
+    "created_at": "2023-04-27T07:02:01.279Z",
+    "updated_at": "2023-04-27T07:02:01.279Z",
+    "status": "completed",
+    "type": "hourly",
+    "start_datetime": "2023-04-26T00:00:00Z",
+    "end_datetime": "2023-04-26T08:00:00Z",
+    "all_datetimes": {
+      "shift_start": "2023-04-26T00:00:00Z",
+      "shift_end": "2023-04-26T08:00:00Z",
+      "breaks": [
+        {
+          "break_start": "2023-04-26T03:36:00Z",
+          "break_end": "2023-04-26T04:24:00Z"
+        }
+      ]
+    },
+    "hours": "7.2",
+    "timezone": "America/New_York",
+    "location": "302 East N St, New York, NY 10014, US",
+    "metadata": null
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the shift."
+    },
+    "account": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the account associated with the shift."
+    },
+    "employer": {
+      "type": "string",
+      "description": "Employer name."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the shift object was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the shift object most recently changed."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "description": "Current state of the shift."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "hourly",
+        "services"
+      ],
+      "description": "The type of shift."
+    },
+    "start_datetime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the shift started."
+    },
+    "end_datetime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the shift ended."
+    },
+    "all_datetimes": {
+      "type": "object",
+      "description": "Contains information on when the shift started and ended, and any breaks taken in between.",
+      "properties": {
+        "shift_start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the shift started."
+        },
+        "shift_end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the shift ended."
+        },
+        "breaks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "break_start": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the break started."
+              },
+              "break_end": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the break ended."
+              }
+            }
+          }
+        }
+      }
+    },
+    "hours": {
+      "type": "string",
+      "description": "Time duration of the shift, subtracting breaks. Up to four decimal places."
+    },
+    "timezone": {
+      "type": "string",
+      "description": "Timezone ([IANA](https://www.iana.org/time-zones)) where the shift took place."
+    },
+    "location": {
+      "type": "string",
+      "description": "Full address of where the shift took place."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional, non-categorized information."
+    }
+  }
+}

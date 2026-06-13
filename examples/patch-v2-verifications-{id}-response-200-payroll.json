@@ -1,0 +1,29 @@
+{
+  "id": "43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b",
+  "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+  "created_at": "2023-03-09T16:22:06.081Z",
+  "updated_at": "2023-03-09T16:22:06.081Z",
+  "channel": "api",
+  "status": {
+    "state": "PROCESSING",
+    "code": "authenticated",
+    "errors": []
+  },
+  "report": {
+    "id": null,
+    "type": "voie",
+    "file_url": null,
+    "json_url": null
+  },
+  "employments": [],
+  "loan": {
+    "number": "5678",
+    "borrower_id": "5678",
+    "application_id": "2121313",
+    "officer_email": "john.doe@mortgage.com"
+  },
+  "billing": {
+    "cost_center": "new_cost_center"
+  },
+  "data_source": "payroll"
+}

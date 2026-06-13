@@ -1,0 +1,11 @@
+{
+  "first_name": "Sarah",
+  "last_name": "Longfield",
+  "email": "sarah@email.com",
+  "phone_number": "+12125555555",
+  "external_metadata": {
+    "notes": "Moved to stage 2 of loan approval.",
+    "category": "Summer Initiative"
+  },
+  "external_id": "July_Connection"
+}

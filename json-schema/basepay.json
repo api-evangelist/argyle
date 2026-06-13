@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/basepay.json",
+  "title": "BasePay",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "string",
+      "description": "Defined pay amount per period. Does not include bonus, commission or similar incentive-based income.",
+      "example": "58024.50"
+    },
+    "period": {
+      "type": "string",
+      "enum": [
+        "hourly",
+        "daily",
+        "weekly",
+        "biweekly",
+        "semimonthly",
+        "monthly",
+        "annual",
+        "salary"
+      ],
+      "description": "Payment interval that specifically corresponds to the base pay `amount`.\n- `hourly`\n- `daily`\n- `weekly`\n- `biweekly` \u2014 every two weeks\n- `semimonthly` \u2014 twice a month\n- `monthly`\n- `annual`\n- `salary` \u2014 only when explicitly mentioned and no other pay period information is present\n",
+      "example": "annual"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Pay currency ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code).\n",
+      "example": "USD"
+    }
+  }
+}

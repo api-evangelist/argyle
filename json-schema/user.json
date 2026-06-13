@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/user.json",
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the user.",
+      "example": "018051aa-f7a9-a0db-2f38-6cfa325e9d69"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp (ISO 8601) when the user object was created.",
+      "example": "2023-01-30T22:25:38.971Z"
+    },
+    "items_connected": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Items the user has connected through Link. Typically employers or payroll platforms.",
+      "example": [
+        "item_123456789",
+        "item_987654321"
+      ]
+    },
+    "employers_connected": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Individual employers associated with the connected Items.",
+      "example": [
+        "Whole Goods",
+        "Bullseye"
+      ]
+    },
+    "external_metadata": {
+      "type": "object",
+      "description": "Free-text field where additional context for the user can be added.\n- Can be any valid JSON, such as a string or object.\n\nUsing `external_id` (see below) is recommended when the ability to filter users by an external value is needed.\n",
+      "example": {
+        "notes": "Moved to stage 2 of loan approval.",
+        "category": "Summer Initiative"
+      }
+    },
+    "external_id": {
+      "type": "string",
+      "description": "Free-text field where [additional context](/overview/data-structure/users#external-identifiers) for the user can be added.\n- Can be any string of 100 characters or less.\n- Multiple users can have the same `external_id`.\n\nOften used to group users, or associate your internal ID's to users.\n- Can be attached to [invites](/console/flows/email-sms-templates#inviting-new-users) or [shareable URLs](/console/flows/shareable-urls#customizations).\n- Can be used as a query parameter when [listing users](/api-reference/users#list). (Only exact matches are supported)\n- Can be used to search for specific users within the [Connections](https://console.argyle.com/connections) section of Console.\n- Will appear on billing CSVs if associated with a user.\n",
+      "example": "July_Connection"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name of the user.",
+      "example": "Sarah"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name of the user.",
+      "example": "Longfield"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email of the user.",
+      "example": "sarah@email.com"
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number of the user. E.164 international format.",
+      "example": "+12125555555"
+    },
+    "ssn": {
+      "type": "string",
+      "description": "Social Security number of the user.",
+      "example": null
+    },
+    "address": {
+      "type": "object",
+      "description": "Address of the user.",
+      "properties": {
+        "city": {
+          "type": "string",
+          "description": "Name of the city, town, district, or similar regional entity.",
+          "example": null
+        },
+        "line1": {
+          "type": "string",
+          "description": "Address-Line 1, usually street address or P.O. Box information.",
+          "example": null
+        },
+        "line2": {
+          "type": "string",
+          "description": "Address-Line 2, usually the apartment or unit number.",
+          "example": null
+        },
+        "state": {
+          "type": "string",
+          "description": "State, county, province, region, or equivalent.",
+          "example": null
+        },
+        "country": {
+          "type": "string",
+          "description": "Two-letter country code (ISO 3166-1 alpha-2 format).",
+          "example": null
+        },
+        "postal_code": {
+          "type": "string",
+          "description": "Zip code, or equivalent.",
+          "example": null
+        }
+      }
+    },
+    "birth_date": {
+      "type": "object",
+      "description": "Date of birth of the user.",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "description": "Birth year (1900 or later).",
+          "example": null
+        },
+        "month": {
+          "type": "integer",
+          "description": "Birth month (between 1 and 12).",
+          "example": null
+        },
+        "day": {
+          "type": "integer",
+          "description": "Birth day (between 1 and 31).",
+          "example": null
+        }
+      }
+    }
+  }
+}

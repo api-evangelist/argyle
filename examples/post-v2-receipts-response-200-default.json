@@ -1,0 +1,1 @@
+"200 OK\nContent-Type: application/pdf\nContent-Disposition: attachment; filename=\"receipt.pdf\"\nContent-Length: 12345\n\n[PDF binary stream omitted]\n"

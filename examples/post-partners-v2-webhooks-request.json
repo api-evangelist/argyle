@@ -1,0 +1,11 @@
+{
+  "events": [
+    "verifications.updated"
+  ],
+  "name": "name-for-the-webhook-subscription",
+  "url": "https://your-webhook-backend.com",
+  "secret": "optional-secret",
+  "config": {
+    "include_resource": true
+  }
+}

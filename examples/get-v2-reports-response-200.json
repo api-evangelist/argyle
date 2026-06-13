@@ -1,0 +1,53 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/reports?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "5b3fa756-1d76-43e1-55f6-e29fc6ae535d",
+      "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+      "reference_id": "5b3fa756-1d76-43e1-55f6-e29fc6ae535d",
+      "generated_at": "2023-03-01T22:45:08.916Z",
+      "created_at": "2023-03-01T22:45:08.916Z",
+      "type": "voe",
+      "status": "generated",
+      "file_url": "www.argyle.com/storagename/pdf",
+      "json_url": "www.argyle.com/storagename/json",
+      "last_synced_at": "2023-03-01T19:20:21.576Z",
+      "accounts": [
+        {
+          "id": "018e6a25-130b-3b98-a3ca-1658cb3afc26",
+          "item": "item_987654321",
+          "last_synced_at": "2023-03-01T19:20:21.576363Z"
+        }
+      ],
+      "metadata": {},
+      "external_id": null
+    },
+    {
+      "id": "43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b",
+      "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+      "reference_id": "43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b",
+      "generated_at": "2023-03-09T16:22:06.081Z",
+      "created_at": "2023-03-09T16:22:06.081Z",
+      "type": "voie",
+      "status": "generated",
+      "file_url": "www.argyle.com/storagename/pdf",
+      "json_url": "www.argyle.com/storagename/json",
+      "last_synced_at": "2023-03-09T14:08:25.069Z",
+      "accounts": [
+        {
+          "id": "0187c66e-e7e5-811c-b006-2232f00f426a",
+          "item": "item_123456789",
+          "last_synced_at": "2023-03-09T14:08:25.069105Z"
+        },
+        {
+          "id": "0185a8b8-60eb-80ca-7482-5f24504573f7",
+          "item": "item_000000001",
+          "last_synced_at": "2023-03-01T05:10:59.558295Z"
+        }
+      ],
+      "metadata": {},
+      "external_id": "July_Connection"
+    }
+  ]
+}

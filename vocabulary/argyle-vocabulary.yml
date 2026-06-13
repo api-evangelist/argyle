@@ -1,0 +1,377 @@
+vocabulary:
+  name: Argyle API Vocabulary
+  description: >-
+    Domain vocabulary extracted from the Argyle employment data connectivity API,
+    covering payroll, employment history, income verification, gig economy earnings,
+    and direct deposit management concepts.
+  url: https://docs.argyle.com/api-guide/overview
+  version: "2.0"
+  created: "2026-06-13"
+  terms:
+
+    # Core resource identifiers
+    - name: id
+      label: Resource Identifier
+      type: string
+      format: uuid
+      description: Unique identifier for a resource object (UUID format).
+      usedIn: [Account, Employment, Identity, Gig, Paystub, PayrollDocument, Shift, Rating, Vehicle, Report]
+
+    - name: user
+      label: User
+      type: string
+      format: uuid
+      description: The Argyle user ID associated with the resource.
+      usedIn: [Account, Employment, Identity, Gig, Paystub, PayrollDocument, Shift]
+
+    - name: account
+      label: Account
+      type: string
+      format: uuid
+      description: The Argyle account ID representing a payroll connection made through Link.
+      usedIn: [Employment, Identity, Gig, Paystub, PayrollDocument, Shift]
+
+    # Timestamps
+    - name: created_at
+      label: Created At
+      type: string
+      format: date-time
+      description: Timestamp when the resource was created.
+      usedIn: [Account, Employment, Identity, Gig, Paystub, Shift]
+
+    - name: updated_at
+      label: Updated At
+      type: string
+      format: date-time
+      description: Timestamp when the resource was last updated.
+      usedIn: [Account, Employment, Identity, Gig, Paystub, Shift]
+
+    - name: scanned_at
+      label: Scanned At
+      type: string
+      format: date-time
+      description: Timestamp when the resource data was last fetched from the payroll source.
+      usedIn: [Account, Employment, Identity, Paystub]
+
+    # Employment
+    - name: employer
+      label: Employer
+      type: string
+      description: The name of the employer or gig platform.
+      usedIn: [Employment, Account, Gig, Shift]
+
+    - name: employers
+      label: Employers
+      type: array
+      description: List of employer objects associated with the user.
+      usedIn: [Account]
+
+    - name: employment_type
+      label: Employment Type
+      type: string
+      description: Type of employment relationship (e.g., employee, contractor, gig).
+      usedIn: [Employment]
+
+    - name: employment_status
+      label: Employment Status
+      type: string
+      description: Current status of the employment (e.g., active, inactive).
+      usedIn: [Employment]
+
+    - name: start_date
+      label: Start Date
+      type: string
+      format: date
+      description: The date the employment or engagement started.
+      usedIn: [Employment, Shift, Gig]
+
+    - name: end_date
+      label: End Date
+      type: string
+      format: date
+      description: The date the employment or engagement ended (null if ongoing).
+      usedIn: [Employment, Shift, Gig]
+
+    - name: job_title
+      label: Job Title
+      type: string
+      description: The employee's or contractor's job title or role.
+      usedIn: [Employment]
+
+    # Income and Compensation
+    - name: base_pay
+      label: Base Pay
+      type: object
+      description: Base compensation information including amount, period, and currency.
+      usedIn: [Employment, Paystub]
+
+    - name: gross_pay
+      label: Gross Pay
+      type: object
+      description: Total earnings before deductions for a pay period.
+      usedIn: [Paystub]
+
+    - name: net_pay
+      label: Net Pay
+      type: object
+      description: Take-home pay after all deductions are applied.
+      usedIn: [Paystub]
+
+    - name: deductions
+      label: Deductions
+      type: array
+      description: List of deduction items subtracted from gross pay (e.g., taxes, benefits).
+      usedIn: [Paystub]
+
+    - name: earnings
+      label: Earnings
+      type: array
+      description: List of earning line items (e.g., regular pay, overtime, bonuses).
+      usedIn: [Paystub]
+
+    - name: taxes
+      label: Taxes
+      type: array
+      description: Federal, state, and local tax withholding details.
+      usedIn: [Paystub]
+
+    # Paystub / Payroll
+    - name: period_start
+      label: Pay Period Start
+      type: string
+      format: date
+      description: The start date of the pay period covered by the paystub.
+      usedIn: [Paystub]
+
+    - name: period_end
+      label: Pay Period End
+      type: string
+      format: date
+      description: The end date of the pay period covered by the paystub.
+      usedIn: [Paystub]
+
+    - name: check_date
+      label: Check Date
+      type: string
+      format: date
+      description: The date on which payment was issued.
+      usedIn: [Paystub]
+
+    # Gig Economy
+    - name: gig_type
+      label: Gig Type
+      type: string
+      description: The type of gig work performed (e.g., rideshare, delivery, task).
+      usedIn: [Gig]
+
+    - name: distance
+      label: Distance
+      type: number
+      description: Distance traveled during a gig or shift, in miles or kilometers.
+      usedIn: [Gig, Shift]
+
+    - name: duration
+      label: Duration
+      type: number
+      description: Duration of a gig or shift in seconds.
+      usedIn: [Gig, Shift]
+
+    - name: payout
+      label: Payout
+      type: object
+      description: Total payout amount for a gig including earnings and tips.
+      usedIn: [Gig]
+
+    - name: tips
+      label: Tips
+      type: object
+      description: Tip amount received during a gig.
+      usedIn: [Gig]
+
+    # Identity / Personal Information
+    - name: first_name
+      label: First Name
+      type: string
+      description: Worker's legal first name as recorded by their employer or payroll system.
+      usedIn: [Identity]
+
+    - name: last_name
+      label: Last Name
+      type: string
+      description: Worker's legal last name as recorded by their employer or payroll system.
+      usedIn: [Identity]
+
+    - name: full_name
+      label: Full Name
+      type: string
+      description: Worker's full legal name.
+      usedIn: [Identity]
+
+    - name: email
+      label: Email
+      type: string
+      format: email
+      description: Worker's email address on file with the employer or payroll system.
+      usedIn: [Identity]
+
+    - name: phone_number
+      label: Phone Number
+      type: string
+      description: Worker's phone number on file with the employer.
+      usedIn: [Identity]
+
+    - name: birth_date
+      label: Birth Date
+      type: string
+      format: date
+      description: Worker's date of birth.
+      usedIn: [Identity]
+
+    - name: ssn
+      label: Social Security Number
+      type: string
+      description: Worker's Social Security Number (last 4 digits typically exposed).
+      usedIn: [Identity]
+
+    - name: address
+      label: Address
+      type: object
+      description: Physical mailing address of the worker.
+      usedIn: [Identity]
+
+    # Deposit Destinations
+    - name: bank_name
+      label: Bank Name
+      type: string
+      description: Name of the financial institution for direct deposit.
+      usedIn: [DepositDestination]
+
+    - name: bank_account
+      label: Bank Account
+      type: string
+      description: Masked bank account number for the direct deposit destination.
+      usedIn: [DepositDestination]
+
+    - name: routing_number
+      label: Routing Number
+      type: string
+      description: Bank routing number (ABA) for the direct deposit destination.
+      usedIn: [DepositDestination]
+
+    - name: deposit_type
+      label: Deposit Type
+      type: string
+      description: Type of deposit allocation — percent, fixed amount, or remainder.
+      usedIn: [DepositDestination]
+
+    - name: deposit_value
+      label: Deposit Value
+      type: string
+      description: The value of the deposit allocation (percentage or fixed dollar amount).
+      usedIn: [DepositDestination]
+
+    # Connection / Account Status
+    - name: source
+      label: Source
+      type: string
+      description: The payroll platform or employer source key (e.g., gusto, adp, uber).
+      usedIn: [Account, Gig, Shift, Employment]
+
+    - name: connection
+      label: Connection Status
+      type: object
+      description: Status of the payroll connection including error state and last sync time.
+      usedIn: [Account]
+
+    - name: item
+      label: Item
+      type: string
+      description: The Argyle item ID representing the payroll platform/employer.
+      usedIn: [Account]
+
+    # Vehicles (Gig Platforms)
+    - name: make
+      label: Vehicle Make
+      type: string
+      description: Manufacturer of the vehicle (e.g., Toyota, Ford).
+      usedIn: [Vehicle]
+
+    - name: model
+      label: Vehicle Model
+      type: string
+      description: Model name of the vehicle.
+      usedIn: [Vehicle]
+
+    - name: year
+      label: Vehicle Year
+      type: integer
+      description: Model year of the vehicle.
+      usedIn: [Vehicle]
+
+    - name: license_plate
+      label: License Plate
+      type: string
+      description: Vehicle license plate number.
+      usedIn: [Vehicle]
+
+    # Ratings
+    - name: score
+      label: Rating Score
+      type: number
+      description: Numerical rating score given to or by the worker.
+      usedIn: [Rating]
+
+    # Verifications
+    - name: status
+      label: Status
+      type: string
+      description: Current processing or verification status of the resource.
+      usedIn: [Account, Report, Verification]
+
+    - name: type
+      label: Type
+      type: string
+      description: Classification type of the resource (varies by resource context).
+      usedIn: [PayrollDocument, Report, Item]
+
+    # Reports
+    - name: report_url
+      label: Report URL
+      type: string
+      format: uri
+      description: Signed URL to download a generated verification or income report.
+      usedIn: [Report]
+
+    - name: expires_at
+      label: Expires At
+      type: string
+      format: date-time
+      description: Timestamp after which a report URL or token becomes invalid.
+      usedIn: [Report, UserToken]
+
+    # Pagination
+    - name: next
+      label: Next Page URL
+      type: string
+      format: uri
+      description: URL to the next page of results in a paginated list response.
+      usedIn: [PaginatedResponse]
+
+    - name: previous
+      label: Previous Page URL
+      type: string
+      format: uri
+      description: URL to the previous page of results in a paginated list response.
+      usedIn: [PaginatedResponse]
+
+    - name: count
+      label: Total Count
+      type: integer
+      description: Total number of items matching the query across all pages.
+      usedIn: [PaginatedResponse]
+
+    - name: results
+      label: Results
+      type: array
+      description: Array of resource objects returned in the current page.
+      usedIn: [PaginatedResponse]

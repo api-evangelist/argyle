@@ -1,0 +1,64 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/ratings?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "0186b4eb-1e33-bb38-a45a-1db105b5bed0",
+      "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+      "rating": "4.14",
+      "acceptance_rate": "0.87",
+      "ontime_rate": "0.85",
+      "achievements": [
+        {
+          "count": 3,
+          "label": "excellent_service",
+          "points": "300",
+          "award": null,
+          "description": "Excellent Service",
+          "metadata": {}
+        },
+        {
+          "count": 2,
+          "label": "speed_demon",
+          "points": "200",
+          "award": "Speed Demon",
+          "description": "Fast Service",
+          "metadata": {}
+        }
+      ],
+      "employer": "GigAntic",
+      "created_at": "2023-03-15T11:15:20.359Z",
+      "updated_at": "2023-03-15T11:15:20.359Z",
+      "metadata": {}
+    },
+    {
+      "id": "0176a5bd-6ed4-1a21-8661-32bc3546e6de",
+      "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+      "rating": "4.98",
+      "acceptance_rate": "0.91",
+      "ontime_rate": "0.94",
+      "achievements": [
+        {
+          "count": 3,
+          "label": "excellent_service",
+          "points": null,
+          "metadata": {},
+          "badge_url": "www.partner.com/badgeinfo",
+          "description": "Excellent Service"
+        },
+        {
+          "count": 1,
+          "label": "great_amenities",
+          "points": null,
+          "metadata": {},
+          "badge_url": "www.partner.com/badgeinfo",
+          "description": "Great Amenities"
+        }
+      ],
+      "employer": "GigAndGo",
+      "created_at": "2023-03-15T13:19:55.723Z",
+      "updated_at": "2023-03-15T13:19:55.723Z",
+      "metadata": {}
+    }
+  ]
+}

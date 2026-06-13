@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerbirthdate.json",
+  "title": "PartnerBirthDate",
+  "type": "object",
+  "description": "Date of birth in year-month-day format.",
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Birth year (1900 or later)."
+    },
+    "month": {
+      "type": "integer",
+      "description": "Birth month (between 1 and 12)."
+    },
+    "day": {
+      "type": "integer",
+      "description": "Birth day (between 1 and 31)."
+    }
+  }
+}

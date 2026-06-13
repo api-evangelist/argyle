@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/employer.json",
+  "title": "Employer",
+  "type": "object",
+  "example": {
+    "id": "item_000000003",
+    "name": "GigAndGo",
+    "logo_url": "argyle.com/image-holdings",
+    "kind": "gig",
+    "mapping_status": "verified",
+    "status": "healthy"
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique ID of the [Item](/api-reference/items). ID format \u2014 `item_123456789`"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the Item."
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "URL location of the Item's logo image file."
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "employer",
+        "gig",
+        "platform",
+        "benefits"
+      ],
+      "description": "Type of Item.\n- `employer` \u2014 individual employer\n- `gig` \u2014 gig platform\n- `platform` \u2014 payroll provider platform\n- `benefits` \u2014 government benefits\n"
+    },
+    "mapping_status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "mapped",
+        "unmapped"
+      ],
+      "description": "Verification status of the Item.\n- `verified` \u2014 The payroll system associated with the Item is known, and the Item has previously experienced a successful connection that returned paystub data.\n\n- `mapped` \u2014 The payroll system associated with the Item is known, but the Item is awaiting a successful connection.\n\n- `unmapped` \u2014 The payroll system associated with this Item is not yet known. If an unmapped Item is selected in Link, the user will be given the option to search for the relevant payroll system and attempt to connect using their login credentials.\n\n![](/images/argyle-guides/api-ref/items/1-mapping-status.png)\n"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "healthy",
+        "issues",
+        "unavailable"
+      ],
+      "description": "Health status of the Item.\n\n- `healthy` \u2014 Normal service.\n- `issues` \u2014 Impacted service. New account connections still supported.\n- `unavailable` \u2014 Impacted service. New account connections not supported. [Ongoing refresh](/overview/ongoing-refresh) paused.\n"
+    }
+  }
+}

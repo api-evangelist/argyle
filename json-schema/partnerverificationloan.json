@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationloan.json",
+  "title": "PartnerVerificationLoan",
+  "type": "object",
+  "description": "Optional loan details.",
+  "properties": {
+    "number": {
+      "type": "string",
+      "description": "Loan number or identifier."
+    },
+    "borrower_id": {
+      "type": "string",
+      "description": "Borrower identifier."
+    },
+    "application_id": {
+      "type": "string",
+      "description": "Application identifier."
+    },
+    "officer_email": {
+      "type": "string",
+      "description": "Email of the loan officer requesting the verification."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Key paystub fields supported",
+  "filters": {
+    "status": {
+      "eq": "healthy"
+    },
+    "field_coverage": {
+      "paystubs": {
+        "gross_pay": {
+          "supported": {
+            "eq": true
+          }
+        },
+        "paystub_date": {
+          "supported": {
+            "eq": true
+          }
+        }
+      }
+    }
+  }
+}

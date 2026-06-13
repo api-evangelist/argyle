@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientopenbanking.json",
+  "title": "ClientOpenBanking",
+  "type": "object",
+  "description": "Banking-specific user metadata.",
+  "properties": {
+    "end_user": {
+      "$ref": "#/components/schemas/ClientOpenBankingEndUser"
+    }
+  }
+}

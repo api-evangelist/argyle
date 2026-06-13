@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/userform.json",
+  "title": "UserForm",
+  "type": "object",
+  "example": {
+    "id": "0186ef31-4a6c-bc77-ffb7-a9db11505d7d",
+    "account": "0182c1e2-59ec-16ba-34e2-4f20594a7df7",
+    "data": {
+      "income_source": "Block & Fish Tackle",
+      "payroll_provider": "Payroll Corp."
+    },
+    "created_at": "2023-03-17T10:50:30.414Z",
+    "updated_at": "2023-03-17T10:50:31.621Z"
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the user form."
+    },
+    "account": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the account associated with the user form."
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "income_source": {
+          "type": "string",
+          "description": "User response entered into the `Income source` input field.",
+          "example": "Block & Fish Tackle"
+        },
+        "payroll_provider": {
+          "type": "string",
+          "description": "User response entered into the `Payroll provider (optional)` input field.",
+          "example": "Payroll Corp."
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user form was submitted."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user form object was last updated."
+    }
+  }
+}

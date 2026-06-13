@@ -1,0 +1,30 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/items?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "item_000000002",
+      "name": "Bullseye",
+      "kind": "employer",
+      "known_limitations": null,
+      "status": "unavailable",
+      "status_details": "The Item is down due to scheduled maintenance but should be back shortly.",
+      "mapping_status": "verified",
+      "logo_url": "argyle.com/image-holdings",
+      "is_grouping": false,
+      "matching_score": "1.00"
+    },
+    {
+      "id": "item_000000003",
+      "name": "Triple",
+      "kind": "platform",
+      "known_limitations": null,
+      "status": "healthy",
+      "status_details": null,
+      "mapping_status": "mapped",
+      "logo_url": "argyle.com/image-holdings",
+      "is_grouping": false,
+      "matching_score": "0.63"
+    }
+  ]
+}

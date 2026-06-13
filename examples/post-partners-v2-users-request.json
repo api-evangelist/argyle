@@ -1,0 +1,25 @@
+{
+  "client": "39096494-45c8-4fd8-9454-3d1cb2d62db7",
+  "first_name": "Jane",
+  "last_name": "Doe",
+  "ssn": "000-00-0000",
+  "email": "jane@example.com",
+  "phone_number": "+15555555555",
+  "address": {
+    "city": "New York",
+    "line1": "123 Main St",
+    "line2": null,
+    "state": "NY",
+    "country": "US",
+    "postal_code": null
+  },
+  "birth_date": {
+    "year": 1990,
+    "month": 1,
+    "day": 13
+  },
+  "external_id": null,
+  "external_metadata": {
+    "suppress_verification": true
+  }
+}

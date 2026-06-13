@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationcreationfailedcontext.json",
+  "title": "PartnerVerificationCreationFailedContext",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user.",
+      "example": "018051aa-f7a9-a0db-2f38-6cfa325e9d69"
+    },
+    "attempted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time when Argyle attempted to create the verification.",
+      "example": "2023-03-09T16:22:06.081Z"
+    },
+    "channel": {
+      "type": "string",
+      "description": "Channel where verification creation was attempted.",
+      "example": "encompass"
+    },
+    "data_source": {
+      "type": "string",
+      "description": "Data source requested for the verification.",
+      "example": "banking"
+    },
+    "report_type": {
+      "type": "string",
+      "description": "Report type requested for the verification.",
+      "example": "voa"
+    },
+    "loan": {
+      "$ref": "#/components/schemas/PartnerVerificationLoan"
+    },
+    "billing": {
+      "$ref": "#/components/schemas/PartnerVerificationBilling"
+    }
+  }
+}

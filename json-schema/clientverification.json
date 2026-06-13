@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientverification.json",
+  "title": "ClientVerification",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the verification."
+    },
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user associated with the verification."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification was requested."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification object was last updated."
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "api",
+        "encompass"
+      ],
+      "example": "api",
+      "description": "Origin of the verification order."
+    },
+    "status": {
+      "$ref": "#/components/schemas/ClientVerificationStatus"
+    },
+    "report": {
+      "$ref": "#/components/schemas/ClientVerificationReport"
+    },
+    "employments": {
+      "type": "array",
+      "description": "List of employments for the user. Documents only.",
+      "items": {
+        "$ref": "#/components/schemas/ClientVerificationEmployment"
+      }
+    },
+    "loan": {
+      "$ref": "#/components/schemas/ClientVerificationLoan"
+    },
+    "billing": {
+      "$ref": "#/components/schemas/ClientVerificationBilling"
+    },
+    "data_source": {
+      "type": "string",
+      "enum": [
+        "payroll",
+        "banking",
+        "documents"
+      ],
+      "description": "Source of verification data."
+    }
+  }
+}

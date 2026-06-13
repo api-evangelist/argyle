@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationemployment.json",
+  "title": "PartnerVerificationEmployment",
+  "type": "object",
+  "description": "Employment details for the user.",
+  "properties": {
+    "employer": {
+      "type": "string",
+      "description": "Name of the employer."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "previous"
+      ],
+      "description": "User's current employment status at this employer."
+    },
+    "hire_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Employment start date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format."
+    },
+    "termination_date": {
+      "type": "string",
+      "format": "date",
+      "nullable": true,
+      "description": "Employment end date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. `null` when employment `status` is `active`."
+    }
+  }
+}

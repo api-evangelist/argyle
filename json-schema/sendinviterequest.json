@@ -1,0 +1,176 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/sendinviterequest.json",
+  "title": "SendInviteRequest",
+  "type": "object",
+  "required": [
+    "first_name",
+    "last_name"
+  ],
+  "example": {
+    "first_name": "Sarah",
+    "last_name": "Longfield",
+    "phone_number": "212-555-5555",
+    "email": "sarah@email.com"
+  },
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "First name of the invite recipient."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name of the invite recipient."
+    },
+    "full_name": {
+      "type": "string",
+      "deprecated": true,
+      "description": "Full name of the invite recipient.\n\n**Required when** `first_name` and `last_name` are empty.\n"
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number of the invite recipient.\n\n**Required when** `email` is empty.\n"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address of the invite recipient.\n\n**Required when** `phone_number` is empty.\n"
+    },
+    "external_id": {
+      "type": "string",
+      "description": "[External identifier](/overview/data-structure/users#external-identifiers) often used to group users.\nWill populate the `external_id` property of the [user object](/api-reference/users#object-external_id),\nand can be used to search for users within the [Connections](https://console.argyle.com/connections) section of Console.\n"
+    },
+    "flow_id": {
+      "type": "string",
+      "description": "ID used to [customize](/console/flows/email-sms-templates) the user's experience in Link.\n\n**Warning:**\nMust be the ID of an [Email/SMS Template](/console/flows/email-sms-templates).\n"
+    },
+    "flow_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of specific Items to display to the invite recipient. Instead of full search, [direct login](/workflows/account-connections#direct-login) will be used (one Item) or [list](/workflows/account-connections#list) (multiple Items).\n\n**Warning:**\n`flow_items` will override direct login Items associated with the `flow_id`.\n"
+    },
+    "dds_config": {
+      "type": "object",
+      "description": "Unencrypted target deposit destination configuration.\nAdds a deposit switching flow after the user connects their payroll accounts.\n"
+    },
+    "override_invite_template": {
+      "type": "object",
+      "deprecated": true,
+      "description": "Overrides the text and branding of the email/SMS template specified via the [`flow_id`](/api-reference/invites#send-flow_id) property (or default invite settings, if no templates exist).\n\nAlso provides a way to Cc members of your team to be notified by email when the user has connected their payroll account(s) by using the `reply_to` parameter.\n",
+      "properties": {
+        "brand": {
+          "type": "object",
+          "properties": {
+            "color": {
+              "type": "string",
+              "description": "HEX color code."
+            },
+            "logo": {
+              "type": "string",
+              "description": "URL to a logo."
+            }
+          }
+        },
+        "email": {
+          "type": "object",
+          "properties": {
+            "reply_to": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Emails to notify after a user connects an account."
+            },
+            "subject": {
+              "type": "string"
+            },
+            "sender": {
+              "type": "string"
+            },
+            "header": {
+              "type": "string"
+            },
+            "subheader": {
+              "type": "string"
+            },
+            "body_text_icon_1": {
+              "type": "string",
+              "description": "URL to an icon."
+            },
+            "body_text_header_1": {
+              "type": "string"
+            },
+            "body_text_subheader_1": {
+              "type": "string"
+            },
+            "body_text_icon_2": {
+              "type": "string",
+              "description": "URL to an icon."
+            },
+            "body_text_header_2": {
+              "type": "string"
+            },
+            "body_text_subheader_2": {
+              "type": "string"
+            },
+            "body_text_icon_3": {
+              "type": "string",
+              "description": "URL to an icon."
+            },
+            "body_text_header_3": {
+              "type": "string"
+            },
+            "body_text_subheader_3": {
+              "type": "string"
+            }
+          }
+        },
+        "sms_text": {
+          "type": "string"
+        },
+        "landing_page": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "string"
+            },
+            "subheader": {
+              "type": "string"
+            },
+            "step_1": {
+              "type": "string"
+            },
+            "step_2": {
+              "type": "string"
+            },
+            "step_3": {
+              "type": "string"
+            }
+          }
+        },
+        "flow_id": {
+          "type": "string",
+          "description": "ID used to [customize](/console/flows/embedded-experiences) the user's experience in Link.\n\n**Warning:**\nMust be the ID of an [embedded experience](/console/flows/embedded-experiences).\nAny `flow_id` included outside of this object will take priority.\n"
+        },
+        "success_page": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "string"
+            },
+            "subheader": {
+              "type": "string"
+            },
+            "button_text": {
+              "type": "string"
+            },
+            "button_url": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

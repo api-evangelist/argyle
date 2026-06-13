@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/grosspaytotal.json",
+  "title": "GrossPayTotal",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "string",
+      "description": "Gross pay earned from line items of this type."
+    },
+    "amount_ytd": {
+      "type": "string",
+      "description": "Total gross pay earned year-to-date from line items of this type, including this paystub."
+    },
+    "hours": {
+      "type": "string",
+      "description": "Hours worked from line items of this type."
+    },
+    "hours_ytd": {
+      "type": "string",
+      "description": "Hours worked year-to-date from line items of this type, including this paystub."
+    },
+    "rate_implied": {
+      "type": "string",
+      "description": "Calculated ratio of `amount` to `hours` of gross pay list totals."
+    },
+    "rate_implied_ytd": {
+      "type": "string",
+      "description": "Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals."
+    }
+  }
+}

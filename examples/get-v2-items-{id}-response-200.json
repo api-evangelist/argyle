@@ -1,0 +1,92 @@
+{
+  "id": "item_000000001",
+  "name": "Whole Goods",
+  "kind": "employer",
+  "known_limitations": "First 5 digits of SSN obfuscated.",
+  "status": "healthy",
+  "status_details": null,
+  "logo_url": "argyle.com/image-holdings",
+  "is_grouping": false,
+  "mapping_status": "verified",
+  "features": {
+    "data_retrieval": {
+      "refresh_frequency": "5h"
+    },
+    "field_coverage": {
+      "identities": {
+        "first_name": {
+          "supported": true
+        },
+        "last_name": {
+          "supported": true
+        },
+        "...": {
+          "supported": true
+        }
+      },
+      "paystubs": {
+        "hours_ytd": {
+          "supported": false
+        },
+        "paystub_period": {
+          "start_date": {
+            "supported": true
+          },
+          "end_date": {
+            "supported": true
+          }
+        },
+        "...": {
+          "supported": true
+        }
+      },
+      "payroll_documents": {
+        "...": {
+          "supported": true
+        }
+      },
+      "deposit_destinations": {
+        "...": {
+          "supported": true
+        }
+      },
+      "shifts": {
+        "...": {
+          "supported": true
+        }
+      },
+      "gigs": {
+        "...": {
+          "supported": true
+        }
+      },
+      "vehicles": {
+        "...": {
+          "supported": true
+        }
+      },
+      "ratings": {
+        "...": {
+          "supported": true
+        }
+      }
+    },
+    "direct_deposit_switch": {
+      "card": {
+        "supported": true,
+        "max_allocations": "3"
+      },
+      "deposit_account": {
+        "types": [
+          "ach_deposit_account"
+        ],
+        "supported": true,
+        "max_allocations": "2",
+        "amount_allocation": false,
+        "percent_allocation": true,
+        "amount_precision": null,
+        "percent_precision": "0.01"
+      }
+    }
+  }
+}

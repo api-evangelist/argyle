@@ -1,0 +1,371 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/account.json",
+  "title": "Account",
+  "type": "object",
+  "example": {
+    "id": "0187c66e-e7e5-811c-b006-2232f00f426a",
+    "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+    "employers": [
+      "Whole Goods"
+    ],
+    "item": "item_123456789",
+    "source": "thepayrollcompany",
+    "created_at": "2023-01-30T12:53:22.561Z",
+    "updated_at": "2023-01-30T12:55:04.478Z",
+    "scanned_at": "2023-01-30T12:55:04.016Z",
+    "connection": {
+      "status": "connected",
+      "error_code": null,
+      "error_message": null,
+      "updated_at": "2023-01-30T12:53:25.561Z"
+    },
+    "direct_deposit_switch": {
+      "status": "success",
+      "error_code": null,
+      "error_message": null,
+      "updated_at": "2023-01-30T12:55:03.478Z"
+    },
+    "availability": {
+      "shifts": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:55:03Z",
+        "available_count": 94,
+        "available_from": "2020-04-11T12:53:27Z",
+        "available_to": "2023-01-25T00:00:00Z"
+      },
+      "gigs": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:55:03Z",
+        "available_count": 217,
+        "available_from": "2020-04-11T12:53:27Z",
+        "available_to": "2023-01-25T00:00:00Z"
+      },
+      "paystubs": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:55:03Z",
+        "available_count": 68,
+        "available_from": "2020-05-11T12:53:27Z",
+        "available_to": "2023-01-29T23:59:59Z"
+      },
+      "payroll_documents": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:53:44.308Z"
+      },
+      "identities": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:53:44.028Z"
+      },
+      "ratings": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:55:03.359Z"
+      },
+      "vehicles": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:53:44.321Z"
+      },
+      "deposit_destinations": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:53:42.586Z"
+      },
+      "user_forms": {
+        "status": "in_progress",
+        "updated_at": "2023-01-30T12:53:42.586Z",
+        "available_count": 0,
+        "files_count": 1,
+        "in_progress_count": 1
+      },
+      "user_uploads": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:54:41.621Z",
+        "files_count": 2,
+        "in_progress_count": 0
+      }
+    },
+    "ongoing_refresh": {
+      "status": "enabled"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the connected payroll account."
+    },
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user that connected the account."
+    },
+    "employers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Employers associated with the account.\n\nA single employer is usually returned per account. Exceptions can occur when an LLC and Co. version of the same employer is returned.\n"
+    },
+    "item": {
+      "type": "string",
+      "description": "ID of the Item in Link through which the account was connected."
+    },
+    "source": {
+      "type": "string",
+      "description": "Payroll data source. Typically a third-party payroll system unless the employer uses an in-house system."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user connected the account."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last updated. An update occurs every time an account is scanned for new data, and when any values of the account object change (such as an updated connection status)."
+    },
+    "scanned_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last scanned for new data. A `null` value indicates the account was never connected."
+    },
+    "connection": {
+      "type": "object",
+      "description": "Object containing information about the account's connection status.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "connecting",
+            "connected",
+            "error"
+          ],
+          "description": "Status of Argyle's connection with the user's payroll system.\n\n- `connecting` \u2014 The user submitted new or revised login credentials through Link and Argyle is establishing the connection.\n- `connected` \u2014 An account connection was successfully made. See the `availability` object for updates on initial data retrieval.\n- `error` \u2014 An [account connection error](/api-reference/account-connection-errors) has occurred. Data refreshes have been paused.\n"
+        },
+        "error_code": {
+          "type": "string",
+          "enum": [
+            "account_disabled",
+            "account_inaccessible",
+            "account_incomplete",
+            "account_nonunique",
+            "account_not_found",
+            "all_employers_connected",
+            "auth_method_temporarily_unavailable",
+            "auth_required",
+            "connection_unavailable",
+            "credentials_managed_by_organization",
+            "existing_account_found",
+            "expired_credentials",
+            "full_auth_required",
+            "insufficient_account_data",
+            "invalid_account_type",
+            "invalid_auth",
+            "invalid_credentials",
+            "invalid_employer_identifier",
+            "invalid_login_method",
+            "invalid_login_url",
+            "invalid_mfa",
+            "invalid_store_identifier",
+            "known_employer_redirect",
+            "login_attempts_exceeded",
+            "login_cancelled_by_the_user",
+            "login_gov_not_linked",
+            "mfa_attempts_exceeded",
+            "mfa_cancelled_by_the_user",
+            "mfa_exhausted",
+            "mfa_not_configured",
+            "mfa_timeout",
+            "multi_driver_account",
+            "ongoing_refresh_disabled",
+            "passkey_limit_reached",
+            "personal_data_access_not_granted",
+            "physical_mfa_unsupported",
+            "platform_temporarily_unavailable",
+            "platform_unavailable",
+            "service_unavailable",
+            "session_limit_reached",
+            "system_error",
+            "temporary_credentials",
+            "tos_required",
+            "trial_connections_exhausted",
+            "trial_period_expired",
+            "unrecognized_employer_email",
+            "unsupported_auth_type",
+            "unsupported_business_account",
+            "unsupported_language",
+            "unsupported_mfa_method",
+            "user_action_timeout"
+          ],
+          "description": "The [account connection error](/api-reference/account-connection-errors) that occurred."
+        },
+        "error_message": {
+          "type": "string",
+          "description": "Description of the error. Common causes and troubleshooting steps can be found in account connection errors."
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the connection status last changed."
+        }
+      }
+    },
+    "direct_deposit_switch": {
+      "type": "object",
+      "description": "Object containing deposit switch status information.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "idle",
+            "awaiting_confirmation",
+            "awaiting_user_action",
+            "awaiting_connection",
+            "scanning",
+            "updating",
+            "success",
+            "error"
+          ],
+          "description": "Status of a deposit switch.\n\n- `idle` \u2014 The deposit switch process has not started.\n- `awaiting_confirmation` \u2014 The user started the deposit switch flow in Link but has not clicked \"Confirm\".\n- `awaiting_user_action` \u2014 The user has confirmed the deposit switch but needs to complete a multi-factor authentication (MFA) step.\n- `awaiting_connection` \u2014 Argyle is connecting to the user's payroll system.\n- `scanning` \u2014 Argyle is scanning the user's existing direct deposits before initiating the deposit switch.\n- `updating` \u2014 The deposit switch is in progress.\n- `success` \u2014 The deposit switch was successful.\n- `error` \u2014 A deposit switch error occurred, and the deposit switch could not be completed.\n"
+        },
+        "error_code": {
+          "type": "string",
+          "enum": [
+            "account_invalid",
+            "account_closed",
+            "account_blocked",
+            "confirmation_expired",
+            "confirmation_invalid",
+            "confirmation_timeout",
+            "deposit_account_mismatch",
+            "deposit_destination_unsupported",
+            "employer_unsupported",
+            "employer_account_invalid",
+            "employer_account_closed",
+            "employer_account_blocked",
+            "employer_confirmation_invalid",
+            "internal_server_error",
+            "invalid_request",
+            "item_invalid",
+            "name_mismatch",
+            "payroll_account_mismatch",
+            "temporarily_unavailable",
+            "terminate_flow",
+            "unauthorized",
+            "unexpected",
+            "user_input_required"
+          ],
+          "description": "The deposit switch error that occurred."
+        },
+        "error_message": {
+          "type": "string",
+          "description": "Description of the error. Common causes and troubleshooting steps can be found in deposit switch errors."
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the deposit switch status last changed."
+        }
+      }
+    },
+    "availability": {
+      "type": "object",
+      "description": "Object containing information on data availability for each of Argyle's data sets, and any user-uploaded documents or \"can't find my income\" response forms.",
+      "properties": {
+        "shifts": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "gigs": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "paystubs": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "payroll_documents": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "identities": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "ratings": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "vehicles": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "deposit_destinations": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "user_forms": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        },
+        "user_uploads": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AvailabilityItem"
+            }
+          ],
+          "nullable": true
+        }
+      }
+    },
+    "ongoing_refresh": {
+      "type": "object",
+      "description": "Object containing the account's `ongoing_refresh` status (whether the account will be updated with new data after each [data refresh](/overview/ongoing-refresh#refresh-frequency)).",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled",
+            "idle"
+          ],
+          "description": "The account's `ongoing_refresh` status.\n\n- `idle` \u2014 This account never experienced a successful payroll connection \u2014 only uploading documents or only completing a \"can't find my income source\" response form is not considered a successful payroll connection.\n- `enabled` \u2014 Ongoing refresh is currently enabled for this connected payroll account.\n- `disabled` \u2014 Ongoing refresh is currently disabled for this connected payroll account.\n\nOngoing refresh can be [disabled manually](/api-reference/accounts#disable) via the API for individual accounts.\n"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partneruser.json",
+  "title": "PartnerUser",
+  "type": "object",
+  "description": "Partner user object.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the user."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user was created."
+    },
+    "items_connected": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Items the user has connected through Link."
+    },
+    "employers_connected": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Employers associated with the connected items."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "User first name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "User last name."
+    },
+    "email": {
+      "type": "string",
+      "description": "User email address."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "User phone number."
+    },
+    "ssn": {
+      "type": "string",
+      "description": "User Social Security number."
+    },
+    "address": {
+      "$ref": "#/components/schemas/PartnerAddress"
+    },
+    "birth_date": {
+      "$ref": "#/components/schemas/PartnerBirthDate"
+    },
+    "external_metadata": {
+      "type": "object",
+      "description": "Additional metadata for internal partner workflows.",
+      "additionalProperties": true
+    },
+    "external_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "External identifier for your internal mapping."
+    }
+  }
+}

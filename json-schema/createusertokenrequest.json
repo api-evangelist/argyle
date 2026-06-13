@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/createusertokenrequest.json",
+  "title": "CreateUserTokenRequest",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user object."
+    }
+  },
+  "required": [
+    "user"
+  ]
+}

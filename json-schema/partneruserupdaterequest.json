@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partneruserupdaterequest.json",
+  "title": "PartnerUserUpdateRequest",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "User first name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "User last name."
+    },
+    "email": {
+      "type": "string",
+      "description": "User email address."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "User phone number."
+    },
+    "ssn": {
+      "type": "string",
+      "description": "User Social Security number."
+    },
+    "address": {
+      "$ref": "#/components/schemas/PartnerAddress"
+    },
+    "birth_date": {
+      "$ref": "#/components/schemas/PartnerBirthDate"
+    },
+    "external_metadata": {
+      "type": "object",
+      "description": "Additional metadata for internal partner workflows.",
+      "additionalProperties": true,
+      "properties": {
+        "suppress_verification": {
+          "type": "boolean",
+          "description": "Set to `true` for banking and document verification workflows."
+        }
+      }
+    },
+    "open_banking": {
+      "$ref": "#/components/schemas/PartnerOpenBanking"
+    },
+    "external_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "External identifier for your internal mapping."
+    }
+  }
+}

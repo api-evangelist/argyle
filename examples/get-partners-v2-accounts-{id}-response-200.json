@@ -1,0 +1,83 @@
+{
+  "id": "0187c66e-e7e5-811c-b006-2232f00f426a",
+  "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+  "employers": [
+    "Whole Goods"
+  ],
+  "item": "item_123456789",
+  "source": "thepayrollcompany",
+  "created_at": "2023-01-30T12:53:22.561Z",
+  "updated_at": "2023-01-30T12:55:04.478Z",
+  "scanned_at": "2023-01-30T12:55:04.016Z",
+  "connection": {
+    "status": "connected",
+    "error_code": null,
+    "error_message": null,
+    "updated_at": "2023-01-30T12:53:25.561Z"
+  },
+  "direct_deposit_switch": {
+    "status": "success",
+    "error_code": null,
+    "error_message": null,
+    "updated_at": "2023-01-30T12:55:03.478Z"
+  },
+  "availability": {
+    "shifts": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:55:03Z",
+      "available_count": 94,
+      "available_from": "2020-04-11T12:53:27Z",
+      "available_to": "2023-01-25T00:00:00Z"
+    },
+    "gigs": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:55:03Z",
+      "available_count": 217,
+      "available_from": "2020-04-11T12:53:27Z",
+      "available_to": "2023-01-25T00:00:00Z"
+    },
+    "paystubs": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:55:03Z",
+      "available_count": 68,
+      "available_from": "2020-05-11T12:53:27Z",
+      "available_to": "2023-01-29T23:59:59Z"
+    },
+    "payroll_documents": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:53:44.308912Z"
+    },
+    "identities": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:53:44.028552Z"
+    },
+    "ratings": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:55:03.359356Z"
+    },
+    "vehicles": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:53:44.321951Z"
+    },
+    "deposit_destinations": {
+      "status": "synced",
+      "updated_at": "2023-01-30T12:53:42.586391Z"
+    },
+    "user_forms": {
+      "status": "in_progress",
+      "updated_at": "2023-01-30T12:53:42.586391Z",
+      "available_count": 0,
+      "files_count": 1,
+      "in_progress_count": 1,
+      "user_uploads": {
+        "status": "synced",
+        "updated_at": "2023-01-30T12:54:41.621Z",
+        "files_count": 2,
+        "in_progress_count": 0
+      }
+    }
+  },
+  "ongoing_refresh": {
+    "status": "enabled"
+  }
+}

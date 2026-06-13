@@ -1,0 +1,9 @@
+{
+  "email": "jane@example.com",
+  "phone_number": "+15555555555",
+  "external_id": "ABC",
+  "external_metadata": {
+    "suppress_verification": true,
+    "additional_id": "123"
+  }
+}

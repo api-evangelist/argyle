@@ -1,0 +1,45 @@
+{
+  "id": "0153b145-7ab9-bea2-cc16-a8b71328942f",
+  "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+  "address": {
+    "city": "New York",
+    "line1": "852 North W St",
+    "line2": "Apt 221",
+    "state": "NY",
+    "country": "US",
+    "postal_code": "10014"
+  },
+  "first_name": "Sarah",
+  "last_name": "Longfield",
+  "full_name": "Sarah Longfield",
+  "birth_date": "1980-10-30",
+  "email": "[email protected]",
+  "phone_number": "+12125555555",
+  "picture_url": "www.argyle.com/logofoldername",
+  "employment_status": "active",
+  "employment_type": "full-time",
+  "job_title": "Store Manager",
+  "ssn": "522-09-1191",
+  "marital_status": "Married filing jointly",
+  "gender": "Female",
+  "original_hire_date": "2019-01-03",
+  "hire_date": "2020-04-08",
+  "termination_date": null,
+  "termination_reason": null,
+  "employer": "Whole Goods",
+  "employment": "0183d52a-d3b2-331d-c753-3662a20e352b",
+  "base_pay": {
+    "amount": "58024.50",
+    "period": "annual",
+    "currency": "USD"
+  },
+  "pay_cycle": "semimonthly",
+  "platform_ids": {
+    "employee_id": "OB238HDW5",
+    "position_id": "6ELL4O7PM",
+    "platform_user_id": "JLH7B9V6O6YGN9O7"
+  },
+  "created_at": "2023-01-30T12:53:24.561594Z",
+  "updated_at": "2023-01-30T12:55:06.478699Z",
+  "metadata": {}
+}

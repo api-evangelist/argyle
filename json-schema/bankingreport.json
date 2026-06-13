@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/bankingreport.json",
+  "title": "BankingReport",
+  "type": "object",
+  "description": "Report object.",
+  "example": {
+    "id": "cde25bb1-5cf4-4544-9df8-04212a781e1b",
+    "user": "01975b3b-5ba6-3ec1-2148-f595b6d92614",
+    "reference_id": "cde25bb1-5cf4-4544-9df8-04212a781e1b",
+    "generated_at": "2025-06-10T20:39:35.000Z",
+    "created_at": "2025-06-10T20:39:35.000Z",
+    "type": "voai",
+    "status": "generated",
+    "file_url": "www.argyle.com/storagename/pdf",
+    "json_url": "www.argyle.com/storagename/json",
+    "accounts": [],
+    "last_synced_at": null,
+    "external_id": null,
+    "source": "open-banking",
+    "metadata": {
+      "origin_report_id": "5u6fx59dnw4b",
+      "bank_accounts_requested": [
+        "8057637863"
+      ],
+      "from_date": "1970-01-19T17:30:50.000Z",
+      "report_custom_fields": [
+        {
+          "label": "loanID",
+          "value": "12345",
+          "shown": true
+        }
+      ],
+      "income_stream_confidence_minimum": 50
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the report object."
+    },
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user associated with the report."
+    },
+    "reference_id": {
+      "type": "string",
+      "format": "uuid",
+      "deprecated": true,
+      "description": "Report PDF identifier."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "deprecated": true,
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the report was requested."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the report was requested."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "voa",
+        "voi",
+        "voai"
+      ],
+      "description": "The type of report.\n\n- `voa` - Verification of Assets\n- `voi` - Verification of Income\n- `voai` - Verification of Assets and Income\n"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "generating",
+        "generated"
+      ],
+      "description": "Progress of report generation.\n\n- `generating` - The report is being generated.\n- `generated` - The report is ready to download.\n"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "Download link to the report PDF. Requires [Argyle authentication headers](/api-guide/overview#authentication)."
+    },
+    "json_url": {
+      "type": "string",
+      "description": "Download link to the report in JSON. Requires [Argyle authentication headers](/api-guide/overview#authentication)."
+    },
+    "accounts": {
+      "type": "array",
+      "description": "Not used in banking reports.",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "last_synced_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Not used in banking reports."
+    },
+    "external_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "The [`external_id`](/api-reference/users#object-external_id) of the user, otherwise `null`."
+    },
+    "source": {
+      "type": "string",
+      "description": "The source of the report data."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional info."
+    }
+  }
+}

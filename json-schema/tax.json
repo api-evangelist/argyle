@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/tax.json",
+  "title": "Tax",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "string",
+      "description": "Amount of the tax withholding."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name or description of the tax withholding."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "federal",
+        "state",
+        "local",
+        "fica",
+        "other"
+      ],
+      "description": "Payroll tax type.\n- `federal`\n- `state`\n- `local`\n- `fica`\n- `other`\n"
+    },
+    "amount_ytd": {
+      "type": "string",
+      "description": "Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.\n"
+    }
+  }
+}

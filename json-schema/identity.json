@@ -1,0 +1,221 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/identity.json",
+  "title": "Identity",
+  "type": "object",
+  "example": {
+    "id": "0153b145-7ab9-bea2-cc16-a8b71328942f",
+    "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+    "address": {
+      "city": "New York",
+      "line1": "852 North W St",
+      "line2": "Apt 221",
+      "state": "NY",
+      "country": "US",
+      "postal_code": "10014"
+    },
+    "first_name": "Sarah",
+    "last_name": "Longfield",
+    "full_name": "Sarah Longfield",
+    "birth_date": "1980-10-30",
+    "email": "sarah@email.com",
+    "phone_number": "+12125555555",
+    "picture_url": "www.argyle.com/logofoldername",
+    "employment_status": "active",
+    "employment_type": "full-time",
+    "job_title": "Store Manager",
+    "ssn": "522-09-1191",
+    "marital_status": "Married filing jointly",
+    "gender": "Female",
+    "original_hire_date": "2019-01-03",
+    "hire_date": "2020-04-08",
+    "termination_date": null,
+    "termination_reason": null,
+    "employer": "Whole Goods",
+    "employment": "0183d52a-d3b2-331d-c753-3662a20e352b",
+    "base_pay": {
+      "amount": "58024.50",
+      "period": "annual",
+      "currency": "USD"
+    },
+    "pay_cycle": "semimonthly",
+    "platform_ids": {
+      "employee_id": "OB238HDW5",
+      "position_id": "6ELL4O7PM",
+      "platform_user_id": "JLH7B9V6O6YGN9O7"
+    },
+    "created_at": "2023-01-30T12:53:24.561Z",
+    "updated_at": "2023-01-30T12:55:06.478Z",
+    "metadata": null
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the identity.",
+      "example": "0153b145-7ab9-bea2-cc16-a8b71328942f"
+    },
+    "account": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the account associated with the identity.",
+      "example": "0187c66e-e7e5-811c-b006-2232f00f426a"
+    },
+    "address": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name of the employee. Usually the legal first name.",
+      "example": "Sarah"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name of the employee. Usually the legal last name.",
+      "example": "Longfield"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "Full name of the employee. Sourced from payroll data if available, otherwise constructed from available names and suffixes.",
+      "example": "Sarah Longfield"
+    },
+    "birth_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of birth in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. If values are obfuscated (rare), a dash will replace the value (e.g. --01-31 when the year is obfuscated).\n",
+      "example": "1980-10-30"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address.",
+      "example": "[email protected]"
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number [E.164](https://en.wikipedia.org/wiki/E.164) international format).\n",
+      "example": "+12125555555"
+    },
+    "picture_url": {
+      "type": "string",
+      "description": "URL location of the user's profile image.",
+      "example": "www.argyle.com/logofoldername"
+    },
+    "employment_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "terminated"
+      ],
+      "description": "Job status of the employment relevant to the identity.\n\n- Definitions of `inactive` and `terminated` vary by Item and can overlap.\n  - `inactive` typically indicates the employee left voluntarily, is on leave, or has not been active for a certain period of time.\n  - `terminated` typically indicates the employee is no longer employed. Specific reasons for termination, if available, are returned in the `termination_reason` field.\n- We recommend using data from the `/paystubs` and `/gigs` endpoints to construct a more wholistic timeline of employment history.\n",
+      "example": "active"
+    },
+    "employment_type": {
+      "type": "string",
+      "enum": [
+        "full-time",
+        "part-time",
+        "contractor",
+        "military",
+        "benefits",
+        "seasonal",
+        "temporary",
+        "regular",
+        "other"
+      ],
+      "description": "Type of employment.\n\n<details class=\"enum-definitions\">\n<summary>Employment type enum definitions</summary>\n\n- `full-time`\n  - Employment in which an individual is regularly scheduled to work 30 or more hours per week, or meets the employer's internal threshold for a standard full-time workweek.\n  - **Examples:** `full-time employee`, `36+ hours weekly`\n- `part-time`\n  - Employment in which an individual is regularly scheduled to work fewer than 30 hours per week, or meets the employer's internal threshold for a standard part-time workweek.\n  - **Examples:** `PT regular`, `20+ hours weekly`\n- `contractor`\n  - Work performed by an individual engaged for a specific project or timeframe who is not an employee of the organization.\n  - **Examples:** `gig worker`, `contract employee`, `contract worker`, `freelancer`\n- `military`\n  - Compensation derived from active-duty or reserve military service.\n  - *Automatically set for military platforms.*\n- `benefits`\n  - Non-wage compensation or government-issued assistance.\n  - *Automatically set for benefits platforms.*\n- `seasonal`\n  - Employment that occurs at approximately the same time each year, typically lasting six months or less.\n  - **Examples:** `seasonal on-call`, `seasonal part-time`, `peak seasonal`\n- `temporary`\n  - Short-term employment with a defined end date, usually lasting one year or less.\n  - **Examples:** `internship`, `substitute employee`, `temporary full-time`, `temporary part-time`\n- `regular`\n  - Ongoing employment with no specified end date that does not fall into more specialized categories.\n  - **Examples:** `permanent`, `W-2`, `salaried`\n- `other`\n  - Work or income that does not fit standard classifications.\n  - **Examples:** `variable`, `casual`, `employee`, `PRN (on-call)`\n\n</details>\n",
+      "example": "full-time"
+    },
+    "job_title": {
+      "type": "string",
+      "description": "Job title.",
+      "example": "Store Manager"
+    },
+    "ssn": {
+      "type": "string",
+      "description": "Social Security number.",
+      "example": "522-09-1191"
+    },
+    "marital_status": {
+      "type": "string",
+      "description": "Marital status.",
+      "example": "Married filing jointly"
+    },
+    "gender": {
+      "type": "string",
+      "description": "Gender.",
+      "example": "Female"
+    },
+    "original_hire_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the user's **earliest** employment start date.\n",
+      "example": "2019-01-03"
+    },
+    "hire_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the user's **most recent** employment start date.\n\n`hire_date` may differ from `original_hire_date` due to a promotion, a re-hiring event, or similar.\n",
+      "example": "2020-04-08"
+    },
+    "termination_date": {
+      "type": "string",
+      "format": "date",
+      "nullable": true,
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user was terminated.",
+      "example": null
+    },
+    "termination_reason": {
+      "type": "string",
+      "nullable": true,
+      "description": "Reason for termination.",
+      "example": null
+    },
+    "employer": {
+      "type": "string",
+      "description": "Name of the employer.",
+      "example": "Whole Goods"
+    },
+    "employment": {
+      "type": "string",
+      "description": "[Employment](/api-reference/employments) ID. Can be used as a filter when [listing identities](/api-reference/identities/list-all-identities).\n",
+      "example": "0183d52a-d3b2-331d-c753-3662a20e352b"
+    },
+    "base_pay": {
+      "$ref": "#/components/schemas/BasePay"
+    },
+    "pay_cycle": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "biweekly",
+        "semimonthly",
+        "monthly",
+        "quarterly"
+      ],
+      "description": "Payment frequency.\n- `daily`\n- `weekly`\n- `biweekly` \u2014 every two weeks\n- `semimonthly` \u2014 twice a month\n- `monthly`\n- `quarterly`\n",
+      "example": "semimonthly"
+    },
+    "platform_ids": {
+      "$ref": "#/components/schemas/PlatformIds"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the identity object was created.\n",
+      "example": "2023-01-30T12:53:24.561594Z"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the identity object most recently changed.\n",
+      "example": "2023-01-30T12:55:06.478699Z"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional, non-categorized information.",
+      "example": {}
+    }
+  }
+}

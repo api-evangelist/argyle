@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientverificationupdaterequest.json",
+  "title": "ClientVerificationUpdateRequest",
+  "type": "object",
+  "description": "Request body for updating a verification.\n\n- `loan` and `billing` can be updated for either data source.\n- `employments` can only be updated when a document verification is in the `PAUSED` state.\n- Updating `employments` replaces the full employments array.\n",
+  "properties": {
+    "loan": {
+      "$ref": "#/components/schemas/ClientVerificationLoan"
+    },
+    "billing": {
+      "$ref": "#/components/schemas/ClientVerificationBilling"
+    },
+    "employments": {
+      "type": "array",
+      "description": "Updated list of employments for the user.",
+      "items": {
+        "$ref": "#/components/schemas/ClientVerificationEmploymentRequest"
+      }
+    }
+  }
+}

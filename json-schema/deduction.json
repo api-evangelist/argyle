@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/deduction.json",
+  "title": "Deduction",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "string",
+      "description": "Amount of the deduction."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name or description of the deduction."
+    },
+    "tax_classification": {
+      "type": "string",
+      "enum": [
+        "pre_tax",
+        "post_tax"
+      ],
+      "description": "Tax classification.\n- `pre_tax`\n- `post_tax`\n"
+    },
+    "amount_ytd": {
+      "type": "string",
+      "description": "Total amount deducted year-to-date, including the amounts from this paystub."
+    }
+  }
+}

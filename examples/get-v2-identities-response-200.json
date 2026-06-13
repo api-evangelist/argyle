@@ -1,0 +1,96 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/identities?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "0186da0b-6569-0ea0-eb50-b64e97cb29e9",
+      "account": "0186da0b-9923-0d27-4b05-6ce3b7b07b89",
+      "address": {
+        "city": "San Diego",
+        "line1": "54 N Shea Ridge",
+        "line2": null,
+        "state": "CA",
+        "country": "US",
+        "postal_code": "92092"
+      },
+      "first_name": "Joe",
+      "last_name": "Burnam",
+      "full_name": "Joe Burnam",
+      "birth_date": "1978-08-29",
+      "email": "[email protected]",
+      "phone_number": "+12123338708",
+      "picture_url": "www.argyle.com/logofoldername",
+      "employment_status": "active",
+      "employment_type": "part-time",
+      "job_title": "Hourly staff",
+      "ssn": "301-06-1225",
+      "marital_status": "Married filing jointly",
+      "gender": "Male",
+      "original_hire_date": "2022-05-18",
+      "hire_date": "2022-05-18",
+      "termination_date": null,
+      "termination_reason": null,
+      "employer": "Double Double",
+      "employment": "0183d52a-d3b2-331d-c753-3662a20e352b",
+      "base_pay": {
+        "amount": "18.08",
+        "period": "hourly",
+        "currency": "USD"
+      },
+      "pay_cycle": "monthly",
+      "platform_ids": {
+        "employee_id": "32ULINA8",
+        "position_id": "67LKUKA8",
+        "platform_user_id": "332512349952"
+      },
+      "created_at": "2023-01-31T12:13:24.561594Z",
+      "updated_at": "2023-01-31T12:45:06.478699Z",
+      "metadata": {}
+    },
+    {
+      "id": "0353c142-4ab9-baa1-cb44-c8b51225877e",
+      "account": "0185a8b8-60eb-80ca-7482-5f24504573f7",
+      "address": {
+        "city": "Oklahoma City",
+        "line1": "312 Main Ave",
+        "line2": null,
+        "state": "OK",
+        "country": "US",
+        "postal_code": "73008"
+      },
+      "first_name": "Bob",
+      "last_name": "Jones",
+      "full_name": "Bob Jones",
+      "birth_date": "1983-07-02",
+      "email": "[email protected]",
+      "phone_number": "+13228675309",
+      "picture_url": "www.argyle.com/logofoldername",
+      "employment_status": "active",
+      "employment_type": "contractor",
+      "job_title": "Data analyst",
+      "ssn": "507-18-3058",
+      "marital_status": "Single",
+      "gender": "Female",
+      "original_hire_date": "2019-01-03",
+      "hire_date": "2021-04-08",
+      "termination_date": null,
+      "termination_reason": null,
+      "employer": "Half Bads",
+      "employment": "0183d52a-d3b2-331d-c753-3662a20e352b",
+      "base_pay": {
+        "amount": "39.72",
+        "period": "hourly",
+        "currency": "USD"
+      },
+      "pay_cycle": "biweekly",
+      "platform_ids": {
+        "employee_id": "bd823Lk",
+        "position_id": "ab3EkU2",
+        "platform_user_id": "832355"
+      },
+      "created_at": "2023-01-30T13:53:24.561594Z",
+      "updated_at": "2023-01-30T13:55:06.478699Z",
+      "metadata": {}
+    }
+  ]
+}

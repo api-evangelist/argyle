@@ -1,0 +1,20 @@
+{
+  "id": "01320596-2c3d-189c-53e7-a8ce6d625b33",
+  "account": "01856c65-43b6-8b5d-b32a-56b8fbda5c28",
+  "document_type": "paystubs",
+  "file_url": "www.argyle.com/storagename",
+  "file_name": "most_recent_paystub.pdf",
+  "metadata": {
+    "employment": {},
+    "ocr_data": {},
+    "ocr_authenticity": {},
+    "ocr_authenticity_score": null
+  },
+  "processing": {
+    "classification": "unauthorized",
+    "ocr": "unauthorized",
+    "authenticity": "unauthorized"
+  },
+  "created_at": "2024-07-08T13:43:49.864Z",
+  "updated_at": "2024-07-08T13:43:51.868Z"
+}

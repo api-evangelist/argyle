@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partneruserupload.json",
+  "title": "PartnerUserUpload",
+  "type": "object",
+  "example": {
+    "id": "01320596-2c3d-189c-53e7-a8ce6d625b33",
+    "account": "01856c65-43b6-8b5d-b32a-56b8fbda5c28",
+    "document_type": "proof-of-identity",
+    "file_url": "www.argyle.com/storagename",
+    "file_name": "my_drivers_license.pdf",
+    "metadata": {
+      "employment": null,
+      "ocr_data": null,
+      "ocr_authenticity": null,
+      "ocr_authenticity_score": null
+    },
+    "processing": {
+      "classification": "unauthorized",
+      "ocr": "unauthorized",
+      "authenticity": "unauthorized"
+    },
+    "created_at": "2024-07-08T13:43:49.864Z",
+    "updated_at": "2024-07-08T13:43:51.868Z"
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the uploaded document."
+    },
+    "account": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the account associated with the uploaded document."
+    },
+    "document_type": {
+      "type": "string",
+      "description": "The document [category](/workflows/document-processing#enabling-document-uploads) in Link the user selected, or the `document_type` provided when [uploading via the API](/api-reference/user-uploads#upload).\n\nIf [OCR processing](/integrations/ocr/ocrolus) is enabled, this value is overwritten when the document is found to be a different type.\n\nPossible values:\n- `paystubs`\n- `W-2`\n- `1099`\n- `proof-of-identity`\n- `proof-of-address`\n- `miscellaneous`\n"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL linking to the original uploaded document file.\n\nThis static URL redirects to a download page that requires [Argyle authentication headers](/api-guide/overview#authentication).\n\n**Implementation requirements for client-side applications**\n\n1. Ensure your HTTP client or library (for example, Axios or Python requests) is configured to follow redirects.\n2. Append [Basic authentication headers](/api-guide/overview#authentication) for Argyle to the file download request.\n"
+    },
+    "file_name": {
+      "type": "string",
+      "description": "File name of the uploaded document on the user's computer or phone."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Contains document OCR and authenticity information.",
+      "properties": {
+        "employment": {
+          "type": "object",
+          "deprecated": true,
+          "description": "Contains document verification data."
+        },
+        "ocr_data": {
+          "type": "object",
+          "description": "Contains [Ocrolus OCR](/integrations/ocr/ocrolus#api) data.\n\nAvailable for paystubs, W-2s, and 1099s when Ocrolus is enabled.\n"
+        },
+        "ocr_authenticity": {
+          "type": "object",
+          "description": "Contains [Ocrolus authenticity](/integrations/ocr/ocrolus#api) data.\n\nIncludes individual instances of tampering or other authenticity-related edits made to the uploaded document that were detected.\n\nAvailable for paystubs, W-2s, and 1099s when Ocrolus is enabled.\n"
+        },
+        "ocr_authenticity_score": {
+          "type": "integer",
+          "description": "[Ocrolus authenticity score](/integrations/ocr/ocrolus#authenticity-scores).\n\nSingle score that captures the likelihood the uploaded document is authentic, as determined by Ocrolus.\n\nAvailable for paystubs, W-2s, and 1099s when Ocrolus is enabled.\n"
+        }
+      }
+    },
+    "processing": {
+      "type": "object",
+      "description": "Contains OCR processing statuses.",
+      "properties": {
+        "classification": {
+          "type": "string",
+          "enum": [
+            "unauthorized",
+            "idle",
+            "in_progress",
+            "completed",
+            "failed"
+          ],
+          "description": "OCR classification processing status.\n\n- `unauthorized`: Classification permissions are not enabled.\n- `idle`: Processing has not started.\n- `in_progress`: Processing is in progress.\n- `completed`: Processing successfully completed.\n- `failed`: Processing failed.\n"
+        },
+        "ocr": {
+          "type": "string",
+          "enum": [
+            "unauthorized",
+            "idle",
+            "in_progress",
+            "completed",
+            "failed"
+          ],
+          "description": "Full OCR processing status.\n\n- `unauthorized`: Full OCR permissions are not enabled.\n- `idle`: Processing has not started.\n- `in_progress`: Processing is in progress.\n- `completed`: Processing successfully completed.\n- `failed`: Processing failed.\n"
+        },
+        "authenticity": {
+          "type": "string",
+          "enum": [
+            "unauthorized",
+            "idle",
+            "in_progress",
+            "completed",
+            "failed"
+          ],
+          "description": "OCR authenticity processing status.\n\n- `unauthorized`: Full OCR permissions are not enabled.\nFull OCR permissions are required for authenticity.\n- `idle`: Processing has not started.\n- `in_progress`: Processing is in progress.\n- `completed`: Processing successfully completed.\n- `failed`: Processing failed.\n"
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the uploaded document was submitted."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user upload object was last updated."
+    }
+  }
+}

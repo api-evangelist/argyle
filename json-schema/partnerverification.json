@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverification.json",
+  "title": "PartnerVerification",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the verification."
+    },
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user associated with the verification."
+    },
+    "client": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the client on whose behalf the verification was requested."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification was requested."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification object was last updated."
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "api",
+        "encompass"
+      ],
+      "example": "api",
+      "description": "Origin of the verification order."
+    },
+    "status": {
+      "$ref": "#/components/schemas/PartnerVerificationStatus"
+    },
+    "report": {
+      "$ref": "#/components/schemas/PartnerVerificationReport"
+    },
+    "employments": {
+      "type": "array",
+      "description": "List of employments for the user. Documents only.",
+      "items": {
+        "$ref": "#/components/schemas/PartnerVerificationEmployment"
+      }
+    },
+    "loan": {
+      "$ref": "#/components/schemas/PartnerVerificationLoan"
+    },
+    "billing": {
+      "$ref": "#/components/schemas/PartnerVerificationBilling"
+    },
+    "data_source": {
+      "type": "string",
+      "enum": [
+        "payroll",
+        "banking",
+        "documents"
+      ],
+      "description": "Source of verification data."
+    }
+  }
+}

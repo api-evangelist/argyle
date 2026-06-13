@@ -1,0 +1,156 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/depositdestination.json",
+  "title": "DepositDestination",
+  "type": "object",
+  "example": {
+    "id": "0176e1ea-60ca-c561-eb8e-6dcdb33b1b55",
+    "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+    "employer": "Whole Goods",
+    "destination_type": "ach_deposit_account",
+    "status": "active",
+    "allocation_type": "percent",
+    "currency": "USD",
+    "allocation_value": "100",
+    "method": "Direct deposit",
+    "ach_deposit_account": {
+      "account_number": "123456780000",
+      "bank_name": "NW Bank",
+      "routing_number": "026010000",
+      "account_type": "savings"
+    },
+    "created_at": "2023-03-14T16:00:49.420Z",
+    "updated_at": "2023-03-14T16:00:49.420Z",
+    "metadata": null
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the deposit destination."
+    },
+    "account": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the account associated with the deposit destination."
+    },
+    "employer": {
+      "type": "string",
+      "description": "Employer name."
+    },
+    "destination_type": {
+      "type": "string",
+      "enum": [
+        "ach_deposit_account",
+        "card",
+        "acss_debit"
+      ],
+      "description": "Destination where payouts are sent."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "pending"
+      ],
+      "description": "Whether the deposit destination is currently set to receive payments.\n\nAdditional details for gig employers:\n`inactive` indicates the user added this card or bank account to the gig platform, but chose another preferred deposit destination in their payout settings.\n\n---\n\n**Note:**\nDeposit destination details for individual payouts from gig employers are also listed within the [metadata](/api-reference/paystubs#object-metadata) object of the user's [paystubs](/api-reference/paystubs).\n\n```json\n// Example - payout to debit card:\n\n\"metadata\": {\n  \"origin_type\": \"DRIVER_DIRECT\",\n  \"payout_on\": \"2022-06-28 21:15:04+00:00\",\n  \"issue_info\": {\n    \"description\": \"\",\n    \"type\": \"UNKNOWN_ISSUE_TYPE\"\n  },\n  \"deposited_ot\": \"2321 Visa\",\n  \"origin_period\": null,\n  \"raw_type\": \"DRIVER_DIRECT\"\n}\n```\n\n```json\n// Example - payout to bank account:\n\n\"metadata\": {\n  \"origin_type\": \"REGULAR\",\n  \"payout_on\": \"2022-11-17 07:20:32+00:00\",\n  \"issue_info\": {\n    \"description\": \"\",\n    \"type\": \"UNKNOWN_ISSUE_TYPE\"\n  },\n  \"deposited_ot\": \"5329 FIFTH SIXTH BANK\",\n  \"origin_period\": {\n    \"start\": \"2022-11-14 14:06:29+00:00\",\n    \"end\": \"2022-11-16 14:06:29+00:00\"\n  },\n  \"raw_type\": \"REGULAR\"\n}\n```\n"
+    },
+    "allocation_type": {
+      "type": "string",
+      "enum": [
+        "percent",
+        "amount"
+      ],
+      "description": "Whether payments sent to this deposit destination are a percentage or amount of the user's total pay."
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)) in which payouts are sent to the deposit destination.\n"
+    },
+    "allocation_value": {
+      "type": "string",
+      "description": "What `percent` or `amount` of the user's pay is being allocated to this deposit destination.\n\nNumerical values are used for *exact* amounts or percentages, and `remainder` is used when this deposit destination is receiving a remainder amount after pay is allocated to all other deposit destinations.\n"
+    },
+    "method": {
+      "type": "string",
+      "description": "Payment method, such as direct deposit."
+    },
+    "ach_deposit_account": {
+      "type": "object",
+      "description": "Details for deposit destinations with a `destination_type` of `ach_deposit_account`, which pertains to U.S. bank accounts.\n",
+      "properties": {
+        "account_number": {
+          "type": "string",
+          "description": "Bank account number. May be obfuscated depending on the payroll system."
+        },
+        "bank_name": {
+          "type": "string",
+          "description": "Name of the bank, as returned by the payroll system.\n\nSome payroll systems will override the `bank_name` included in your target deposit destination configuration and instead use a bank name they derive from another source, such as the routing number of the account.\n"
+        },
+        "routing_number": {
+          "type": "string",
+          "description": "Routing number of the bank account."
+        },
+        "account_type": {
+          "type": "string",
+          "description": "The type of bank account."
+        }
+      }
+    },
+    "card": {
+      "type": "object",
+      "description": "Details for deposit destinations with a `destination_type` of `card`, which pertains to debit cards or similar cards that can receive payouts.\n",
+      "properties": {
+        "card_number": {
+          "type": "string",
+          "description": "Card number. Typically obfuscated."
+        },
+        "card_name": {
+          "type": "string",
+          "description": "Card name or vendor. Typically Visa or MasterCard."
+        },
+        "is_platform_card": {
+          "type": "boolean",
+          "description": "Whether the card is directly issued by a platform such as Uber or Lyft."
+        }
+      }
+    },
+    "acss_debit": {
+      "type": "object",
+      "description": "Details for deposit destinations with a `destination_type` of `acss_debit`, which pertains to Canadian bank accounts that use the Automated Clearing Settlement System (ACSS).\n",
+      "properties": {
+        "account_number": {
+          "type": "string",
+          "description": "Bank account number. May be obfuscated depending on the payroll system."
+        },
+        "account_type": {
+          "type": "string",
+          "description": "The type of bank account."
+        },
+        "institution_number": {
+          "type": "string",
+          "description": "3-digit code that identifies the user's bank."
+        },
+        "transit_number": {
+          "type": "string",
+          "description": "5-digit code that identifies the bank branch."
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the deposit destination object was created.\n"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the deposit destination object most recently changed.\n"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional, non-categorized information."
+    }
+  }
+}

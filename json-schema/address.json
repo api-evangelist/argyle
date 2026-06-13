@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/address.json",
+  "title": "Address",
+  "type": "object",
+  "properties": {
+    "city": {
+      "type": "string",
+      "description": "Name of the city, town, district, or similar regional entity.",
+      "example": "New York"
+    },
+    "line1": {
+      "type": "string",
+      "description": "Address-Line 1, usually street address or P.O. Box information.",
+      "example": "852 North W St"
+    },
+    "line2": {
+      "type": "string",
+      "description": "Address-Line 2, usually the apartment or unit number.",
+      "example": "Apt 221"
+    },
+    "state": {
+      "type": "string",
+      "description": "State, county, province, region, or equivalent.",
+      "example": "NY"
+    },
+    "country": {
+      "type": "string",
+      "description": "Two-letter country code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).\n",
+      "example": "US"
+    },
+    "postal_code": {
+      "type": "string",
+      "description": "Zip code, or equivalent.",
+      "example": "10014"
+    }
+  }
+}

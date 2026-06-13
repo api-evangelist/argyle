@@ -1,0 +1,26 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/user-forms?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "0186ef31-4a6c-bc77-ffb7-a9db11505d7d",
+      "account": "0182c1e2-59ec-16ba-34e2-4f20594a7df7",
+      "data": {
+        "income_source": "Block & Fish Tackle",
+        "payroll_provider": "Payroll Corp."
+      },
+      "created_at": "2023-03-17T10:50:30.414265Z",
+      "updated_at": "2023-03-17T10:50:31.621908Z"
+    },
+    {
+      "id": "0187bf23-cd80-118d-c0b8-58023e21c8e5",
+      "account": "01856c65-43b6-8b5d-b32a-56b8fbda5c28",
+      "data": {
+        "income_source": "Spanner & Gear Innovations",
+        "payroll_provider": "Payroll Corp."
+      },
+      "created_at": "2023-03-17T10:40:00.672839Z",
+      "updated_at": "2023-03-17T10:45:20.035736Z"
+    }
+  ]
+}

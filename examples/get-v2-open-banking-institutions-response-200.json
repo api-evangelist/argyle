@@ -1,0 +1,72 @@
+{
+  "found": 8263,
+  "displaying": 25,
+  "more_available": true,
+  "requested_date": "2025-06-10T17:39:43.000Z",
+  "institutions": [
+    {
+      "id": 10,
+      "rssd": 0,
+      "name": "Discover Card (All Account Types)",
+      "trans_agg": true,
+      "ach": true,
+      "state_agg": true,
+      "voi": true,
+      "voa": true,
+      "aha": false,
+      "avail_balance": true,
+      "account_owner": true,
+      "student_loan_data": false,
+      "loan_payment_details": false,
+      "child_institutions": []
+    },
+    {
+      "id": 12,
+      "rssd": 0,
+      "name": "E*TRADE",
+      "trans_agg": true,
+      "ach": true,
+      "state_agg": false,
+      "voi": true,
+      "voa": true,
+      "aha": false,
+      "avail_balance": true,
+      "account_owner": true,
+      "student_loan_data": false,
+      "loan_payment_details": false,
+      "child_institutions": []
+    },
+    {
+      "id": 18,
+      "rssd": 0,
+      "name": "SouthTrust",
+      "trans_agg": true,
+      "ach": false,
+      "state_agg": false,
+      "voi": true,
+      "voa": true,
+      "aha": false,
+      "avail_balance": false,
+      "account_owner": true,
+      "student_loan_data": false,
+      "loan_payment_details": false,
+      "child_institutions": []
+    },
+    {
+      "id": 23,
+      "rssd": 0,
+      "name": "Merrill Lynch",
+      "trans_agg": true,
+      "ach": false,
+      "state_agg": true,
+      "voi": true,
+      "voa": true,
+      "aha": false,
+      "avail_balance": false,
+      "account_owner": true,
+      "student_loan_data": false,
+      "loan_payment_details": false,
+      "child_institutions": []
+    }
+  ]
+}

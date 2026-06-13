@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/destination.json",
+  "title": "Destination",
+  "type": "object",
+  "properties": {
+    "reference": {
+      "type": "string",
+      "description": "Describes where the payment was sent, such as a checking account or bank name."
+    },
+    "amount": {
+      "type": "string",
+      "description": "Pay amount sent to the destination."
+    },
+    "method": {
+      "type": "string",
+      "description": "Payment method, such as direct deposit."
+    },
+    "ach_deposit_account": {
+      "type": "object",
+      "properties": {
+        "bank_name": {
+          "type": "string",
+          "description": "Name of the bank account."
+        },
+        "routing_number": {
+          "type": "string",
+          "description": "Routing number of the bank account."
+        },
+        "account_number": {
+          "type": "string",
+          "description": "Account number of the bank account."
+        }
+      },
+      "description": "Details for bank account destinations."
+    },
+    "card": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the card where the payout was sent."
+        },
+        "number": {
+          "type": "string",
+          "description": "Card number."
+        }
+      },
+      "description": "Details for payout card destinations."
+    }
+  }
+}

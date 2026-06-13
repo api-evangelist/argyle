@@ -1,0 +1,26 @@
+{
+  "id": "43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b",
+  "user": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+  "reference_id": "43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b",
+  "generated_at": "2023-03-09T16:22:06.081Z",
+  "created_at": "2023-03-09T16:22:06.081Z",
+  "type": "voie",
+  "status": "generating",
+  "file_url": "www.argyle.com/storagename/pdf",
+  "json_url": "www.argyle.com/storagename/json",
+  "accounts": [
+    {
+      "id": "0187c66e-e7e5-811c-b006-2232f00f426a",
+      "item": "item_123456789",
+      "last_synced_at": "2023-03-09T14:08:25.069Z"
+    },
+    {
+      "id": "0185a8b8-60eb-80ca-7482-5f24504573f7",
+      "item": "item_000000001",
+      "last_synced_at": "2023-03-01T05:10:59.558Z"
+    }
+  ],
+  "metadata": {},
+  "last_synced_at": "2023-03-09T14:08:25.069Z",
+  "external_id": "July_Connection"
+}

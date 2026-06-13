@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientverificationlistresponse.json",
+  "title": "ClientVerificationListResponse",
+  "type": "object",
+  "description": "Paginated list of client verification objects.",
+  "properties": {
+    "next": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL for the next page of results, if available."
+    },
+    "previous": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL for the previous page of results, if available."
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ClientVerification"
+      }
+    }
+  }
+}

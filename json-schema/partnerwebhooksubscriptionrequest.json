@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerwebhooksubscriptionrequest.json",
+  "title": "PartnerWebhookSubscriptionRequest",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "description": "`verifications.updated` or `verifications.creation_failed`",
+      "items": {
+        "type": "string",
+        "enum": [
+          "verifications.updated",
+          "verifications.creation_failed"
+        ],
+        "example": "verifications.updated"
+      }
+    },
+    "name": {
+      "type": "string",
+      "example": "name-for-the-webhook-subscription",
+      "description": "Your name for the webhook subscription."
+    },
+    "url": {
+      "type": "string",
+      "example": "https://your-webhook-backend.com",
+      "description": "Where you want to receive webhook delivery. Argyle handles URL encoding for webhook URLs. Send the URL in its normal, unencoded form."
+    },
+    "secret": {
+      "type": "string",
+      "example": "optional-secret",
+      "description": "Optional secret used to verify webhooks."
+    },
+    "config": {
+      "type": "object",
+      "description": "Optional webhook delivery configuration.",
+      "example": {
+        "include_resource": true
+      }
+    }
+  },
+  "required": [
+    "events",
+    "name",
+    "url"
+  ]
+}

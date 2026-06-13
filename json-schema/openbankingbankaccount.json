@@ -1,0 +1,191 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/openbankingbankaccount.json",
+  "title": "OpenBankingBankAccount",
+  "type": "object",
+  "additionalProperties": true,
+  "example": {
+    "id": "8057637863",
+    "user": "01975b3b-5ba6-3ec1-2148-f595b6d92614",
+    "account_number_display": "2203",
+    "name": "Savings",
+    "type": "savings",
+    "aggregation_status_code": 0,
+    "status": "active",
+    "institution": "102168",
+    "aggregation_success_date": "2026-06-04T16:57:26.000Z",
+    "aggregation_attempt_date": "2026-06-04T16:57:26.000Z",
+    "created_date": "2026-06-04T16:57:17.000Z",
+    "currency": "USD",
+    "institution_login": 8029158291,
+    "display_position": 1,
+    "parent_bank_account": null,
+    "linked_account_date": "2026-06-04T16:57:22.000Z",
+    "error_code": null,
+    "error_message": null,
+    "real_account_number_last4": "2203",
+    "balance": 22327.3,
+    "balance_date": "2026-06-04T16:57:26.000Z",
+    "last_updated_date": "2026-06-04T16:57:22.000Z",
+    "market_segment": "personal",
+    "last_transaction_date": "2026-06-04T16:57:23.000Z",
+    "oldest_transaction_date": "2024-06-08T12:00:00.000Z"
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ID of the bank account."
+    },
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user associated with the bank account."
+    },
+    "account_number_display": {
+      "type": "string",
+      "description": "Display account identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Account name."
+    },
+    "type": {
+      "type": "string",
+      "description": "Bank account type.",
+      "enum": [
+        "checking",
+        "savings",
+        "cd",
+        "moneyMarket",
+        "creditCard",
+        "lineOfCredit",
+        "investment",
+        "investmentTaxDeferred",
+        "employeeStockPurchasePlan",
+        "ira",
+        "401k",
+        "roth",
+        "403b",
+        "529plan",
+        "rollover",
+        "ugma",
+        "utma",
+        "keogh",
+        "457plan",
+        "401a",
+        "brokerageAccount",
+        "educationSavings",
+        "healthSavingsAccount",
+        "pension",
+        "profitSharingPlan",
+        "roth401k",
+        "sepIRA",
+        "simpleIRA",
+        "thriftSavingsPlan",
+        "variableAnnuity",
+        "cryptocurrency",
+        "mortgage",
+        "loan",
+        "studentLoan",
+        "studentLoanGroup",
+        "studentLoanAccount"
+      ]
+    },
+    "aggregation_status_code": {
+      "type": "integer",
+      "description": "Status code of the most recent aggregation attempt.\n\nSee [Aggregation status codes](/api-reference/bank-accounts#aggregation-status-codes).\n"
+    },
+    "status": {
+      "type": "string",
+      "description": "Bank account status.",
+      "enum": [
+        "pending",
+        "active"
+      ]
+    },
+    "institution": {
+      "type": "string",
+      "description": "ID of the financial institution."
+    },
+    "aggregation_success_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the last successful aggregation for the account."
+    },
+    "aggregation_attempt_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the last aggregation attempt for the account, whether successful or not."
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the bank account was created."
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency code."
+    },
+    "institution_login": {
+      "type": "integer",
+      "description": "ID of the institution login."
+    },
+    "display_position": {
+      "type": "integer",
+      "description": "Display position of the account at the financial institution."
+    },
+    "parent_bank_account": {
+      "type": "string",
+      "description": "ID of the parent bank account."
+    },
+    "linked_account_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the account was linked."
+    },
+    "error_code": {
+      "type": "string",
+      "description": "Bank connection error code."
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Bank connection error message."
+    },
+    "real_account_number_last4": {
+      "type": "string",
+      "description": "Last four digits of the account number."
+    },
+    "balance": {
+      "type": "number",
+      "description": "Account balance amount."
+    },
+    "balance_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the balance was recorded."
+    },
+    "last_updated_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the account was last updated."
+    },
+    "market_segment": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "business"
+      ],
+      "description": "Indicates whether the account is personal or business."
+    },
+    "last_transaction_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest transaction."
+    },
+    "oldest_transaction_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the oldest transaction."
+    }
+  }
+}

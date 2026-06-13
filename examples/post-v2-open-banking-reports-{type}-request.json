@@ -1,0 +1,16 @@
+{
+  "user": "01975b3b-5ba6-3ec1-2148-f595b6d92614",
+  "webhook": "https://your-webhook-backend.com",
+  "bank_accounts": [
+    "8057637863"
+  ],
+  "from_date": "1970-01-19T17:30:50Z",
+  "report_custom_fields": [
+    {
+      "label": "loanID",
+      "value": "12345",
+      "shown": true
+    }
+  ],
+  "income_stream_confidence_minimum": 50
+}

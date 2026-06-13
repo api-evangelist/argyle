@@ -1,0 +1,76 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/users?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "018051aa-f7a9-a0db-2f38-6cfa325e9d69",
+      "created_at": "2023-01-30T22:25:38.971Z",
+      "items_connected": [
+        "item_123456789",
+        "item_987654321"
+      ],
+      "employers_connected": [
+        "Whole Goods",
+        "Bullseye"
+      ],
+      "external_metadata": {
+        "notes": "In stage 3 of loan approval.",
+        "category": "Summer Initiative"
+      },
+      "external_id": "July Connection",
+      "first_name": "Sarah",
+      "last_name": "Longfield",
+      "email": "sarah@email.com",
+      "phone_number": "+12125555555",
+      "ssn": null,
+      "address": {
+        "city": null,
+        "line1": null,
+        "line2": null,
+        "state": null,
+        "country": null,
+        "postal_code": null
+      },
+      "birth_date": {
+        "year": null,
+        "month": null,
+        "day": null
+      }
+    },
+    {
+      "id": "0186c5b8-8fa1-67b3-39af-14b3e18da8a7",
+      "created_at": "2023-01-30T23:25:38.971Z",
+      "items_connected": [
+        "item_000000001",
+        "item_000000002"
+      ],
+      "employers_connected": [
+        "Half Bads",
+        "Triple"
+      ],
+      "external_metadata": {
+        "notes": "In stage 1 of loan approval.",
+        "category": "Summer Initiative"
+      },
+      "external_id": "August Connection",
+      "first_name": null,
+      "last_name": null,
+      "email": null,
+      "phone_number": null,
+      "ssn": null,
+      "address": {
+        "city": null,
+        "line1": null,
+        "line2": null,
+        "state": null,
+        "country": null,
+        "postal_code": null
+      },
+      "birth_date": {
+        "year": null,
+        "month": null,
+        "day": null
+      }
+    }
+  ]
+}

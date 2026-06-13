@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientaddress.json",
+  "title": "ClientAddress",
+  "type": "object",
+  "description": "Address of the user.",
+  "properties": {
+    "city": {
+      "type": "string",
+      "description": "Name of the city, town, district, or similar regional entity."
+    },
+    "line1": {
+      "type": "string",
+      "description": "Address-Line 1, usually street address or P.O. Box information."
+    },
+    "line2": {
+      "type": "string",
+      "nullable": true,
+      "description": "Address-Line 2, usually the apartment or unit number."
+    },
+    "state": {
+      "type": "string",
+      "description": "State, county, province, region, or equivalent."
+    },
+    "country": {
+      "type": "string",
+      "description": "Two-letter country code (ISO 3166-1 alpha-2 format)."
+    },
+    "postal_code": {
+      "type": "string",
+      "nullable": true,
+      "description": "Zip code, or equivalent."
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/rating.json",
+  "title": "Rating",
+  "type": "object",
+  "example": {
+    "id": "0176a5bd-6ed4-1a21-8661-32bc3546e6de",
+    "account": "0187c66e-e7e5-811c-b006-2232f00f426a",
+    "rating": "4.98",
+    "acceptance_rate": "0.91",
+    "ontime_rate": "0.94",
+    "achievements": [
+      {
+        "count": 3,
+        "label": "excellent_service",
+        "points": null,
+        "metadata": null,
+        "badge_url": "www.partner.com/badgeinfo",
+        "description": "Excellent Service"
+      },
+      {
+        "count": 1,
+        "label": "great_amenities",
+        "points": null,
+        "metadata": null,
+        "badge_url": "www.partner.com/badgeinfo",
+        "description": "Great Amenities"
+      }
+    ],
+    "rewards": [
+      {
+        "program_name": "Driver Rewards Program",
+        "tier": "Elite",
+        "valid_through": "2026-05-15",
+        "points": "117"
+      }
+    ],
+    "employer": "GigAndGo",
+    "created_at": "2023-03-15T13:19:55.723Z",
+    "updated_at": "2023-03-15T13:19:55.723Z",
+    "metadata": null
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID of the rating object."
+    },
+    "account": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the account associated with the rating object."
+    },
+    "rating": {
+      "type": "string",
+      "description": "A normalized average of the user's ratings between 0 and 5. Overall average, as payroll system do not typically provide ratings information for individual events."
+    },
+    "acceptance_rate": {
+      "type": "string",
+      "description": "Percent of the time the user accepts a task. Decimal between 0 and 1."
+    },
+    "ontime_rate": {
+      "type": "string",
+      "description": "Percent of the time the user completes a task on time. Decimal between 0 and 1."
+    },
+    "achievements": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Individual ratings or achievement information, sorted into relevant key:value pairs. Varies by gig platform."
+    },
+    "rewards": {
+      "type": "array",
+      "description": "Rewards program information.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "program_name": {
+            "type": "string",
+            "description": "Name of the rewards program."
+          },
+          "tier": {
+            "type": "string",
+            "description": "Current rewards program tier or status."
+          },
+          "valid_through": {
+            "type": "string",
+            "description": "Date until the current tier or status is valid."
+          },
+          "points": {
+            "type": "string",
+            "description": "Points earned in the current rewards period."
+          }
+        }
+      }
+    },
+    "employer": {
+      "type": "string",
+      "description": "Name of the user's employer."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the rating object was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the rating object most recently changed."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional, non-categorized information."
+    }
+  }
+}

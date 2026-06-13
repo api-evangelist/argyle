@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/clientverificationcreaterequest.json",
+  "title": "ClientVerificationCreateRequest",
+  "type": "object",
+  "description": "Request body for ordering a verification.\n\n- `user` and `report` are required for all requests.\n- `employments` is required for document verifications only.\n- `report.configuration` is used for banking verifications only.",
+  "properties": {
+    "user": {
+      "type": "string",
+      "format": "uuid",
+      "description": "User ID for the verification."
+    },
+    "employments": {
+      "type": "array",
+      "description": "List of employments for the user.\n\nRequired for document verifications only. Not used for payroll or banking verifications.",
+      "items": {
+        "$ref": "#/components/schemas/ClientVerificationEmploymentRequest"
+      }
+    },
+    "report": {
+      "$ref": "#/components/schemas/ClientVerificationCreateReportRequest"
+    },
+    "loan": {
+      "$ref": "#/components/schemas/ClientVerificationLoan"
+    },
+    "billing": {
+      "$ref": "#/components/schemas/ClientVerificationBilling"
+    }
+  },
+  "required": [
+    "user",
+    "report"
+  ]
+}

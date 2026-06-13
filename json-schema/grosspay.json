@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/grosspay.json",
+  "title": "GrossPay",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name or description of the gross pay line item."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "base",
+        "pto",
+        "overtime",
+        "commission",
+        "bonus",
+        "disability",
+        "benefits",
+        "tips",
+        "stock",
+        "other"
+      ],
+      "description": "Categorized type of gross pay, based on `name`. Used in `gross_pay_list_totals`.\n- `base`\n- `pto`\n- `overtime`\n- `commission`\n- `bonus`\n- `disability`\n- `benefits`\n- `tips`\n- `stock`\n- `other`\n"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period."
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period."
+    },
+    "rate": {
+      "type": "string",
+      "description": "Hourly rate of gross pay earnings for this line item."
+    },
+    "hours": {
+      "type": "string",
+      "description": "Hours worked for this line item."
+    },
+    "amount": {
+      "type": "string",
+      "description": "Gross pay earned from this line item."
+    },
+    "hours_ytd": {
+      "type": "string",
+      "description": "Total hours worked year-to-date related to this gross pay line item, including this paystub's work period."
+    },
+    "amount_ytd": {
+      "type": "string",
+      "description": "Total gross pay earned year-to-date related to this gross pay line item, including this paystub."
+    }
+  }
+}

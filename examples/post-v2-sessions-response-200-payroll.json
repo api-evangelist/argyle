@@ -1,0 +1,17 @@
+{
+  "verification": "43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b",
+  "configuration": {
+    "experience": null,
+    "single_use_url": false,
+    "redirect_url": "https://your-application.com/return",
+    "flow_id": "12ABCD3E",
+    "items": [
+      "item_000000001",
+      "item_000000002"
+    ],
+    "language": "EN",
+    "mobile_app": true
+  },
+  "link": "https://connect.argyle.com/?...",
+  "data_source": "payroll"
+}

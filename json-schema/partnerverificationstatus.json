@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationstatus.json",
+  "title": "PartnerVerificationStatus",
+  "type": "object",
+  "description": "Verification status information.",
+  "properties": {
+    "state": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "PAUSED",
+        "CANCELLED",
+        "COMPLETED"
+      ],
+      "description": "Verification state.\n\n- `PENDING` - Initial status after verification is created.\n- `PROCESSING` - Verification processing is underway.\n- `PAUSED` - Verification is paused because more data or documents are required.\n- `CANCELLED` - Verification has been cancelled.\n- `COMPLETED` - Verification is complete and report assets are available.\n"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "documents_processing",
+        "more_data_required",
+        "report_available",
+        "waiting_on_third_party",
+        "report_generating",
+        "argyle_timeout",
+        "cancelled_by_client",
+        "completed",
+        "completed_with_errors",
+        "user_session_started",
+        "authenticated"
+      ],
+      "description": "Verification status code.\n\nFor `doc-voi-mortgage` report types:\n- `pending` - Verification created.\n- `documents_processing` - Documents processing.\n- `more_data_required` - More data or documents are needed to complete the verification.\n- `report_available` - Data and documents are sufficient to complete verification.\n- `waiting_on_third_party` - Awaiting processing by a third party.\n- `report_generating` - Report is currently generating.\n- `argyle_timeout` - Verification request has been cancelled by Argyle after 180 days of inactivity.\n- `cancelled_by_client` - Verification has been cancelled.\n- `completed` - Verification request complete. Report can be retrieved.\n- `completed_with_errors` - Verification request completed. Report can be retrieved but is not GSE eligible.\n\nFor payroll and banking report types:\n- `pending` - Verification created.\n- `user_session_started` - User opened the payroll or banking connection experience.\n- `authenticated` - User authenticated for payroll or banking; data aggregation is in progress.\n- `completed` - Report is ready for download."
+    },
+    "errors": {
+      "type": "array",
+      "description": "Error information.\n\nError details can explain what caused a `PAUSED` state or prevented GSE eligibility for a `COMPLETED` document verification.\n",
+      "items": {
+        "$ref": "#/components/schemas/PartnerVerificationError"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/employer-search?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "item_000000002",
+      "name": "Bullseye",
+      "logo_url": "argyle.com/image-holdings",
+      "kind": "employer",
+      "mapping_status": "verified",
+      "status": "unavailable"
+    },
+    {
+      "id": "item_000000003",
+      "name": "Triple",
+      "logo_url": "argyle.com/image-holdings",
+      "kind": "platform",
+      "mapping_status": "mapped",
+      "status": "healthy"
+    }
+  ]
+}

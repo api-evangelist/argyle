@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/json-schema/partnerverificationerror.json",
+  "title": "PartnerVerificationError",
+  "type": "object",
+  "description": "Verification error details.",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Error code."
+    },
+    "title": {
+      "type": "string",
+      "description": "Error title."
+    },
+    "message": {
+      "type": "string",
+      "description": "Error message."
+    },
+    "resources": {
+      "type": "array",
+      "description": "Additional troubleshooting resources (for example, the ID of an unmatched document).",
+      "items": {
+        "$ref": "#/components/schemas/PartnerVerificationErrorResource"
+      }
+    }
+  },
+  "example": {
+    "code": "self-employed_income",
+    "title": "Self-employed income",
+    "message": "Self-employed income cannot be assessed using Paystub and W2 Data.",
+    "resources": [
+      {
+        "id": null,
+        "type": "employments",
+        "name": "Freelance Consulting LLC"
+      }
+    ]
+  }
+}

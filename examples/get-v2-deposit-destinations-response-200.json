@@ -1,0 +1,45 @@
+{
+  "next": "https://api-sandbox.argyle.com/v2/deposit-destinations?cursor=ZXhhbXBsZV9jdXJzb3I",
+  "previous": null,
+  "results": [
+    {
+      "id": "0185da22-3322-eeaf-57b2-a6527214e456",
+      "account": "0185a8b8-60eb-80ca-7482-5f24504573f7",
+      "employer": "Half Bads",
+      "destination_type": "card",
+      "status": "active",
+      "allocation_type": null,
+      "currency": null,
+      "allocation_value": null,
+      "method": "Instant payout",
+      "card": {
+        "card_number": "****5678",
+        "card_name": "Visa",
+        "is_platform_card": false
+      },
+      "created_at": "2023-03-13T19:53:49.090Z",
+      "updated_at": "2023-03-13T19:53:49.091Z",
+      "metadata": {}
+    },
+    {
+      "id": "0185e091-cbe2-775c-bc32-7bc943cb4264",
+      "account": "0187e091-b47d-3cc6-a273-2b5e3cab83af",
+      "employer": "Bullseye",
+      "destination_type": "ach_deposit_account",
+      "status": "inactive",
+      "allocation_type": "amount",
+      "currency": "USD",
+      "allocation_value": "remainder",
+      "method": "Direct deposit",
+      "ach_deposit_account": {
+        "account_number": "757127245584",
+        "bank_name": "SW Bank",
+        "routing_number": "016012008",
+        "account_type": "checking"
+      },
+      "created_at": "2023-03-14T14:41:37.989Z",
+      "updated_at": "2023-03-14T14:41:37.989Z",
+      "metadata": {}
+    }
+  ]
+}
