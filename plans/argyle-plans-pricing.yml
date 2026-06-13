@@ -1,0 +1,49 @@
+name: Argyle Plans and Pricing
+description: >-
+  Argyle does not publicly publish tiered pricing. Access to the API and
+  platform is available through custom enterprise agreements negotiated directly
+  with Argyle's sales team. Pricing is based on usage volume and specific
+  verification use cases (income, employment, asset verification). A sandbox
+  environment is available for development and testing.
+specificationVersion: "0.1"
+plans:
+  - name: Sandbox
+    description: >-
+      Free sandbox environment for development and testing. Provides access to
+      the Argyle API sandbox base URL (api-sandbox.argyle.com/v2) with
+      simulated payroll data to build and validate integrations before
+      production deployment.
+    url: https://docs.argyle.com/api-guide/overview
+    isFree: true
+    sandbox: true
+    features:
+      - Sandbox API access at api-sandbox.argyle.com/v2
+      - Simulated user and account data
+      - Full API endpoint coverage for testing
+      - Argyle Console access for sandbox API key management
+  - name: Production (Custom)
+    description: >-
+      Custom enterprise pricing for production access to the Argyle API.
+      Pricing is negotiated based on verification volume, data types accessed,
+      and integration complexity. Includes production API access, SLA
+      commitments, dedicated support, and access to Argyle Link for user
+      consent flows.
+    url: https://www.argyle.com/contact-sales
+    isFree: false
+    sandbox: false
+    features:
+      - Production API access at api.argyle.com/v2
+      - Real-time payroll data connectivity
+      - Income and employment verification
+      - Gig platform earnings data
+      - Direct deposit switching
+      - Webhook notifications
+      - Argyle Link (user-facing consent UI)
+      - Argyle Console (no-code management dashboard)
+      - SLA with 99.9% uptime commitment
+      - Dedicated customer success support
+notes: >-
+  Argyle pricing is custom-quoted. Contact sales at argyle.com/contact-sales
+  for a pricing proposal. No publicly disclosed per-call or per-verification
+  pricing is available. The platform processes approximately 8 million API calls
+  per day at scale.

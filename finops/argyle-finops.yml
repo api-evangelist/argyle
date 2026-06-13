@@ -1,0 +1,99 @@
+name: Argyle FinOps Framework
+description: >-
+  FinOps cost management guidance for teams integrating the Argyle employment
+  data API. Argyle uses custom enterprise pricing with costs driven by
+  verification volume and data types accessed.
+specificationVersion: "1.0"
+framework: FinOps Framework
+version: "1.0"
+allocation:
+  description: >-
+    Argyle API costs are primarily driven by the number of verifications
+    performed and the types of data accessed (income, employment, asset
+    verification). Costs should be allocated against the business unit or
+    product feature consuming verification data.
+  dimensions:
+    - name: Verification Type
+      description: Income verification, employment verification, or asset verification
+      values:
+        - income-verification
+        - employment-verification
+        - asset-verification
+        - direct-deposit-switch
+        - gig-earnings
+    - name: Environment
+      description: Sandbox (free) vs Production (billable)
+      values:
+        - sandbox
+        - production
+    - name: Data Source
+      description: Employer payroll system, gig platform, or government payroll
+      values:
+        - employer-payroll
+        - gig-platform
+        - government-payroll
+        - bank-connection
+optimization:
+  description: >-
+    Strategies to optimize Argyle API costs and usage efficiency.
+  strategies:
+    - name: Use Sandbox for Development
+      description: >-
+        Leverage the free Argyle sandbox environment (api-sandbox.argyle.com/v2)
+        for all development, testing, and QA activities to avoid production
+        costs during integration work.
+    - name: Webhook-Driven Updates
+      description: >-
+        Subscribe to Argyle webhooks for data change notifications rather than
+        polling API endpoints. This reduces unnecessary API calls and associated
+        costs by only fetching updated data when changes occur.
+    - name: Cache Verification Results
+      description: >-
+        Cache verification results appropriate to their use case lifetime.
+        Income and employment data does not change frequently; reusing recent
+        verification data where permitted reduces repeat API calls.
+    - name: Targeted Data Fetching
+      description: >-
+        Request only the specific data endpoints needed for each use case
+        (e.g., paystubs only for income verification) rather than fetching all
+        available data types for each connected account.
+    - name: Monitor Rate Limit Usage
+      description: >-
+        Track 429 response rates to identify inefficient polling patterns or
+        burst traffic that can be smoothed to reduce errors and improve
+        cost-per-successful-call ratios.
+governance:
+  description: >-
+    Cost governance considerations for Argyle API usage.
+  controls:
+    - name: Volume Monitoring
+      description: >-
+        Monitor monthly verification volumes against contractual limits to
+        avoid overage charges in custom enterprise agreements.
+    - name: Environment Separation
+      description: >-
+        Maintain strict separation between sandbox and production API keys.
+        Ensure development workloads never run against production credentials.
+    - name: Access Control
+      description: >-
+        Manage API key access through the Argyle Console. Rotate keys
+        periodically and immediately upon team member offboarding.
+    - name: Webhook Security
+      description: >-
+        Use webhook secrets and validate X-Argyle-Signature headers
+        (HMAC-SHA512) on all webhook deliveries to prevent unauthorized data
+        ingestion costs from spoofed requests.
+reporting:
+  description: >-
+    Argyle does not provide a built-in cost dashboard. Usage and cost tracking
+    must be implemented through the Argyle Console and internal logging of
+    API call volumes by verification type and business unit.
+  metrics:
+    - name: Verifications Per Month
+      description: Total number of income/employment/asset verifications completed
+    - name: Successful vs Failed Connections
+      description: Track Argyle Link connection success rates to measure ROI
+    - name: API Error Rate
+      description: Monitor 429 and 5xx error rates to identify optimization opportunities
+    - name: Data Freshness
+      description: Track how often webhook-triggered refreshes are needed vs cached data use

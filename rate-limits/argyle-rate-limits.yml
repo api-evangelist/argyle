@@ -1,0 +1,54 @@
+name: Argyle API Rate Limits
+description: >-
+  Argyle enforces rate limits on API requests to ensure platform stability and
+  fair use across all API consumers. The primary rate limit applies globally
+  across all API endpoints.
+specificationVersion: "0.1"
+limits:
+  - name: Global Request Rate Limit
+    description: >-
+      The Argyle API allows a maximum of 50 requests per second. Exceeding this
+      limit results in a 429 Too Many Requests HTTP status code. Clients should
+      implement retry logic with backoff when receiving 429 responses.
+    scope: account
+    rate:
+      requests: 50
+      period: second
+    errorCode: 429
+    errorMessage: Too Many Requests
+    headers:
+      - name: Retry-After
+        description: Seconds to wait before retrying after a 429 response
+  - name: Webhook Delivery Timeout
+    description: >-
+      Webhook deliveries have a 10-second timeout. If a delivery fails with
+      error codes 429, 500, 502, 503, or 504, Argyle will retry once after
+      30 seconds.
+    scope: webhook
+    timeout:
+      seconds: 10
+    retry:
+      attempts: 1
+      delaySeconds: 30
+      retryOnStatusCodes:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+handling:
+  description: >-
+    When rate limited (HTTP 429), clients should implement exponential backoff
+    and reduce request throughput. Argyle recommends scaling down request
+    volume progressively until successful responses are received again.
+  strategies:
+    - type: exponential-backoff
+      description: Increase wait time exponentially between retries
+    - type: rate-reduction
+      description: Reduce request volume when 429 responses are encountered
+environments:
+  sandbox:
+    baseUrl: https://api-sandbox.argyle.com/v2
+    rateLimits: Same as production
+  production:
+    baseUrl: https://api.argyle.com/v2
