@@ -1,0 +1,856 @@
+"""
+Argyle GraphQL Schema
+Income and employment verification API — conceptual schema derived from Argyle REST API v2.
+https://docs.argyle.com/
+"""
+
+# ─── Scalars ────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar Date
+scalar JSON
+scalar UUID
+scalar Decimal
+
+# ─── Enums ──────────────────────────────────────────────────────────────────
+
+enum LinkStatus {
+  awaiting
+  active
+  expired
+  error
+  closed
+}
+
+enum EmploymentStatus {
+  active
+  inactive
+  terminated
+  leave
+  unknown
+}
+
+enum EmploymentType {
+  full_time
+  part_time
+  contract
+  temporary
+  gig
+  intern
+  unknown
+}
+
+enum IncomeType {
+  salary
+  hourly
+  commission
+  bonus
+  overtime
+  tips
+  reimbursement
+  other
+}
+
+enum IncomeFrequency {
+  weekly
+  biweekly
+  semimonthly
+  monthly
+  annually
+  irregular
+}
+
+enum PlatformType {
+  payroll
+  gig
+  government
+  benefits
+  staffing
+}
+
+enum WebhookEventType {
+  link_created
+  link_connected
+  link_expired
+  link_error
+  account_added
+  account_updated
+  employment_updated
+  income_updated
+  paystub_added
+  gig_added
+  identity_updated
+  deposit_destination_updated
+  document_added
+}
+
+enum GigPlatformCategory {
+  rideshare
+  delivery
+  freelance
+  staffing
+  other
+}
+
+enum TaxFilingStatus {
+  single
+  married_filing_jointly
+  married_filing_separately
+  head_of_household
+  qualifying_widow
+}
+
+enum ErrorCode {
+  authentication_failed
+  mfa_required
+  account_locked
+  unsupported_employer
+  connection_error
+  rate_limit_exceeded
+  invalid_credentials
+  session_expired
+  data_unavailable
+  internal_error
+}
+
+# ─── Core Types ─────────────────────────────────────────────────────────────
+
+"""
+A Link represents a user's consent session that connects their employment
+account to the Argyle platform.
+"""
+type Link {
+  id: UUID!
+  userId: String!
+  status: LinkStatus!
+  details: LinkDetails
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  expiresAt: DateTime
+  accounts: [Account!]
+}
+
+"""
+Detailed attributes of a Link session including configuration and callbacks.
+"""
+type LinkDetails {
+  linkId: UUID!
+  sandboxMode: Boolean!
+  redirectUrl: String
+  items: [String!]
+  userToken: String
+  flowType: String
+}
+
+"""
+An Account represents a successfully connected employment data source for a user.
+"""
+type Account {
+  id: UUID!
+  userId: String!
+  linkId: UUID
+  source: AccountSource!
+  status: String!
+  details: AccountDetails
+  employers: [Employer!]
+  employments: [Employment!]
+  incomes: [Income!]
+  payStubs: PayStubConnection
+  identity: IdentityDetails
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+Metadata describing a connected Account.
+"""
+type AccountDetails {
+  accountId: UUID!
+  connectedAt: DateTime
+  lastSyncedAt: DateTime
+  availableData: [String!]
+  errorDetails: Error
+}
+
+"""
+The data source provider for a connected Account.
+"""
+type AccountSource {
+  id: String!
+  name: String!
+  platform: Platform
+  logoUrl: String
+}
+
+# ─── Platform ────────────────────────────────────────────────────────────────
+
+"""
+A payroll or gig platform accessible through Argyle.
+"""
+type Platform {
+  id: String!
+  name: String!
+  type: PlatformType!
+  details: PlatformDetails
+  logoUrl: String
+  isSupported: Boolean!
+  isSandboxSupported: Boolean!
+}
+
+"""
+Extended attributes for a Platform.
+"""
+type PlatformDetails {
+  platformId: String!
+  canonicalName: String
+  category: String
+  supportedCountries: [String!]
+  supportedFeatures: [String!]
+  mfaRequired: Boolean
+  lastUpdated: DateTime
+}
+
+# ─── Employer ────────────────────────────────────────────────────────────────
+
+"""
+An Employer associated with an employment record.
+"""
+type Employer {
+  id: UUID!
+  name: EmployerName!
+  details: EmployerDetails
+  logo: EmployerLogo
+  platform: Platform
+}
+
+"""
+Name variants for an Employer.
+"""
+type EmployerName {
+  canonical: String!
+  display: String
+  legalName: String
+  dba: String
+}
+
+"""
+Extended employer metadata including address and contact information.
+"""
+type EmployerDetails {
+  employerId: UUID!
+  ein: String
+  address: PersonAddress
+  phone: String
+  website: String
+  industry: String
+  naicsCode: String
+}
+
+"""
+Logo asset for an Employer.
+"""
+type EmployerLogo {
+  url: String!
+  width: Int
+  height: Int
+  format: String
+}
+
+# ─── Employment ──────────────────────────────────────────────────────────────
+
+"""
+An Employment record describes the relationship between a user and an employer.
+"""
+type Employment {
+  id: UUID!
+  accountId: UUID!
+  employer: Employer
+  status: EmploymentStatus!
+  type: EmploymentType!
+  details: EmploymentDetails
+  position: Position
+  startDate: StartDate
+  endDate: EndDate
+  unit: EmploymentUnit
+  income: Income
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+Detailed attributes of an Employment record.
+"""
+type EmploymentDetails {
+  employmentId: UUID!
+  fullTimeEquivalent: Decimal
+  isCurrentJob: Boolean
+  terminationReason: String
+  benefitsEligible: Boolean
+  unionMember: Boolean
+  department: String
+  supervisorName: String
+}
+
+"""
+The organizational unit an employee belongs to.
+"""
+type EmploymentUnit {
+  id: String
+  name: String
+  costCenter: String
+  locationCode: String
+}
+
+# ─── Position ────────────────────────────────────────────────────────────────
+
+"""
+A Position represents the job title and classification held during employment.
+"""
+type Position {
+  id: UUID
+  title: PositionTitle!
+  details: PositionDetails
+}
+
+"""
+Title variants for a Position.
+"""
+type PositionTitle {
+  raw: String!
+  normalized: String
+  seniorityLevel: String
+  jobFamily: String
+}
+
+"""
+Extended details for a Position including compensation basis.
+"""
+type PositionDetails {
+  positionId: UUID
+  jobCode: String
+  flsaStatus: String
+  compensationType: IncomeType
+  hoursPerWeek: Decimal
+  location: PersonAddress
+}
+
+# ─── Date Types ──────────────────────────────────────────────────────────────
+
+"""
+The start date of an employment or pay period.
+"""
+type StartDate {
+  date: Date!
+  estimated: Boolean!
+}
+
+"""
+The end date of an employment or pay period.
+"""
+type EndDate {
+  date: Date
+  estimated: Boolean!
+  isPresent: Boolean!
+}
+
+# ─── Income ──────────────────────────────────────────────────────────────────
+
+"""
+Income represents the compensation details for a given employment.
+"""
+type Income {
+  id: UUID!
+  accountId: UUID!
+  employmentId: UUID
+  type: IncomeType!
+  frequency: IncomeFrequency!
+  details: IncomeDetails
+  gross: IncomeGross
+  net: IncomeNet
+  deductions: Deductions
+  taxes: Taxes
+  annualSummary: AnnualSummary
+  currency: String!
+}
+
+"""
+Extended income metadata.
+"""
+type IncomeDetails {
+  incomeId: UUID!
+  baseAmount: Decimal
+  overtimeRate: Decimal
+  bonusAmount: Decimal
+  commissionAmount: Decimal
+  tipsAmount: Decimal
+  reimbursementsAmount: Decimal
+  effectiveDate: Date
+}
+
+"""
+Gross income amounts before deductions.
+"""
+type IncomeGross {
+  amount: Decimal!
+  ytdAmount: Decimal
+  currency: String!
+}
+
+"""
+Net income amounts after deductions and taxes.
+"""
+type IncomeNet {
+  amount: Decimal!
+  ytdAmount: Decimal
+  currency: String!
+}
+
+# ─── Deductions ──────────────────────────────────────────────────────────────
+
+"""
+A collection of deductions applied to a pay stub.
+"""
+type Deductions {
+  total: Decimal!
+  ytdTotal: Decimal
+  currency: String!
+  items: [DeductionDetails!]
+}
+
+"""
+A single deduction line item.
+"""
+type DeductionDetails {
+  type: String!
+  name: String!
+  amount: Decimal!
+  ytdAmount: Decimal
+  preTax: Boolean!
+  currency: String!
+}
+
+# ─── Taxes ───────────────────────────────────────────────────────────────────
+
+"""
+Tax withholdings associated with a pay stub.
+"""
+type Taxes {
+  total: Decimal!
+  ytdTotal: Decimal
+  currency: String!
+  filingStatus: TaxFilingStatus
+  allowances: Int
+  items: [TaxDetails!]
+}
+
+"""
+A single tax line item.
+"""
+type TaxDetails {
+  type: String!
+  name: String!
+  amount: Decimal!
+  ytdAmount: Decimal
+  jurisdiction: String
+  currency: String!
+}
+
+# ─── Pay Stub ────────────────────────────────────────────────────────────────
+
+"""
+A PayStub represents a single payroll payment event for an employee.
+"""
+type PayStub {
+  id: UUID!
+  accountId: UUID!
+  employmentId: UUID
+  employer: Employer
+  details: PayStubDetails!
+  period: PayPeriod!
+  payDate: PayDate!
+  income: Income
+  deductions: Deductions
+  taxes: Taxes
+  currency: String!
+  documentUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+Detailed attributes of a PayStub record.
+"""
+type PayStubDetails {
+  payStubId: UUID!
+  checkNumber: String
+  paymentMethod: String
+  netPay: Decimal!
+  grossPay: Decimal!
+  hoursWorked: Decimal
+  regularHours: Decimal
+  overtimeHours: Decimal
+  currency: String!
+}
+
+"""
+The pay period covered by a PayStub.
+"""
+type PayPeriod {
+  startDate: Date!
+  endDate: Date!
+  durationDays: Int
+}
+
+"""
+The date on which payment was issued.
+"""
+type PayDate {
+  date: Date!
+  estimated: Boolean!
+}
+
+"""
+Paginated connection for PayStub results.
+"""
+type PayStubConnection {
+  nodes: [PayStub!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+# ─── Gig ─────────────────────────────────────────────────────────────────────
+
+"""
+A Gig represents a single task, delivery, or ride completed on a gig platform.
+"""
+type Gig {
+  id: UUID!
+  accountId: UUID!
+  platform: GigPlatform!
+  details: GigDetails!
+  income: GigIncome
+  vehicle: VehicleDetails
+  startDate: DateTime
+  endDate: DateTime
+  duration: Int
+  status: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+Detailed attributes of a Gig activity.
+"""
+type GigDetails {
+  gigId: UUID!
+  taskType: String
+  pickupLocation: String
+  dropoffLocation: String
+  distanceMiles: Decimal
+  customerRating: Decimal
+  driverRating: Decimal
+  notes: String
+}
+
+"""
+The gig platform on which a Gig was performed.
+"""
+type GigPlatform {
+  id: String!
+  name: String!
+  category: GigPlatformCategory!
+  logoUrl: String
+  supportedCountries: [String!]
+}
+
+"""
+Income earned from a single Gig activity.
+"""
+type GigIncome {
+  baseFare: Decimal
+  tips: Decimal
+  bonuses: Decimal
+  surcharges: Decimal
+  deductions: Decimal
+  total: Decimal!
+  currency: String!
+}
+
+"""
+Vehicle information associated with a gig worker's account.
+"""
+type VehicleDetails {
+  id: UUID
+  make: String
+  model: String
+  year: Int
+  color: String
+  licensePlate: String
+  vin: String
+  insuranceProvider: String
+  insurancePolicyNumber: String
+}
+
+# ─── Identity ────────────────────────────────────────────────────────────────
+
+"""
+Identity information about the account holder as reported by their employer.
+"""
+type IdentityDetails {
+  id: UUID!
+  accountId: UUID!
+  name: PersonName!
+  address: PersonAddress
+  contact: ContactInfo
+  dateOfBirth: Date
+  ssn: String
+  maritalStatus: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+Full name of a person.
+"""
+type PersonName {
+  firstName: String!
+  lastName: String!
+  middleName: String
+  prefix: String
+  suffix: String
+  fullName: String!
+}
+
+"""
+Physical address of a person or employer.
+"""
+type PersonAddress {
+  line1: String
+  line2: String
+  city: String
+  state: String
+  postalCode: String
+  country: String!
+  formatted: String
+}
+
+"""
+Contact information for a person.
+"""
+type ContactInfo {
+  email: String
+  phone: String
+  alternatePhone: String
+}
+
+# ─── Tax Summary ─────────────────────────────────────────────────────────────
+
+"""
+Aggregated tax information for a calendar year (from W-2, 1099, etc.).
+"""
+type TaxSummary {
+  id: UUID!
+  accountId: UUID!
+  taxYear: Int!
+  filingStatus: TaxFilingStatus
+  federalTaxWithheld: Decimal
+  stateTaxWithheld: Decimal
+  localTaxWithheld: Decimal
+  socialSecurityWages: Decimal
+  medicareWages: Decimal
+  documentType: String
+  documentUrl: String
+  createdAt: DateTime!
+}
+
+"""
+Annual income and earnings summary across all employers for a given year.
+"""
+type AnnualSummary {
+  year: Int!
+  totalGrossIncome: Decimal!
+  totalNetIncome: Decimal!
+  totalTaxes: Decimal!
+  totalDeductions: Decimal!
+  currency: String!
+  employerCount: Int!
+}
+
+# ─── Webhooks ────────────────────────────────────────────────────────────────
+
+"""
+A configured Webhook endpoint for receiving Argyle event notifications.
+"""
+type Webhook {
+  id: UUID!
+  url: String!
+  name: String
+  events: [WebhookEventType!]!
+  isActive: Boolean!
+  secret: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A single webhook event payload delivered to a registered endpoint.
+"""
+type WebhookEvent {
+  id: UUID!
+  webhookId: UUID
+  event: WebhookEventType!
+  accountId: UUID
+  userId: String
+  payload: JSON
+  deliveredAt: DateTime
+  attempts: Int!
+  lastAttemptAt: DateTime
+}
+
+# ─── Auth ────────────────────────────────────────────────────────────────────
+
+"""
+An API key credential used to authenticate server-to-server Argyle requests.
+"""
+type APIKey {
+  id: UUID!
+  name: String!
+  clientId: String!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  isActive: Boolean!
+  scopes: [String!]
+}
+
+"""
+A short-lived user access token for initializing Link sessions.
+"""
+type Token {
+  access: String!
+  expiresAt: DateTime!
+  userId: String
+  scope: String
+}
+
+# ─── Error ───────────────────────────────────────────────────────────────────
+
+"""
+A structured error returned by the Argyle API.
+"""
+type Error {
+  code: ErrorCode!
+  message: String!
+  details: String
+  field: String
+  docUrl: String
+}
+
+# ─── Pagination ──────────────────────────────────────────────────────────────
+
+"""
+Pagination cursor metadata for list responses.
+"""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+  totalPages: Int
+}
+
+# ─── Query ───────────────────────────────────────────────────────────────────
+
+type Query {
+  "Retrieve a Link session by ID"
+  link(id: UUID!): Link
+  "List all Link sessions for the authenticated client"
+  links(userId: String, status: LinkStatus, limit: Int, cursor: String): [Link!]
+
+  "Retrieve an Account by ID"
+  account(id: UUID!): Account
+  "List Accounts, optionally filtered by user"
+  accounts(userId: String, limit: Int, cursor: String): [Account!]
+
+  "Retrieve an Employment record by ID"
+  employment(id: UUID!): Employment
+  "List Employment records for an Account"
+  employments(accountId: UUID!, status: EmploymentStatus, limit: Int, cursor: String): [Employment!]
+
+  "Retrieve Identity details for an Account"
+  identity(accountId: UUID!): IdentityDetails
+
+  "Retrieve an Income record by ID"
+  income(id: UUID!): Income
+  "List Income records for an Account"
+  incomes(accountId: UUID!, type: IncomeType, limit: Int, cursor: String): [Income!]
+
+  "Retrieve a PayStub by ID"
+  payStub(id: UUID!): PayStub
+  "List PayStubs for an Account with optional date range"
+  payStubs(accountId: UUID!, from: Date, to: Date, limit: Int, cursor: String): PayStubConnection!
+
+  "Retrieve a Gig activity by ID"
+  gig(id: UUID!): Gig
+  "List Gig activities for an Account"
+  gigs(accountId: UUID!, from: Date, to: Date, limit: Int, cursor: String): [Gig!]
+
+  "Retrieve Vehicle details for an Account"
+  vehicle(accountId: UUID!): VehicleDetails
+
+  "Retrieve a Tax Summary (W-2/1099) by ID"
+  taxSummary(id: UUID!): TaxSummary
+  "List Tax Summaries for an Account"
+  taxSummaries(accountId: UUID!, year: Int): [TaxSummary!]
+
+  "Look up a Platform by its canonical ID"
+  platform(id: String!): Platform
+  "Search for supported Platforms"
+  platforms(type: PlatformType, query: String, limit: Int): [Platform!]
+
+  "List configured Webhooks"
+  webhooks(limit: Int, cursor: String): [Webhook!]
+  "Retrieve a single Webhook by ID"
+  webhook(id: UUID!): Webhook
+  "Retrieve Webhook event delivery logs"
+  webhookEvents(webhookId: UUID, event: WebhookEventType, limit: Int, cursor: String): [WebhookEvent!]
+
+  "Create a short-lived user token for initializing a Link session"
+  userToken(userId: String!): Token
+}
+
+# ─── Mutation ────────────────────────────────────────────────────────────────
+
+type Mutation {
+  "Create a new Link session for a user"
+  createLink(userId: String!, items: [String!], redirectUrl: String): Link!
+  "Revoke (expire) an active Link session"
+  revokeLink(id: UUID!): Link!
+
+  "Disconnect an Account and remove associated data"
+  disconnectAccount(id: UUID!): Boolean!
+
+  "Register a new Webhook endpoint"
+  createWebhook(url: String!, events: [WebhookEventType!]!, name: String, secret: String): Webhook!
+  "Update an existing Webhook"
+  updateWebhook(id: UUID!, url: String, events: [WebhookEventType!], name: String, isActive: Boolean): Webhook!
+  "Delete a Webhook endpoint"
+  deleteWebhook(id: UUID!): Boolean!
+
+  "Generate a new API key"
+  createAPIKey(name: String!, scopes: [String!]): APIKey!
+  "Revoke an API key"
+  revokeAPIKey(id: UUID!): Boolean!
+}
+
+# ─── Subscription ────────────────────────────────────────────────────────────
+
+type Subscription {
+  "Stream real-time account status changes"
+  accountUpdated(userId: String): Account!
+  "Stream new PayStubs as they are synced"
+  payStubAdded(accountId: UUID!): PayStub!
+  "Stream new Gig activities as they are synced"
+  gigAdded(accountId: UUID!): Gig!
+  "Stream employment status changes"
+  employmentUpdated(accountId: UUID!): Employment!
+}
