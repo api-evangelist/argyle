@@ -7,7 +7,7 @@ description: Argyle is an employment data connectivity platform offering a REST 
   platforms, and government payroll systems, with webhook alerts for employment and
   income changes.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -26,7 +26,7 @@ apis:
   description: RESTful API providing user-consented access to payroll and employment
     data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll
     documents, and deposit destinations across thousands of employers and gig platforms.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.argyle.com/api-guide/overview
   baseURL: https://api.argyle.com/v2
   tags:
