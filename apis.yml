@@ -76,7 +76,7 @@ common:
   url: https://status.argyle.com
 - type: X
   url: https://twitter.com/withArgyle
-- type: Changelog
+- type: ChangeLog
   url: https://changelog.argyle.com
 - type: Plans
   url: plans/argyle-plans-pricing.yml
