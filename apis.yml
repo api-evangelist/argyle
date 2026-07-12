@@ -60,6 +60,12 @@ apis:
   - url: graphql/argyle-graphql.md
     type: GraphQL
 common:
+- type: VulnerabilityDisclosure
+  url: security/argyle-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/argyle-domain-security.yml
+- type: Authentication
+  url: authentication/argyle-authentication.yml
 - type: Website
   url: https://www.argyle.com/
 - type: Documentation

@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/argyle-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: Username = api_key_id, Password = api_key_secret
+  sources:
+  - openapi/argyle-api-openapi.yml
