@@ -60,6 +60,8 @@ apis:
   - url: graphql/argyle-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/argyle-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/argyle-vulnerability-disclosure.yml
 - type: DomainSecurity
