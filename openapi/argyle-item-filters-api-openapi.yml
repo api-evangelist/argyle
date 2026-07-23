@@ -1,0 +1,268 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Item Filters API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Item Filters
+paths:
+  /v2/item-filters:
+    post:
+      summary: Create an Item filter
+      description: "Filters are applied to properties of the `field_coverage` object of [Items](/api-reference/items#object) using the comparison operators below. You can also filter Items by their `status` property using the `eq` operator.\n\nThe name and ID of the new Item filter are returned in the response, which can be used as a query parameter when [listing Items](/api-reference/items#list).\n\n## Comparison operators\n\n`eq` — equals  \n`gt` — greater than  \n`gte` — greater than or equal to  \n`lt` — less than  \n`lte` — less than or equal to\n"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Key paystub fields supported
+              filters:
+                status:
+                  eq: healthy
+                field_coverage:
+                  paystubs:
+                    gross_pay:
+                      supported:
+                        eq: true
+                    paystub_date:
+                      supported:
+                        eq: true
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name for the Item filter.
+                filters:
+                  type: object
+                  description: The set of filters, which can be applied when [listing Items](/api-reference/items#list).
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the item filter.
+                    example: 087394d4-83b5-4722-8c5e-0235362c12f5
+                  name:
+                    type: string
+                    description: The name of the item filter.
+                    example: Key paystub fields supported
+      tags:
+      - Item Filters
+    get:
+      summary: List all Item filters
+      description: Returns a paginated list of all Item filters.
+      parameters:
+      - name: limit
+        in: query
+        description: 'Number of Item filters returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.
+
+          '
+        schema:
+          type: integer
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The name of the item filter.
+                          example: Candidate for new car loan fields supported
+                        filters:
+                          type: object
+                          description: The filters applied to this item filter.
+                    example:
+                    - name: Candidate for new car loan fields supported
+                      filters:
+                        field_coverage:
+                          gigs:
+                            distance:
+                              supported: true
+                          vehicles:
+                            year:
+                              supported: true
+                    - name: Key paystub fields supported
+                      filters:
+                        status:
+                          eq: healthy
+                        field_coverage:
+                          paystubs:
+                            gross_pay:
+                              supported:
+                                eq: true
+                            paystub_date:
+                              supported:
+                                eq: true
+      tags:
+      - Item Filters
+  /v2/item-filters/{id}:
+    get:
+      summary: Retrieve an Item filter
+      description: Retrieves an Item filter.
+      parameters:
+      - name: id
+        in: path
+        description: ID of the Item filter to be retrieved.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the item filter.
+                    example: 087394d4-83b5-4722-8c5e-0235362c12f5
+                  name:
+                    type: string
+                    description: The name of the item filter.
+                    example: Key paystub fields supported
+                  filters:
+                    type: object
+                    description: The filters applied to this item filter.
+                    example:
+                      status:
+                        eq: healthy
+                      field_coverage:
+                        paystubs:
+                          gross_pay:
+                            supported:
+                              eq: true
+                          paystub_date:
+                            supported:
+                              eq: true
+      tags:
+      - Item Filters
+    put:
+      summary: Replace an Item filter
+      description: Replaces the filters of an Item filter with a new set of filters.
+      parameters:
+      - name: id
+        in: path
+        description: ID of the Item filter whose filters are to be replaced.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Key paystub fields supported
+              filters:
+                status:
+                  eq: healthy
+                field_coverage:
+                  paystubs:
+                    gross_pay:
+                      supported:
+                        eq: true
+                    paystub_date:
+                      supported:
+                        eq: true
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name for the revised Item filter.
+
+
+                    The ID of the Item filter does not change after the replacement filters are substituted.
+
+                    '
+                filters:
+                  type: object
+                  description: The replacement set of filters.
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the item filter.
+                    example: 087394d4-83b5-4722-8c5e-0235362c12f5
+                  name:
+                    type: string
+                    description: The name of the item filter.
+                    example: Key paystub fields supported
+      tags:
+      - Item Filters
+    delete:
+      summary: Delete an Item filter
+      description: Deletes an Item filter.
+      parameters:
+      - name: id
+        in: path
+        description: ID of the Item filter to be deleted.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: '204 status code: No content.'
+      tags:
+      - Item Filters
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

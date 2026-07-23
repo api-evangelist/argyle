@@ -1,0 +1,984 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Open Banking API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Open Banking
+paths:
+  /v2/open-banking/connect:
+    post:
+      summary: Create a Connect URL
+      description: Creates a new Connect URL for the specified user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  format: uuid
+                  description: ID of the user object.
+                webhook:
+                  type: string
+                  format: uri
+                  description: Webhook URL to receive Connect Events.
+                webhook_data:
+                  type: object
+                  description: Optional data added to Connect Events webhook payloads.
+                experience:
+                  type: string
+                  description: 'Experience ID that customizes the bank connection experience.
+
+
+                    If an `experience` value is not provided, a default experience configured by the Argyle team will be applied.
+
+                    '
+                single_use_url:
+                  type: boolean
+                  description: If true, the Connect URL expires after the session completes.
+                redirect_url:
+                  type: string
+                  format: uri
+                  description: Redirect users after they complete the session.
+              required:
+              - user
+              - webhook
+            example:
+              user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+              webhook: https://your-webhook-backend.com
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  open_banking_link:
+                    type: string
+                    description: Connect URL for the user.
+              example:
+                open_banking_link: https://connect_url_link.com
+      tags:
+      - Open Banking
+  /v2/open-banking/reports/{type}:
+    post:
+      summary: Generate a banking report
+      description: Generates a new banking report and returns a report object.
+      parameters:
+      - in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum:
+          - voa
+          - voi
+          - voai
+        description: The type of report to generate.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankingReportRequest'
+            example:
+              user: 01975b3b-5ba6-3ec1-2148-f595b6d92614
+              webhook: https://your-webhook-backend.com
+              bank_accounts:
+              - '8057637863'
+              from_date: '1970-01-19T17:30:50Z'
+              report_custom_fields:
+              - label: loanID
+                value: '12345'
+                shown: true
+              income_stream_confidence_minimum: 50
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankingReport'
+              example:
+                id: cde25bb1-5cf4-4544-9df8-04212a781e1b
+                user: 01975b3b-5ba6-3ec1-2148-f595b6d92614
+                reference_id: cde25bb1-5cf4-4544-9df8-04212a781e1b
+                generated_at: '2025-06-10T20:39:35.000Z'
+                created_at: '2025-06-10T20:39:35.000Z'
+                type: voai
+                status: generating
+                file_url: www.argyle.com/storagename/pdf
+                json_url: www.argyle.com/storagename/json
+                accounts: []
+                last_synced_at: null
+                external_id: null
+                source: open-banking
+                metadata:
+                  origin_report_id: 5u6fx59dnw4b
+                  bank_accounts_requested:
+                  - '8057637863'
+                  from_date: '1970-01-19T17:30:50.000Z'
+                  report_custom_fields:
+                  - label: loanID
+                    value: '12345'
+                    shown: true
+                  income_stream_confidence_minimum: 50
+      tags:
+      - Open Banking
+  /v2/open-banking/bank-accounts/{bank_account_id}:
+    get:
+      summary: Retrieve a bank account
+      description: Retrieves a bank account.
+      parameters:
+      - in: path
+        name: bank_account_id
+        required: true
+        schema:
+          type: string
+        description: ID of the bank account.
+      - in: query
+        name: user
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the user.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenBankingBankAccount'
+              example:
+                id: '8057637863'
+                user: 01975b3b-5ba6-3ec1-2148-f595b6d92614
+                account_number_display: '2203'
+                name: Savings
+                type: savings
+                aggregation_status_code: 0
+                status: active
+                institution: '102168'
+                aggregation_success_date: '2026-06-04T16:57:26.000Z'
+                aggregation_attempt_date: '2026-06-04T16:57:26.000Z'
+                created_date: '2026-06-04T16:57:17.000Z'
+                currency: USD
+                institution_login: 8029158291
+                display_position: 1
+                parent_bank_account: null
+                linked_account_date: '2026-06-04T16:57:22.000Z'
+                error_code: null
+                error_message: null
+                real_account_number_last4: '2203'
+                balance: 22327.3
+                balance_date: '2026-06-04T16:57:26.000Z'
+                last_updated_date: '2026-06-04T16:57:22.000Z'
+                market_segment: personal
+                last_transaction_date: '2026-06-04T16:57:23.000Z'
+                oldest_transaction_date: '2024-06-08T12:00:00.000Z'
+      tags:
+      - Open Banking
+  /v2/open-banking/bank-accounts:
+    get:
+      summary: List all bank accounts
+      description: 'Returns a paginated list of the user''s bank accounts.
+
+
+        Each result is a bank account object with two bank connection error fields:
+
+        - `error_code` - Bank connection error code. Returned when `aggregation_status_code` indicates an error; otherwise `null`.
+
+        - `error_message` - Bank connection error message. Returned when `aggregation_status_code` indicates an error; otherwise `null`.
+
+        '
+      parameters:
+      - in: query
+        name: user
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the user.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of bank account objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.'
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        id:
+                          type: string
+                          description: ID of the bank account.
+                        user:
+                          type: string
+                          format: uuid
+                          description: ID of the user associated with the bank account.
+                        account_number_display:
+                          type: string
+                          description: Display account identifier.
+                        name:
+                          type: string
+                          description: Account name.
+                        type:
+                          type: string
+                          description: Bank account type.
+                          enum:
+                          - checking
+                          - savings
+                          - cd
+                          - moneyMarket
+                          - creditCard
+                          - lineOfCredit
+                          - investment
+                          - investmentTaxDeferred
+                          - employeeStockPurchasePlan
+                          - ira
+                          - 401k
+                          - roth
+                          - 403b
+                          - 529plan
+                          - rollover
+                          - ugma
+                          - utma
+                          - keogh
+                          - 457plan
+                          - 401a
+                          - brokerageAccount
+                          - educationSavings
+                          - healthSavingsAccount
+                          - pension
+                          - profitSharingPlan
+                          - roth401k
+                          - sepIRA
+                          - simpleIRA
+                          - thriftSavingsPlan
+                          - variableAnnuity
+                          - cryptocurrency
+                          - mortgage
+                          - loan
+                          - studentLoan
+                          - studentLoanGroup
+                          - studentLoanAccount
+                        aggregation_status_code:
+                          type: integer
+                          description: 'Status code of the most recent aggregation attempt.
+
+
+                            See [Aggregation status codes](/api-reference/bank-accounts#aggregation-status-codes).
+
+                            '
+                        status:
+                          type: string
+                          description: Bank account status.
+                          enum:
+                          - pending
+                          - active
+                        institution:
+                          type: string
+                          description: ID of the financial institution.
+                        aggregation_success_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the last successful aggregation.
+                        aggregation_attempt_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the last aggregation attempt.
+                        created_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the bank account was created.
+                        currency:
+                          type: string
+                          description: Currency code.
+                        institution_login:
+                          type: integer
+                          description: ID of the institution login.
+                        display_position:
+                          type: integer
+                          description: Display position of the account at the financial institution.
+                        parent_bank_account:
+                          type: string
+                          description: ID of the parent bank account.
+                        linked_account_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the account was linked.
+                        error_code:
+                          type: string
+                          description: Bank connection error code.
+                        error_message:
+                          type: string
+                          description: Bank connection error message.
+                        real_account_number_last4:
+                          type: string
+                          description: Last four digits of the account number.
+                        balance:
+                          type: number
+                          description: Account balance amount.
+                        balance_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the balance was recorded.
+                        last_updated_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the account was last updated.
+                        market_segment:
+                          type: string
+                          enum:
+                          - personal
+                          - business
+                          description: Indicates whether the account is personal or business.
+                        last_transaction_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest transaction.
+                        oldest_transaction_date:
+                          type: string
+                          format: date-time
+                          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the oldest transaction.
+              example:
+                results:
+                - id: '8057637863'
+                  user: 01975b3b-5ba6-3ec1-2148-f595b6d92614
+                  account_number_display: '2203'
+                  name: Savings
+                  type: savings
+                  aggregation_status_code: 0
+                  status: active
+                  institution: '102168'
+                  aggregation_success_date: '2026-06-04T16:57:26.000Z'
+                  aggregation_attempt_date: '2026-06-04T16:57:26.000Z'
+                  created_date: '2026-06-04T16:57:17.000Z'
+                  currency: USD
+                  institution_login: 8029158291
+                  display_position: 1
+                  parent_bank_account: null
+                  linked_account_date: '2026-06-04T16:57:22.000Z'
+                  error_code: null
+                  error_message: null
+                  real_account_number_last4: '2203'
+                  balance: 22327.3
+                  balance_date: '2026-06-04T16:57:26.000Z'
+                  last_updated_date: '2026-06-04T16:57:22.000Z'
+                  market_segment: personal
+                  last_transaction_date: '2026-06-04T16:57:23.000Z'
+                  oldest_transaction_date: '2024-06-08T12:00:00.000Z'
+                - id: '8057637864'
+                  user: 01975b3b-5ba6-3ec1-2148-f595b6d92614
+                  account_number_display: '1111'
+                  name: Checking
+                  type: checking
+                  aggregation_status_code: 0
+                  status: active
+                  institution: '102168'
+                  aggregation_success_date: '2026-06-04T16:57:27.000Z'
+                  aggregation_attempt_date: '2026-06-04T16:57:27.000Z'
+                  created_date: '2026-06-04T16:57:17.000Z'
+                  currency: USD
+                  institution_login: 8029158291
+                  display_position: 2
+                  parent_bank_account: null
+                  linked_account_date: '2026-06-04T16:57:22.000Z'
+                  error_code: null
+                  error_message: null
+                  real_account_number_last4: '1111'
+                  balance: 9357.24
+                  balance_date: '2026-06-04T16:57:27.000Z'
+                  last_updated_date: '2026-06-04T16:57:22.000Z'
+                  market_segment: personal
+                  last_transaction_date: '2026-06-04T16:57:25.000Z'
+                  oldest_transaction_date: '2024-06-08T12:00:00.000Z'
+                next: https://api-sandbox.argyle.com/v2/open-banking/bank-accounts?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+      tags:
+      - Open Banking
+  /v2/open-banking/institutions/{institution_id}:
+    get:
+      summary: Retrieve an institution
+      description: Retrieves a financial institution.
+      parameters:
+      - in: path
+        name: institution_id
+        required: true
+        schema:
+          type: string
+        description: ID of the financial institution.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                id: 10
+                name: Discover Card (All Account Types)
+                trans_agg: true
+                ach: true
+                state_agg: true
+                voi: true
+                voa: true
+                aha: false
+                avail_balance: true
+                account_owner: true
+                student_loan_data: false
+                loan_payment_details: false
+                account_type_description: Credit Cards/Accounts
+                phone: 1-800-DISCOVER
+                url_home_app: www.discovercard.com
+                url_logon_app: https://www.discover.com/login/
+                oauth_enabled: false
+                url_forgot_password: https://bank.discover.com/bankac/loginreg/loadloginassist?Aff=Bank
+                url_online_registration: ''
+                special_text: Please enter your Discover Card personalized User ID and Password required to login.
+                time_zone: null
+                special_instructions: []
+                special_instutions_title: null
+                address:
+                  city: Wilmington
+                  state: DE
+                  country: USA
+                  postal_code: '19886'
+                  address_line1: ''
+                  address_line2: ''
+                currency: USD
+                email: https://customerservice.novusnet.com/EMS/html/usemsform.html
+                status: online
+                new_institution: 0
+                branding:
+                  logo: https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/logo.svg
+                  alternate_logo: https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/alternateLogo.svg
+                  icon: https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/icon.svg
+                  primary_color: '#115892'
+                  tile: https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/tile.svg
+                oauth_institution: 0
+                class: creditCards
+      tags:
+      - Open Banking
+  /v2/open-banking/institutions:
+    get:
+      summary: List all institutions
+      description: Returns a paginated list of supported financial institutions.
+      parameters:
+      - in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        description: Search term (financial institution name).
+      - in: query
+        name: type
+        required: false
+        schema:
+          type: string
+          enum:
+          - voa
+          - voi
+        description: 'Report type eligibility.
+
+
+          Possible values:
+
+          - `voa` - Verification of Assets
+
+          - `voi` - Verification of Income
+
+
+          If `voa` is `true` but `voi` is `false`, VOAI reports contain only asset data.
+
+          If `voi` is `true` but `voa` is `false`, VOAI reports contain only income data.
+
+          '
+      - in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        description: Number of institutions per page.
+      - in: query
+        name: start
+        required: false
+        schema:
+          type: integer
+        description: Index of page results to return.
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      type: object
+              example:
+                found: 8263
+                displaying: 25
+                more_available: true
+                requested_date: '2025-06-10T17:39:43.000Z'
+                institutions:
+                - id: 10
+                  rssd: 0
+                  name: Discover Card (All Account Types)
+                  trans_agg: true
+                  ach: true
+                  state_agg: true
+                  voi: true
+                  voa: true
+                  aha: false
+                  avail_balance: true
+                  account_owner: true
+                  student_loan_data: false
+                  loan_payment_details: false
+                  child_institutions: []
+                - id: 12
+                  rssd: 0
+                  name: E*TRADE
+                  trans_agg: true
+                  ach: true
+                  state_agg: false
+                  voi: true
+                  voa: true
+                  aha: false
+                  avail_balance: true
+                  account_owner: true
+                  student_loan_data: false
+                  loan_payment_details: false
+                  child_institutions: []
+                - id: 18
+                  rssd: 0
+                  name: SouthTrust
+                  trans_agg: true
+                  ach: false
+                  state_agg: false
+                  voi: true
+                  voa: true
+                  aha: false
+                  avail_balance: false
+                  account_owner: true
+                  student_loan_data: false
+                  loan_payment_details: false
+                  child_institutions: []
+                - id: 23
+                  rssd: 0
+                  name: Merrill Lynch
+                  trans_agg: true
+                  ach: false
+                  state_agg: true
+                  voi: true
+                  voa: true
+                  aha: false
+                  avail_balance: false
+                  account_owner: true
+                  student_loan_data: false
+                  loan_payment_details: false
+                  child_institutions: []
+      tags:
+      - Open Banking
+components:
+  schemas:
+    BankingReportRequest:
+      type: object
+      properties:
+        user:
+          type: string
+          format: uuid
+          description: ID of the user.
+        webhook:
+          type: string
+          format: uri
+          description: Webhook URL to receive report-related [Connect Events](/api-reference/banking-overview#connect-events).
+        bank_accounts:
+          type: array
+          items:
+            type: string
+          description: List of [bank account](/api-reference/bank-accounts) IDs to be included in the report.
+        from_date:
+          type: string
+          format: date-time
+          description: 'Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+
+            - `VOAI` reports - controls the length of asset history
+
+            - `VOA` reports - controls the length of asset history
+
+            - `VOI` reports - controls the length of income history
+
+            '
+        income_from_date:
+          type: string
+          format: date-time
+          description: 'Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+
+            - `VOAI` reports - controls the length of income history
+
+            - Does not apply to `VOA` or `VOI` reports.
+
+            '
+        report_custom_fields:
+          type: array
+          maxItems: 5
+          description: Include up to `5` custom objects in the report metadata. Often used for identifying information.
+          items:
+            $ref: '#/components/schemas/BankingReportCustomField'
+        income_stream_confidence_minimum:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 'Limit income streams used in the report to those above this confidence value (`0-100` accepted).
+
+
+            Only available for `VOI` and `VOAI` report types.
+
+            '
+      required:
+      - user
+    BankingReport:
+      type: object
+      description: Report object.
+      example:
+        id: cde25bb1-5cf4-4544-9df8-04212a781e1b
+        user: 01975b3b-5ba6-3ec1-2148-f595b6d92614
+        reference_id: cde25bb1-5cf4-4544-9df8-04212a781e1b
+        generated_at: '2025-06-10T20:39:35.000Z'
+        created_at: '2025-06-10T20:39:35.000Z'
+        type: voai
+        status: generated
+        file_url: www.argyle.com/storagename/pdf
+        json_url: www.argyle.com/storagename/json
+        accounts: []
+        last_synced_at: null
+        external_id: null
+        source: open-banking
+        metadata:
+          origin_report_id: 5u6fx59dnw4b
+          bank_accounts_requested:
+          - '8057637863'
+          from_date: '1970-01-19T17:30:50.000Z'
+          report_custom_fields:
+          - label: loanID
+            value: '12345'
+            shown: true
+          income_stream_confidence_minimum: 50
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the report object.
+        user:
+          type: string
+          format: uuid
+          description: ID of the user associated with the report.
+        reference_id:
+          type: string
+          format: uuid
+          deprecated: true
+          description: Report PDF identifier.
+        generated_at:
+          type: string
+          format: date-time
+          deprecated: true
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the report was requested.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the report was requested.
+        type:
+          type: string
+          enum:
+          - voa
+          - voi
+          - voai
+          description: 'The type of report.
+
+
+            - `voa` - Verification of Assets
+
+            - `voi` - Verification of Income
+
+            - `voai` - Verification of Assets and Income
+
+            '
+        status:
+          type: string
+          enum:
+          - generating
+          - generated
+          description: 'Progress of report generation.
+
+
+            - `generating` - The report is being generated.
+
+            - `generated` - The report is ready to download.
+
+            '
+        file_url:
+          type: string
+          description: Download link to the report PDF. Requires [Argyle authentication headers](/api-guide/overview#authentication).
+        json_url:
+          type: string
+          description: Download link to the report in JSON. Requires [Argyle authentication headers](/api-guide/overview#authentication).
+        accounts:
+          type: array
+          description: Not used in banking reports.
+          items:
+            type: object
+            additionalProperties: true
+        last_synced_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Not used in banking reports.
+        external_id:
+          type: string
+          nullable: true
+          description: The [`external_id`](/api-reference/users#object-external_id) of the user, otherwise `null`.
+        source:
+          type: string
+          description: The source of the report data.
+        metadata:
+          type: object
+          description: Additional info.
+    BankingReportCustomField:
+      type: object
+      properties:
+        label:
+          type: string
+          description: Custom field name.
+        value:
+          type: string
+          description: Custom field value.
+        shown:
+          type: boolean
+          description: Show custom field on report PDF.
+    OpenBankingBankAccount:
+      type: object
+      additionalProperties: true
+      example:
+        id: '8057637863'
+        user: 01975b3b-5ba6-3ec1-2148-f595b6d92614
+        account_number_display: '2203'
+        name: Savings
+        type: savings
+        aggregation_status_code: 0
+        status: active
+        institution: '102168'
+        aggregation_success_date: '2026-06-04T16:57:26.000Z'
+        aggregation_attempt_date: '2026-06-04T16:57:26.000Z'
+        created_date: '2026-06-04T16:57:17.000Z'
+        currency: USD
+        institution_login: 8029158291
+        display_position: 1
+        parent_bank_account: null
+        linked_account_date: '2026-06-04T16:57:22.000Z'
+        error_code: null
+        error_message: null
+        real_account_number_last4: '2203'
+        balance: 22327.3
+        balance_date: '2026-06-04T16:57:26.000Z'
+        last_updated_date: '2026-06-04T16:57:22.000Z'
+        market_segment: personal
+        last_transaction_date: '2026-06-04T16:57:23.000Z'
+        oldest_transaction_date: '2024-06-08T12:00:00.000Z'
+      properties:
+        id:
+          type: string
+          description: ID of the bank account.
+        user:
+          type: string
+          format: uuid
+          description: ID of the user associated with the bank account.
+        account_number_display:
+          type: string
+          description: Display account identifier.
+        name:
+          type: string
+          description: Account name.
+        type:
+          type: string
+          description: Bank account type.
+          enum:
+          - checking
+          - savings
+          - cd
+          - moneyMarket
+          - creditCard
+          - lineOfCredit
+          - investment
+          - investmentTaxDeferred
+          - employeeStockPurchasePlan
+          - ira
+          - 401k
+          - roth
+          - 403b
+          - 529plan
+          - rollover
+          - ugma
+          - utma
+          - keogh
+          - 457plan
+          - 401a
+          - brokerageAccount
+          - educationSavings
+          - healthSavingsAccount
+          - pension
+          - profitSharingPlan
+          - roth401k
+          - sepIRA
+          - simpleIRA
+          - thriftSavingsPlan
+          - variableAnnuity
+          - cryptocurrency
+          - mortgage
+          - loan
+          - studentLoan
+          - studentLoanGroup
+          - studentLoanAccount
+        aggregation_status_code:
+          type: integer
+          description: 'Status code of the most recent aggregation attempt.
+
+
+            See [Aggregation status codes](/api-reference/bank-accounts#aggregation-status-codes).
+
+            '
+        status:
+          type: string
+          description: Bank account status.
+          enum:
+          - pending
+          - active
+        institution:
+          type: string
+          description: ID of the financial institution.
+        aggregation_success_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the last successful aggregation for the account.
+        aggregation_attempt_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the last aggregation attempt for the account, whether successful or not.
+        created_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the bank account was created.
+        currency:
+          type: string
+          description: Currency code.
+        institution_login:
+          type: integer
+          description: ID of the institution login.
+        display_position:
+          type: integer
+          description: Display position of the account at the financial institution.
+        parent_bank_account:
+          type: string
+          description: ID of the parent bank account.
+        linked_account_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the account was linked.
+        error_code:
+          type: string
+          description: Bank connection error code.
+        error_message:
+          type: string
+          description: Bank connection error message.
+        real_account_number_last4:
+          type: string
+          description: Last four digits of the account number.
+        balance:
+          type: number
+          description: Account balance amount.
+        balance_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the balance was recorded.
+        last_updated_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) for when the account was last updated.
+        market_segment:
+          type: string
+          enum:
+          - personal
+          - business
+          description: Indicates whether the account is personal or business.
+        last_transaction_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest transaction.
+        oldest_transaction_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the oldest transaction.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

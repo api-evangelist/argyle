@@ -1,0 +1,630 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Paystubs API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Paystubs
+paths:
+  /v2/paystubs/{id}:
+    get:
+      summary: Retrieve a paystub
+      description: Retrieves a paystub object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: 'ID of the paystub object to be retrieved.
+
+          '
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paystub'
+      tags:
+      - Paystubs
+  /v2/paystubs:
+    get:
+      summary: List all paystubs
+      description: Returns a paginated list of all paystub objects.
+      parameters:
+      - in: query
+        name: account
+        schema:
+          type: string
+          format: uuid
+        description: Filter by account ID.
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        description: Filter by user ID.
+      - in: query
+        name: employment
+        schema:
+          type: string
+          format: uuid
+        description: Filter by employment ID.
+      - in: query
+        name: from_start_date
+        schema:
+          type: string
+          format: date-time
+        description: 'Filter for paystubs with a `paystub_date` on or after this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+          '
+      - in: query
+        name: to_start_date
+        schema:
+          type: string
+          format: date-time
+        description: 'Filter for paystubs with a `paystub_date` on or before this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+          '
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of paystubs objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Paystub'
+      tags:
+      - Paystubs
+components:
+  schemas:
+    Destination:
+      type: object
+      properties:
+        reference:
+          type: string
+          description: Describes where the payment was sent, such as a checking account or bank name.
+        amount:
+          type: string
+          description: Pay amount sent to the destination.
+        method:
+          type: string
+          description: Payment method, such as direct deposit.
+        ach_deposit_account:
+          type: object
+          properties:
+            bank_name:
+              type: string
+              description: Name of the bank account.
+            routing_number:
+              type: string
+              description: Routing number of the bank account.
+            account_number:
+              type: string
+              description: Account number of the bank account.
+          description: Details for bank account destinations.
+        card:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the card where the payout was sent.
+            number:
+              type: string
+              description: Card number.
+          description: Details for payout card destinations.
+    GrossPayTotal:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Gross pay earned from line items of this type.
+        amount_ytd:
+          type: string
+          description: Total gross pay earned year-to-date from line items of this type, including this paystub.
+        hours:
+          type: string
+          description: Hours worked from line items of this type.
+        hours_ytd:
+          type: string
+          description: Hours worked year-to-date from line items of this type, including this paystub.
+        rate_implied:
+          type: string
+          description: Calculated ratio of `amount` to `hours` of gross pay list totals.
+        rate_implied_ytd:
+          type: string
+          description: Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals.
+    Deduction:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount of the deduction.
+        name:
+          type: string
+          description: Name or description of the deduction.
+        tax_classification:
+          type: string
+          enum:
+          - pre_tax
+          - post_tax
+          description: 'Tax classification.
+
+            - `pre_tax`
+
+            - `post_tax`
+
+            '
+        amount_ytd:
+          type: string
+          description: Total amount deducted year-to-date, including the amounts from this paystub.
+    Tax:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount of the tax withholding.
+        name:
+          type: string
+          description: Name or description of the tax withholding.
+        type:
+          type: string
+          enum:
+          - federal
+          - state
+          - local
+          - fica
+          - other
+          description: 'Payroll tax type.
+
+            - `federal`
+
+            - `state`
+
+            - `local`
+
+            - `fica`
+
+            - `other`
+
+            '
+        amount_ytd:
+          type: string
+          description: 'Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.
+
+            '
+    Paystub:
+      type: object
+      example:
+        id: 0187dc99-63be-bc96-51bf-af6b51d43687
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        payroll_document: 0186eb89-2e52-b3c5-ac6d-05e7debb2aff
+        deduction_list:
+        - amount: '38.10'
+          name: 401K
+          tax_classification: pre_tax
+          amount_ytd: '139.70'
+        - amount: '25.40'
+          name: Garnishment
+          tax_classification: post_tax
+          amount_ytd: '76.20'
+        - amount: '25.40'
+          name: Garnishment
+          tax_classification: post_tax
+          amount_ytd: '101.60'
+        filing_status:
+        - type: federal
+          location: null
+          status: married filing separately
+        - type: state
+          location: NY
+          status: married filing separately
+        tax_list:
+        - amount: '88.91'
+          name: Federal Withholding
+          type: federal
+          amount_ytd: '850.99'
+        - amount: '139.72'
+          name: Social Security Tax
+          type: fica
+          amount_ytd: '381.04'
+        status: completed
+        paystub_date: '2023-03-12T00:00:00Z'
+        paystub_period:
+          start_date: '2023-02-28T00:00:00Z'
+          end_date: '2023-03-07T00:00:00Z'
+        currency: USD
+        gross_pay: '1607.63'
+        deductions: '88.90'
+        taxes: '228.63'
+        net_pay: '1290.10'
+        reimbursements: '0.00'
+        hours: '49.60'
+        fees: null
+        net_pay_ytd: '12714.18'
+        gross_pay_ytd: '15730.10'
+        employer: Whole Goods
+        employment: 0186a27d-e5c6-735a-a359-6315b34d544c
+        employer_address:
+          city: New York
+          line1: 852 North W St
+          line2: Apt 221
+          state: NY
+          country: US
+          postal_code: '10014'
+        created_at: '2023-03-13T19:53:57.122Z'
+        updated_at: '2023-03-13T19:53:57.122Z'
+        destinations:
+        - reference: CHECKING *********2201
+          amount: '1290.10'
+          method: direct deposit
+          ach_deposit_account:
+            bank_name: NW Regional
+            routing_number: null
+            account_number: '*********2201'
+          card: null
+        hours_ytd: '422.00'
+        deductions_ytd: '533.40'
+        taxes_ytd: '2502.17'
+        gross_pay_list:
+        - name: Regular
+          type: base
+          start_date: '2023-02-28'
+          end_date: '2023-03-07'
+          rate: '25.6088'
+          hours: '49.5977'
+          amount: '1270.14'
+          hours_ytd: '422.0000'
+          amount_ytd: '13971.54'
+        - name: Commission
+          type: commission
+          start_date: '2023-03-04'
+          end_date: '2023-03-04'
+          rate: null
+          hours: null
+          amount: '337.49'
+          hours_ytd: null
+          amount_ytd: '1758.56'
+        gross_pay_list_totals:
+          base:
+            amount: '1270.14'
+            amount_ytd: '13971.54'
+            hours: '49.5977'
+            hours_ytd: '422.0000'
+            rate_implied: '25.6100'
+            rate_implied_ytd: '33.1100'
+          overtime: null
+          commission:
+            amount: '337.49'
+            amount_ytd: '1758.56'
+            hours: null
+            hours_ytd: null
+            rate_implied: null
+            rate_implied_ytd: null
+          bonus: null
+          other: null
+        metadata: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the paystub object.
+        account:
+          type: string
+          format: uuid
+          description: ID of the account associated with the paystub.
+        payroll_document:
+          type: string
+          format: uuid
+          description: 'ID of the [payroll document object](/api-reference/payroll-documents#object) associated with this paystub.
+
+            '
+        deduction_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deduction'
+          description: An itemized list of deductions listed on the paystub. Each object corresponds to one line item.
+        filing_status:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilingStatus'
+          description: Information on the user's filing status.
+        tax_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax'
+          description: An itemized list of tax withholdings listed on the paystub. Each object corresponds to one line item.
+        status:
+          type: string
+          enum:
+          - completed
+          - scheduled
+          - cancelled
+          - excluded
+          description: 'Payment status of the paystub.
+
+            - `completed` — Payment has been made to the user.
+
+            - `scheduled` — Payment is scheduled to be made to the user.
+
+            - `cancelled` — Payment was cancelled, and was not nor will be paid to the user.
+
+            - `excluded` — Tag used for dummy/sample/watermarked/test paystubs present in the account. These paystubs are excluded when generating reports and other calculations and should not be considered proof of income.
+
+            '
+        paystub_date:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the payment date, sourced from the paystub.
+
+            '
+        paystub_period:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
+            end_date:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
+          description: Start date and end date of the work period.
+        currency:
+          type: string
+          description: Currency code ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)).
+        gross_pay:
+          type: string
+          description: Total gross pay from the paystub period before taxes or deductions.
+        deductions:
+          type: string
+          description: Total amount of deductions from the paystub period.
+        taxes:
+          type: string
+          description: Total tax amount from the paystub period.
+        net_pay:
+          type: string
+          description: Net pay (gross pay minus taxes and deductions) from the paystub period.
+        reimbursements:
+          type: string
+          description: Total reimbursement amount from the paystub period.
+        hours:
+          type: string
+          description: Total hours worked during the paystub period.
+        fees:
+          type: string
+          description: Total fees incurred during the paystub period.
+        net_pay_ytd:
+          type: string
+          description: Net pay year-to-date, including this paystub.
+        gross_pay_ytd:
+          type: string
+          description: Gross pay year-to-date, including this paystub.
+        employer:
+          type: string
+          description: Employer name.
+        employment:
+          type: string
+          description: '[Employment](/api-reference/employments) ID. Can be used as a filter when [listing paystubs](/api-reference/paystubs/list-all-paystubs).
+
+            '
+        employer_address:
+          type: object
+          properties:
+            city:
+              type: string
+              description: Name of the city, town, district, or similar regional entity.
+            line1:
+              type: string
+              description: Address-Line 1, usually street address or P.O. Box information.
+            line2:
+              type: string
+              description: Address-Line 2, usually the apartment or unit number.
+            state:
+              type: string
+              description: State, county, province, region, or equivalent.
+            country:
+              type: string
+              description: Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
+            postal_code:
+              type: string
+              description: Zip code, or equivalent.
+          description: Object containing employer address information, sourced from the paystub.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the paystub object was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the paystub object most recently changed.
+        destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination'
+          description: Contains information on where and how pay was delivered to the user.
+        hours_ytd:
+          type: string
+          description: Total hours worked year-to-date, including this paystub's work period.
+        deductions_ytd:
+          type: string
+          description: Total deductions year-to-date, including amounts from this paystub.
+        taxes_ytd:
+          type: string
+          description: Total taxes year-to-date, including amounts from this paystub.
+        gross_pay_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrossPay'
+          description: An itemized list of gross pay listed on the paystub. Each object corresponds to one line item.
+        gross_pay_list_totals:
+          type: object
+          properties:
+            base:
+              $ref: '#/components/schemas/GrossPayTotal'
+            overtime:
+              $ref: '#/components/schemas/GrossPayTotal'
+            commission:
+              $ref: '#/components/schemas/GrossPayTotal'
+            bonus:
+              $ref: '#/components/schemas/GrossPayTotal'
+            other:
+              $ref: '#/components/schemas/GrossPayTotal'
+          description: 'Sums the values of `gross_pay_list` objects based on their `type`:
+
+            * **base** = base + pto
+
+            * **overtime** = overtime
+
+            * **commission** = commission
+
+            * **bonus** = bonus
+
+            * **other** = disability + benefits + tips + stock + other
+
+            '
+        metadata:
+          type: object
+          description: Additional, non-categorized information.
+    GrossPay:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name or description of the gross pay line item.
+        type:
+          type: string
+          enum:
+          - base
+          - pto
+          - overtime
+          - commission
+          - bonus
+          - disability
+          - benefits
+          - tips
+          - stock
+          - other
+          description: 'Categorized type of gross pay, based on `name`. Used in `gross_pay_list_totals`.
+
+            - `base`
+
+            - `pto`
+
+            - `overtime`
+
+            - `commission`
+
+            - `bonus`
+
+            - `disability`
+
+            - `benefits`
+
+            - `tips`
+
+            - `stock`
+
+            - `other`
+
+            '
+        start_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
+        end_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
+        rate:
+          type: string
+          description: Hourly rate of gross pay earnings for this line item.
+        hours:
+          type: string
+          description: Hours worked for this line item.
+        amount:
+          type: string
+          description: Gross pay earned from this line item.
+        hours_ytd:
+          type: string
+          description: Total hours worked year-to-date related to this gross pay line item, including this paystub's work period.
+        amount_ytd:
+          type: string
+          description: Total gross pay earned year-to-date related to this gross pay line item, including this paystub.
+    FilingStatus:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - federal
+          - state
+          - local
+          description: 'Tax authority.
+
+            - `federal`
+
+            - `state`
+
+            - `local`
+
+            '
+        location:
+          type: string
+          description: 'Local jurisdiction. Values depend on `type`.
+
+            - if type is `federal` — `null`
+
+            - if type is `state` — state abbreviation code
+
+            - if type is `local` — city name or area code
+
+            '
+        status:
+          type: string
+          description: Marital status.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

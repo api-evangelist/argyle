@@ -1,0 +1,298 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Deposit Destinations API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Deposit Destinations
+paths:
+  /v2/deposit-destinations/{id}:
+    get:
+      summary: Retrieve a deposit destination
+      description: Retrieves a deposit destination object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the deposit destination object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositDestination'
+              example:
+                id: 0176e1ea-60ca-c561-eb8e-6dcdb33b1b55
+                account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                employer: Whole Goods
+                destination_type: ach_deposit_account
+                status: active
+                allocation_type: amount
+                currency: USD
+                allocation_value: '325.70'
+                method: Direct deposit
+                ach_deposit_account:
+                  account_number: '123456780000'
+                  bank_name: NW Bank
+                  routing_number: '026010000'
+                  account_type: savings
+                created_at: '2023-03-14T16:00:49.420Z'
+                updated_at: '2023-03-14T16:00:49.420Z'
+                metadata: {}
+      tags:
+      - Deposit Destinations
+  /v2/deposit-destinations:
+    get:
+      summary: List all deposit destinations
+      description: Returns a paginated list of all deposit destination objects.
+      parameters:
+      - in: query
+        name: account
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by account ID.
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by user ID.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        required: false
+        description: 'Number of deposit destination objects returned <a href="/api-guide/overview#pagination">per page</a>. Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DepositDestination'
+              example:
+                next: https://api-sandbox.argyle.com/v2/deposit-destinations?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0185da22-3322-eeaf-57b2-a6527214e456
+                  account: 0185a8b8-60eb-80ca-7482-5f24504573f7
+                  employer: Half Bads
+                  destination_type: card
+                  status: active
+                  allocation_type: null
+                  currency: null
+                  allocation_value: null
+                  method: Instant payout
+                  card:
+                    card_number: '****5678'
+                    card_name: Visa
+                    is_platform_card: false
+                  created_at: '2023-03-13T19:53:49.090Z'
+                  updated_at: '2023-03-13T19:53:49.091Z'
+                  metadata: {}
+                - id: 0185e091-cbe2-775c-bc32-7bc943cb4264
+                  account: 0187e091-b47d-3cc6-a273-2b5e3cab83af
+                  employer: Bullseye
+                  destination_type: ach_deposit_account
+                  status: inactive
+                  allocation_type: amount
+                  currency: USD
+                  allocation_value: remainder
+                  method: Direct deposit
+                  ach_deposit_account:
+                    account_number: '757127245584'
+                    bank_name: SW Bank
+                    routing_number: 016012008
+                    account_type: checking
+                  created_at: '2023-03-14T14:41:37.989Z'
+                  updated_at: '2023-03-14T14:41:37.989Z'
+                  metadata: {}
+      tags:
+      - Deposit Destinations
+components:
+  schemas:
+    DepositDestination:
+      type: object
+      example:
+        id: 0176e1ea-60ca-c561-eb8e-6dcdb33b1b55
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        employer: Whole Goods
+        destination_type: ach_deposit_account
+        status: active
+        allocation_type: percent
+        currency: USD
+        allocation_value: '100'
+        method: Direct deposit
+        ach_deposit_account:
+          account_number: '123456780000'
+          bank_name: NW Bank
+          routing_number: '026010000'
+          account_type: savings
+        created_at: '2023-03-14T16:00:49.420Z'
+        updated_at: '2023-03-14T16:00:49.420Z'
+        metadata: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the deposit destination.
+        account:
+          type: string
+          format: uuid
+          description: ID of the account associated with the deposit destination.
+        employer:
+          type: string
+          description: Employer name.
+        destination_type:
+          type: string
+          enum:
+          - ach_deposit_account
+          - card
+          - acss_debit
+          description: Destination where payouts are sent.
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - pending
+          description: "Whether the deposit destination is currently set to receive payments.\n\nAdditional details for gig employers:\n`inactive` indicates the user added this card or bank account to the gig platform, but chose another preferred deposit destination in their payout settings.\n\n---\n\n**Note:**\nDeposit destination details for individual payouts from gig employers are also listed within the [metadata](/api-reference/paystubs#object-metadata) object of the user's [paystubs](/api-reference/paystubs).\n\n```json\n// Example - payout to debit card:\n\n\"metadata\": {\n  \"origin_type\": \"DRIVER_DIRECT\",\n  \"payout_on\": \"2022-06-28 21:15:04+00:00\",\n  \"issue_info\": {\n    \"description\": \"\",\n    \"type\": \"UNKNOWN_ISSUE_TYPE\"\n  },\n  \"deposited_ot\": \"2321 Visa\",\n  \"origin_period\": null,\n  \"raw_type\": \"DRIVER_DIRECT\"\n}\n```\n\n```json\n// Example - payout to bank account:\n\n\"metadata\": {\n  \"origin_type\": \"REGULAR\",\n  \"payout_on\": \"2022-11-17 07:20:32+00:00\",\n  \"issue_info\": {\n    \"description\": \"\",\n    \"type\": \"UNKNOWN_ISSUE_TYPE\"\n  },\n  \"deposited_ot\": \"5329 FIFTH SIXTH BANK\",\n  \"origin_period\": {\n    \"start\": \"2022-11-14 14:06:29+00:00\",\n    \"end\": \"2022-11-16 14:06:29+00:00\"\n  },\n  \"raw_type\": \"REGULAR\"\n}\n```\n"
+        allocation_type:
+          type: string
+          enum:
+          - percent
+          - amount
+          description: Whether payments sent to this deposit destination are a percentage or amount of the user's total pay.
+        currency:
+          type: string
+          description: 'Currency ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)) in which payouts are sent to the deposit destination.
+
+            '
+        allocation_value:
+          type: string
+          description: 'What `percent` or `amount` of the user''s pay is being allocated to this deposit destination.
+
+
+            Numerical values are used for *exact* amounts or percentages, and `remainder` is used when this deposit destination is receiving a remainder amount after pay is allocated to all other deposit destinations.
+
+            '
+        method:
+          type: string
+          description: Payment method, such as direct deposit.
+        ach_deposit_account:
+          type: object
+          description: 'Details for deposit destinations with a `destination_type` of `ach_deposit_account`, which pertains to U.S. bank accounts.
+
+            '
+          properties:
+            account_number:
+              type: string
+              description: Bank account number. May be obfuscated depending on the payroll system.
+            bank_name:
+              type: string
+              description: 'Name of the bank, as returned by the payroll system.
+
+
+                Some payroll systems will override the `bank_name` included in your target deposit destination configuration and instead use a bank name they derive from another source, such as the routing number of the account.
+
+                '
+            routing_number:
+              type: string
+              description: Routing number of the bank account.
+            account_type:
+              type: string
+              description: The type of bank account.
+        card:
+          type: object
+          description: 'Details for deposit destinations with a `destination_type` of `card`, which pertains to debit cards or similar cards that can receive payouts.
+
+            '
+          properties:
+            card_number:
+              type: string
+              description: Card number. Typically obfuscated.
+            card_name:
+              type: string
+              description: Card name or vendor. Typically Visa or MasterCard.
+            is_platform_card:
+              type: boolean
+              description: Whether the card is directly issued by a platform such as Uber or Lyft.
+        acss_debit:
+          type: object
+          description: 'Details for deposit destinations with a `destination_type` of `acss_debit`, which pertains to Canadian bank accounts that use the Automated Clearing Settlement System (ACSS).
+
+            '
+          properties:
+            account_number:
+              type: string
+              description: Bank account number. May be obfuscated depending on the payroll system.
+            account_type:
+              type: string
+              description: The type of bank account.
+            institution_number:
+              type: string
+              description: 3-digit code that identifies the user's bank.
+            transit_number:
+              type: string
+              description: 5-digit code that identifies the bank branch.
+        created_at:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the deposit destination object was created.
+
+            '
+        updated_at:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the deposit destination object most recently changed.
+
+            '
+        metadata:
+          type: object
+          description: Additional, non-categorized information.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

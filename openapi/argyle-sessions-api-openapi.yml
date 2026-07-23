@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Sessions API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Sessions
+paths:
+  /v2/sessions:
+    post:
+      summary: Create a session
+      description: 'Create a connection session and return a `link` URL that launches the frontend experience.
+
+
+        Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
+
+
+        <Note>This endpoint is for payroll and banking verifications only.</Note>'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientSessionCreateRequest'
+            examples:
+              payroll:
+                summary: Example Request (Payroll)
+                value:
+                  verification: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                  configuration:
+                    redirect_url: https://your-application.com/return
+                    flow_id: 12ABCD3E
+                    items:
+                    - item_000000001
+                    - item_000000002
+                    language: EN
+                    mobile_app: true
+              banking:
+                summary: Example Request (Banking)
+                value:
+                  verification: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                  configuration:
+                    experience: 97f1eccb-241d-4052-8409-fab9e27a589b
+                    single_use_url: false
+                    redirect_url: https://your-application.com/return
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientSession'
+              examples:
+                payroll:
+                  summary: Example Response (Payroll)
+                  value:
+                    verification: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                    configuration:
+                      experience: null
+                      single_use_url: false
+                      redirect_url: https://your-application.com/return
+                      flow_id: 12ABCD3E
+                      items:
+                      - item_000000001
+                      - item_000000002
+                      language: EN
+                      mobile_app: true
+                    link: https://connect.argyle.com/?...
+                    data_source: payroll
+                banking:
+                  summary: Example Response (Banking)
+                  value:
+                    verification: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                    configuration:
+                      experience: 97f1eccb-241d-4052-8409-fab9e27a589b
+                      single_use_url: false
+                      redirect_url: https://your-application.com/return
+                    link: https://connect2.finicity.com?...
+                    data_source: banking
+      tags:
+      - Sessions
+components:
+  schemas:
+    ClientSessionCreateConfiguration:
+      type: object
+      description: Connection session configuration for payroll and banking verifications.
+      properties:
+        experience:
+          type: string
+          format: uuid
+          description: Banking only. Optional bank connection experience customization ID.
+        single_use_url:
+          type: boolean
+          description: Banking only. If `true`, the session link expires after one successful connection.
+        redirect_url:
+          type: string
+          nullable: true
+          description: Payroll and banking. Optional redirect URL after session completion. Hosted/direct-launch flows should always set this. On desktop browsers, use a regular `https://` URL. For mobile app flows, use a custom scheme such as `your-custom-scheme://return-to-app`, or a Universal Link on iOS / App Link on Android. Universal Links and App Links are the more modern approach. You can include an application-owned state or nonce value to match the returning browser session to an internal user, session, or verification. Argyle appends `user_submission_complete` and `user_attempted_employer_selection`, which mirror the [`onClose`](/link/reference/callbacks#onclose) fields.
+        flow_id:
+          type: string
+          description: Payroll only. Optional payroll embedded connection experience customization ID.
+        items:
+          type: array
+          description: Payroll only. Limits Link to the provided Items. If one Item is provided, Link skips search and opens that Item's login screen. If multiple Items are provided, Link shows only those Items.
+          items:
+            type: string
+          example:
+          - item_000000001
+          - item_000000002
+        language:
+          type: string
+          enum:
+          - EN
+          - ES
+          - RU
+          - ZH
+          description: Payroll only. Supported Link [display language](/link/initialization/overview#optional-initialization-parameters).
+        mobile_app:
+          type: boolean
+          description: Payroll only. Set to `true` when the session is used in a mobile app, including Hosted Link opened in a secure browser context.
+    ClientSessionConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
+    ClientSessionCreateRequest:
+      type: object
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: ID of the verification used to initialize the session.
+        configuration:
+          $ref: '#/components/schemas/ClientSessionCreateConfiguration'
+      required:
+      - verification
+    ClientSession:
+      type: object
+      description: Client connection session object.
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: Verification ID associated with the session.
+        configuration:
+          $ref: '#/components/schemas/ClientSessionConfiguration'
+        link:
+          type: string
+          description: URL used to launch the payroll or banking frontend experience. For payroll, use it as `connectUrl` when initializing the [Web SDK](/link/initialization/web#initialize-with-connecturl); the returned session URL already determines whether the session runs in Sandbox or Production. Alternatively, open it directly for [Hosted Link](/link/initialization/hosted-link). For banking, use it to launch either an Embedded banking session or a Hosted banking session. Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
+        data_source:
+          type: string
+          enum:
+          - payroll
+          - banking
+          description: Source of connection data.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

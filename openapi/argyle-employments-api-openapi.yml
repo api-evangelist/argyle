@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Employments API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Employments
+paths:
+  /v2/employments:
+    get:
+      summary: List all employments
+      description: Returns a paginated list of all employment objects.
+      parameters:
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by user ID.
+      - in: query
+        name: account
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by account ID.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of employment objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.'
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: A list of employment objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employment'
+              example:
+                next: https://api-sandbox.argyle.com/v2/employments?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0186a27d-e5c6-735a-a359-6315b34d544c
+                  user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  created_at: '2023-01-30T12:53:24.561Z'
+                  employer: Whole Goods
+                  employment_status: active
+                  origin: retrieved
+                - id: 0183d52a-d3b2-331d-c753-3662a20e352b
+                  user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  account: 0183d52b-a0c3-599a-e901-3676a20a533f
+                  created_at: '2023-01-30T12:53:24.561Z'
+                  employer: Double Double
+                  employment_status: inactive
+                  origin: acquired
+                - id: 0183d52a-d3b2-331d-c753-3662a20e352b
+                  user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  account: 0175a40a-b3b4-622b-a339-8855c57b226e
+                  created_at: '2023-01-30T12:53:24.561Z'
+                  employer: Half Bads
+                  employment_status: inactive
+                  origin: retrieved
+                - id: 0183d52a-d3b2-331d-c753-3662a20e352b
+                  user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  account: 0175a40a-b3b4-622b-a339-8855c57b226e
+                  created_at: '2023-01-30T12:53:24.561Z'
+                  employer: Stardollars LLC
+                  employment_status: inactive
+                  origin: retrieved
+      tags:
+      - Employments
+components:
+  schemas:
+    Employment:
+      type: object
+      example:
+        id: 0183d52a-d3b2-331d-c753-3662a20e352b
+        user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        created_at: '2023-01-30T12:53:24.561Z'
+        employer: Whole Goods
+        employment_status: active
+        origin: retrieved
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 'Unique ID of the employment.
+
+
+            Can be used to filter the following data sets:
+
+            - [Identities](/api-reference/identities#list)
+
+            - [Paystubs](/api-reference/paystubs#list)
+
+            - [Payroll Documents](/api-reference/payroll-documents#list)
+
+            '
+        account:
+          type: string
+          format: uuid
+          description: ID of the account associated with the employment.
+        user:
+          type: string
+          format: uuid
+          description: ID of the user associated with the employment.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the employment object was created.
+        employer:
+          type: string
+          description: Employer name on the most recent <a href="/api-reference/paystubs#object-employer">paystub</a> associated with the employment.
+        employment_status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - terminated
+          description: 'Job status of the employment.
+
+
+            `inactive` and `terminated` definitions vary by Item and can overlap.
+
+            `inactive` typically indicates the employee left voluntarily, is on leave, or has not been active for a certain period of time.
+
+            `terminated` typically indicates the employee is no longer employed. Specific reasons for termination, if available, are returned in the `termination_reason` field.
+
+
+            We recommend using data from the `/paystubs` and `/gigs` endpoints to construct a more wholistic timeline of employment history.
+
+            '
+        origin:
+          type: string
+          enum:
+          - retrieved
+          - acquired
+          description: 'Whether the employment was defined by the connected payroll system or paystubs.
+
+
+            - `retrieved` — Employment defined by the connected payroll system.
+
+            - `acquired` — Employment defined by retrieved paystubs.
+
+            '
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

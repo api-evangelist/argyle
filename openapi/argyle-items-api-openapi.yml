@@ -1,0 +1,543 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Items API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Items
+paths:
+  /v2/items/{id}:
+    get:
+      summary: Retrieve an Item
+      description: Retrieves an Item object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: 'ID of the Item. ID format — `item_123456789`
+
+          '
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              example:
+                id: item_000000001
+                name: Whole Goods
+                kind: employer
+                known_limitations: First 5 digits of SSN obfuscated.
+                status: healthy
+                status_details: null
+                logo_url: argyle.com/image-holdings
+                is_grouping: false
+                mapping_status: verified
+                features:
+                  data_retrieval:
+                    refresh_frequency: 5h
+                  field_coverage:
+                    identities:
+                      first_name:
+                        supported: true
+                      last_name:
+                        supported: true
+                      '...':
+                        supported: true
+                    paystubs:
+                      hours_ytd:
+                        supported: false
+                      paystub_period:
+                        start_date:
+                          supported: true
+                        end_date:
+                          supported: true
+                      '...':
+                        supported: true
+                    payroll_documents:
+                      '...':
+                        supported: true
+                    deposit_destinations:
+                      '...':
+                        supported: true
+                    shifts:
+                      '...':
+                        supported: true
+                    gigs:
+                      '...':
+                        supported: true
+                    vehicles:
+                      '...':
+                        supported: true
+                    ratings:
+                      '...':
+                        supported: true
+                  direct_deposit_switch:
+                    card:
+                      supported: true
+                      max_allocations: '3'
+                    deposit_account:
+                      types:
+                      - ach_deposit_account
+                      supported: true
+                      max_allocations: '2'
+                      amount_allocation: false
+                      percent_allocation: true
+                      amount_precision: null
+                      percent_precision: '0.01'
+      tags:
+      - Items
+  /v2/items:
+    get:
+      summary: List all Items
+      description: Returns a paginated list of all Item objects.
+      parameters:
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: 'Free-text search filter. For best results, use the payroll platform or employer''s full name.
+
+          '
+      - in: query
+        name: id
+        schema:
+          type: string
+        description: 'Filter by Item ID.
+
+          Multiple Item IDs can also be searched at once using either method:
+
+
+          1. `/v2/items?id=item_000000001,item_000000002`
+
+          2. `/v2/items?id=item_000000001&id=item_000000002`
+
+          '
+      - in: query
+        name: kind
+        schema:
+          type: string
+        description: Filter by `kind` value.
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: 'Filter by `status` value.
+
+
+          Multiple `status` values can also be searched at once using either method:
+
+
+          1. `/v2/items?status=healthy,issues`
+
+          2. `/v2/items?status=healthy&status=issues`
+
+
+          Filtering by both `healthy` and `issues` will return all Items that currently support new payroll connections.
+
+          '
+      - in: query
+        name: mapping_status
+        schema:
+          type: string
+        description: 'Filter by `mapping_status` value.
+
+
+          Multiple `mapping_status` values can also be searched at once using either method:
+
+
+          1. `/v2/items?mapping_status=verified,mapped`
+
+          2. `/v2/items?mapping_status=verified&mapping_status=mapped`
+
+          '
+      - in: query
+        name: min_matching_score
+        schema:
+          type: number
+        description: 'Only returns items with a [matching_score](/api-reference/items#object-matching_score) greater than or equal to this value.
+
+          `min_matching_score` should be used together with the `q` "free-text search" query parameter.
+
+          '
+      - in: query
+        name: filter_set
+        schema:
+          type: string
+          format: uuid
+        description: Filter by Item filter ID.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of Item objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Item'
+              example:
+                next: https://api-sandbox.argyle.com/v2/items?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: item_000000002
+                  name: Bullseye
+                  kind: employer
+                  known_limitations: null
+                  status: unavailable
+                  status_details: The Item is down due to scheduled maintenance but should be back shortly.
+                  mapping_status: verified
+                  logo_url: argyle.com/image-holdings
+                  is_grouping: false
+                  matching_score: '1.00'
+                - id: item_000000003
+                  name: Triple
+                  kind: platform
+                  known_limitations: null
+                  status: healthy
+                  status_details: null
+                  mapping_status: mapped
+                  logo_url: argyle.com/image-holdings
+                  is_grouping: false
+                  matching_score: '0.63'
+      tags:
+      - Items
+components:
+  schemas:
+    Item:
+      type: object
+      example:
+        id: item_000000001
+        name: Whole Goods
+        kind: employer
+        known_limitations: First 5 digits of SSN obfuscated.
+        status: healthy
+        status_details: null
+        logo_url: argyle.com/image-holdings
+        is_grouping: false
+        mapping_status: verified
+        features:
+          data_retrieval:
+            refresh_frequency: 5h
+          field_coverage:
+            identities:
+              first_name:
+                supported: true
+              last_name:
+                supported: true
+              '...':
+                supported: true
+            paystubs:
+              hours_ytd:
+                supported: false
+              paystub_period:
+                start_date:
+                  supported: true
+                end_date:
+                  supported: true
+              '...':
+                supported: true
+            payroll_documents:
+              '...':
+                supported: true
+            deposit_destinations:
+              '...':
+                supported: true
+            shifts:
+              '...':
+                supported: true
+            gigs:
+              '...':
+                supported: true
+            vehicles:
+              '...':
+                supported: true
+            ratings:
+              '...':
+                supported: true
+          direct_deposit_switch:
+            card:
+              supported: true
+              max_allocations: '3'
+            deposit_account:
+              types:
+              - ach_deposit_account
+              supported: true
+              max_allocations: '2'
+              amount_allocation: false
+              percent_allocation: true
+              amount_precision: null
+              percent_precision: '0.01'
+      properties:
+        id:
+          type: string
+          description: 'Unique ID of the Item. ID format — `item_123456789`
+
+            '
+        name:
+          type: string
+          description: Name of the Item.
+        kind:
+          type: string
+          enum:
+          - employer
+          - gig
+          - platform
+          - benefits
+          description: Type of Item.
+        known_limitations:
+          type: string
+          nullable: true
+          description: 'Known limitations of the Item, such as historical data limits, unique behavior, or degree of value obfuscation. Otherwise `null`.
+
+            '
+        status:
+          type: string
+          enum:
+          - healthy
+          - issues
+          - unavailable
+          description: 'Health status of the Item.
+
+
+            - `healthy` — Normal service.
+
+            - `issues` — Impacted service. New account connections still supported.
+
+            - `unavailable` — Impacted service. New account connections not supported. [Ongoing refresh](/overview/ongoing-refresh) paused.
+
+            '
+        status_details:
+          type: string
+          nullable: true
+          description: 'Additional details on the Item''s health status, such as degraded account connection ability or paused [ongoing refresh](/overview/ongoing-refresh). Otherwise `null`.
+
+            '
+        logo_url:
+          type: string
+          description: URL location of the Item's logo image file.
+        is_grouping:
+          type: boolean
+          description: '`true` if the Item does not directly support account connections, but instead acts as a container for other Items.
+
+            '
+        mapping_status:
+          type: string
+          enum:
+          - verified
+          - mapped
+          - unmapped
+          description: 'Verification status of the Item.
+
+
+            - `verified` — The payroll system associated with the Item is known, and the Item has previously experienced a successful connection that returned paystub data.
+
+            - `mapped` — The payroll system associated with the Item is known, but the Item is awaiting a successful connection.
+
+            - `unmapped` — The payroll system associated with this Item is not yet known. If an `unmapped` Item is selected in Link, the user will be given the option to search for the relevant payroll system and attempt to connect using their login credentials.
+
+            '
+        matching_score:
+          type: string
+          description: 'Confidence score based on the degree of similarity between the Item and the search term. Ranges from "1.00" (strong match) to "0.01" (weak match).
+
+
+            `matching_score` is only returned when [listing Items](/api-reference/items#list) and is only applicable when the `q` "free-text search" [query parameter](/api-reference/items#list-q) is used.
+
+            '
+        features:
+          type: object
+          description: 'What data fields the Item supports, the Item''s deposit switching capabilities, and how often the Item is refreshed with new data.
+
+
+            *Only returned when* [retrieving individual Items](/api-reference/items#retrieve) *by Item ID.*
+
+            '
+          properties:
+            data_retrieval:
+              type: object
+              description: Details on how often the Item is re-scanned for new data.
+              properties:
+                refresh_frequency:
+                  type: string
+                  description: 'How often the Item is re-scanned to check for new data, which is used to update all accounts connected to this Item.
+
+
+                    Rounded up to the nearest hour, in the format `#hr`.
+
+
+                    *`null` values indicate [ongoing data refreshes](/overview/ongoing-refresh) have temporarily been suspended. Check the Item''s health [status](#object-status) and [status_details](#object-status_details) for more information.*
+
+                    '
+            field_coverage:
+              type: object
+              description: 'Contains information on whether the Item returns data for a particular property within one of Argyle''s data sets.
+
+
+                *Does not include object ID''s, account ID''s, or metadata. `null` values are returned for properties of new or uncommon Items until a determination on data availability can be made.*
+
+                '
+              properties:
+                identities:
+                  type: object
+                  description: All data fields of the [identity object](/api-reference/identities#object).
+                paystubs:
+                  type: object
+                  description: All data fields of the [paystub object](/api-reference/paystubs#object).
+                payroll_documents:
+                  type: object
+                  description: All data fields of the [payroll document object](/api-reference/payroll-documents#object).
+                deposit_destinations:
+                  type: object
+                  description: All data fields of the [deposit destination object](/api-reference/deposit-destinations#object).
+                shifts:
+                  type: object
+                  description: All data fields of the [shift object](/api-reference/shifts#object).
+                gigs:
+                  type: object
+                  description: All data fields of the [gig object](/api-reference/gigs#object).
+                vehicles:
+                  type: object
+                  description: All data fields of the [vehicle object](/api-reference/vehicles#object).
+                ratings:
+                  type: object
+                  description: All data fields of the [rating object](/api-reference/ratings#object).
+            direct_deposit_switch:
+              type: object
+              description: Contains information on the Item's deposit switch capabilities.
+              properties:
+                card:
+                  type: object
+                  description: Employer supports payouts to debit cards.
+                  properties:
+                    supported:
+                      type: boolean
+                      description: '`true` if the Item supports payouts to debit cards.
+
+
+                        Generally applies to gig platforms, where users can send instant payouts to debit cards.
+
+                        '
+                    max_allocations:
+                      type: string
+                      format: integer
+                      description: Number of debit cards that can be added to the Item's underlying platform.
+                deposit_account:
+                  type: object
+                  description: Direct deposit capabilities.
+                  properties:
+                    types:
+                      type: array
+                      items:
+                        type: string
+                      description: 'The types of bank accounts supported.
+
+
+                        Only `ach_deposit_account` (U.S. deposit account) is currently supported.
+
+                        '
+                    supported:
+                      type: boolean
+                      description: '`true` if the Item supports deposit switching.'
+                    max_allocations:
+                      type: string
+                      format: integer
+                      description: Number of total bank accounts supported by the Item's underlying platform.
+                    amount_allocation:
+                      type: boolean
+                      description: '`true` if the Item''s direct deposit settings support using exact amounts to define how pay is allocated to different bank accounts.'
+                    percent_allocation:
+                      type: boolean
+                      description: '`true` if the Item''s direct deposit settings support using exact percentages of total pay to define how pay is allocated to different bank accounts.'
+                    amount_precision:
+                      type: string
+                      nullable: true
+                      description: 'What level of precision is allowed when setting amount allocations.
+
+
+                        - `100`
+
+                        - `10`
+
+                        - `1` — e.g. $52 or $53
+
+                        - `0.10`
+
+                        - `0.01` — e.g. $52.05 or $52.06
+
+                        - `null`
+
+
+                        Null values indicate the platform does not specify an exact level of precision.
+
+                        '
+                    percent_precision:
+                      type: string
+                      nullable: true
+                      description: 'What level of precision is allowed when setting percentage allocations.
+
+
+                        - `100`
+
+                        - `10`
+
+                        - `1` — e.g. 52% or 53%
+
+                        - `0.10`
+
+                        - `0.01` — e.g. 52.05% or 52.06%
+
+                        - `0.001`
+
+                        - `0.0001`
+
+                        - `null`
+
+
+                        Null values indicate the platform does not specify an exact level of precision.
+
+                        '
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

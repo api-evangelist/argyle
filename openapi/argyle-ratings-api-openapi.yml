@@ -1,0 +1,257 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Ratings API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Ratings
+paths:
+  /v2/ratings/{id}:
+    get:
+      summary: Retrieve a rating
+      description: Retrieves a rating object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the rating object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+              example:
+                id: 0176a5bd-6ed4-1a21-8661-32bc3546e6de
+                account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                rating: '4.98'
+                acceptance_rate: '0.91'
+                ontime_rate: '0.94'
+                achievements:
+                - count: 1
+                  label: excellent_service
+                  points: null
+                  metadata: {}
+                  badge_url: www.partner.com/badgeinfo
+                  description: Excellent Service
+                - count: 1
+                  label: great_amenities
+                  points: null
+                  metadata: {}
+                  badge_url: www.partner.com/badgeinfo
+                  description: Great Amenities
+                employer: GigAndGo
+                created_at: '2023-03-15T13:19:55.723Z'
+                updated_at: '2023-03-15T13:19:55.723Z'
+                metadata: {}
+      tags:
+      - Ratings
+  /v2/ratings:
+    get:
+      summary: List all ratings
+      description: Returns a paginated list of all rating objects.
+      parameters:
+      - in: query
+        name: account
+        schema:
+          type: string
+          format: uuid
+        description: Filter by account ID.
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        description: Filter by user ID.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of rating objects returned <a href="/api-guide/overview#pagination">per page</a>. Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Rating'
+              example:
+                next: https://api-sandbox.argyle.com/v2/ratings?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0186b4eb-1e33-bb38-a45a-1db105b5bed0
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  rating: '4.14'
+                  acceptance_rate: '0.87'
+                  ontime_rate: '0.85'
+                  achievements:
+                  - count: 3
+                    label: excellent_service
+                    points: '300'
+                    award: null
+                    description: Excellent Service
+                    metadata: {}
+                  - count: 2
+                    label: speed_demon
+                    points: '200'
+                    award: Speed Demon
+                    description: Fast Service
+                    metadata: {}
+                  employer: GigAntic
+                  created_at: '2023-03-15T11:15:20.359Z'
+                  updated_at: '2023-03-15T11:15:20.359Z'
+                  metadata: {}
+                - id: 0176a5bd-6ed4-1a21-8661-32bc3546e6de
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  rating: '4.98'
+                  acceptance_rate: '0.91'
+                  ontime_rate: '0.94'
+                  achievements:
+                  - count: 3
+                    label: excellent_service
+                    points: null
+                    metadata: {}
+                    badge_url: www.partner.com/badgeinfo
+                    description: Excellent Service
+                  - count: 1
+                    label: great_amenities
+                    points: null
+                    metadata: {}
+                    badge_url: www.partner.com/badgeinfo
+                    description: Great Amenities
+                  employer: GigAndGo
+                  created_at: '2023-03-15T13:19:55.723Z'
+                  updated_at: '2023-03-15T13:19:55.723Z'
+                  metadata: {}
+      tags:
+      - Ratings
+components:
+  schemas:
+    Rating:
+      type: object
+      example:
+        id: 0176a5bd-6ed4-1a21-8661-32bc3546e6de
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        rating: '4.98'
+        acceptance_rate: '0.91'
+        ontime_rate: '0.94'
+        achievements:
+        - count: 3
+          label: excellent_service
+          points: null
+          metadata: null
+          badge_url: www.partner.com/badgeinfo
+          description: Excellent Service
+        - count: 1
+          label: great_amenities
+          points: null
+          metadata: null
+          badge_url: www.partner.com/badgeinfo
+          description: Great Amenities
+        rewards:
+        - program_name: Driver Rewards Program
+          tier: Elite
+          valid_through: '2026-05-15'
+          points: '117'
+        employer: GigAndGo
+        created_at: '2023-03-15T13:19:55.723Z'
+        updated_at: '2023-03-15T13:19:55.723Z'
+        metadata: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the rating object.
+        account:
+          type: string
+          format: uuid
+          description: ID of the account associated with the rating object.
+        rating:
+          type: string
+          description: A normalized average of the user's ratings between 0 and 5. Overall average, as payroll system do not typically provide ratings information for individual events.
+        acceptance_rate:
+          type: string
+          description: Percent of the time the user accepts a task. Decimal between 0 and 1.
+        ontime_rate:
+          type: string
+          description: Percent of the time the user completes a task on time. Decimal between 0 and 1.
+        achievements:
+          type: array
+          items:
+            type: object
+          description: Individual ratings or achievement information, sorted into relevant key:value pairs. Varies by gig platform.
+        rewards:
+          type: array
+          description: Rewards program information.
+          items:
+            type: object
+            properties:
+              program_name:
+                type: string
+                description: Name of the rewards program.
+              tier:
+                type: string
+                description: Current rewards program tier or status.
+              valid_through:
+                type: string
+                description: Date until the current tier or status is valid.
+              points:
+                type: string
+                description: Points earned in the current rewards period.
+        employer:
+          type: string
+          description: Name of the user's employer.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the rating object was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the rating object most recently changed.
+        metadata:
+          type: object
+          description: Additional, non-categorized information.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

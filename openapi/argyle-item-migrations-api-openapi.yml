@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Item Migrations API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Item Migrations
+paths:
+  /v2/item-migrations:
+    post:
+      summary: Migrate a Link item ID
+      description: 'Returns the Item ID''s that correspond to a provided list of Link item ID''s.
+
+
+        - Link item ID''s were used in Link 4 initializations.
+
+        - Item ID''s are used in [Link 5 initializations](/link/initialization).
+
+
+        Item ID''s use the convention: "item_[9 digits]" - `"item_123456789"` for example.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                link_items:
+                  type: array
+                  description: Array of Link item ID's.
+                  items:
+                    type: string
+              required:
+              - link_items
+            example:
+              link_items:
+              - GigAndGo
+              - GigDrive
+              - GigAntic
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                description: 'Object keyed by Link item ID''s.
+
+                  Each key maps to an object containing the corresponding Item ID.
+
+                  '
+              example:
+                GigAndGo:
+                  id: item_000000003
+                GigDrive:
+                  id: item_000000042
+                GigAntic:
+                  id: item_000000819
+      tags:
+      - Item Migrations
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

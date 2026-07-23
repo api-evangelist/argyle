@@ -1,0 +1,396 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Reports API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Reports
+paths:
+  /v2/reports/{type}:
+    post:
+      summary: Generate a report
+      description: 'Generates a new report and returns a report object.
+
+
+        <Warning>There is a daily limit of 10 reports per user to prevent excessive report generation due to accidental client-side errors.</Warning>
+
+
+        If the daily report limit is reached, deleting a previously generated report from the same 24 hour period will allow another report to be generated.
+
+        '
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - voe
+          - voie
+          - voe-mortgage
+          - voie-mortgage
+        description: 'The type of report to generate.
+
+
+          - `voie` - Verification of Income and Employment
+
+          - `voe` - Verification of Employment
+
+          - `voie-mortgage` - Verification of Income and Employment, integrated with Fannie Mae''s Desktop Underwriter (DU) validation service and Freddie Mac''s asset and income modeler (AIM)
+
+          - `voe-mortgage` - Verification of Employment, integrated with Fannie Mae''s Desktop Underwriter (DU) validation service and Freddie Mac''s asset and income modeler (AIM)
+
+
+          Visit our [Day 1 Certainty and AIM guide](/integrations/d1c-aim/verifications#requesting-verification-reports) for more information on mortgage reports.
+
+          '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  format: uuid
+                  description: ID of the user.
+                metadata:
+                  type: object
+                  description: Information for internal use, structured as a JSON object.
+              required:
+              - user
+            example:
+              user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+              example:
+                id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                reference_id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                generated_at: '2023-03-09T16:22:06.081Z'
+                created_at: '2023-03-09T16:22:06.081Z'
+                type: voie
+                status: generating
+                file_url: www.argyle.com/storagename/pdf
+                json_url: www.argyle.com/storagename/json
+                accounts:
+                - id: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  item: item_123456789
+                  last_synced_at: '2023-03-09T14:08:25.069Z'
+                - id: 0185a8b8-60eb-80ca-7482-5f24504573f7
+                  item: item_000000001
+                  last_synced_at: '2023-03-01T05:10:59.558Z'
+                metadata: {}
+                last_synced_at: '2023-03-09T14:08:25.069Z'
+                external_id: July_Connection
+      tags:
+      - Reports
+  /v2/reports:
+    get:
+      summary: List all reports
+      description: Returns a paginated list of all report objects.
+      parameters:
+      - name: user
+        in: query
+        schema:
+          type: string
+          format: uuid
+        description: Filter by user ID.
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        description: 'Number of report objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Report'
+              example:
+                next: https://api-sandbox.argyle.com/v2/reports?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 5b3fa756-1d76-43e1-55f6-e29fc6ae535d
+                  user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  reference_id: 5b3fa756-1d76-43e1-55f6-e29fc6ae535d
+                  generated_at: '2023-03-01T22:45:08.916Z'
+                  created_at: '2023-03-01T22:45:08.916Z'
+                  type: voe
+                  status: generated
+                  file_url: www.argyle.com/storagename/pdf
+                  json_url: www.argyle.com/storagename/json
+                  last_synced_at: '2023-03-01T19:20:21.576Z'
+                  accounts:
+                  - id: 018e6a25-130b-3b98-a3ca-1658cb3afc26
+                    item: item_987654321
+                    last_synced_at: '2023-03-01T19:20:21.576363Z'
+                  metadata: {}
+                  external_id: null
+                - id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                  user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  reference_id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                  generated_at: '2023-03-09T16:22:06.081Z'
+                  created_at: '2023-03-09T16:22:06.081Z'
+                  type: voie
+                  status: generated
+                  file_url: www.argyle.com/storagename/pdf
+                  json_url: www.argyle.com/storagename/json
+                  last_synced_at: '2023-03-09T14:08:25.069Z'
+                  accounts:
+                  - id: 0187c66e-e7e5-811c-b006-2232f00f426a
+                    item: item_123456789
+                    last_synced_at: '2023-03-09T14:08:25.069105Z'
+                  - id: 0185a8b8-60eb-80ca-7482-5f24504573f7
+                    item: item_000000001
+                    last_synced_at: '2023-03-01T05:10:59.558295Z'
+                  metadata: {}
+                  external_id: July_Connection
+      tags:
+      - Reports
+  /v2/reports/{id}:
+    get:
+      summary: Retrieve a report
+      description: Retrieves a report object.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the report object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+              example:
+                id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                reference_id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+                generated_at: '2023-03-09T16:22:06.081Z'
+                created_at: '2023-03-09T16:22:06.081Z'
+                type: voie
+                status: generated
+                file_url: www.argyle.com/storagename/pdf
+                json_url: www.argyle.com/storagename/json
+                last_synced_at: '2023-03-09T14:08:25.069Z'
+                accounts:
+                - id: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  item: item_123456789
+                  last_synced_at: '2023-03-09T14:08:25.069105Z'
+                - id: 0185a8b8-60eb-80ca-7482-5f24504573f7
+                  item: item_000000001
+                  last_synced_at: '2023-03-01T05:10:59.558295Z'
+                metadata: {}
+                external_id: July_Connection
+      tags:
+      - Reports
+    delete:
+      summary: Delete a report
+      description: 'Deletes a report object.
+
+        '
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the report object to be deleted.
+      responses:
+        '204':
+          description: '204 status code: No content.'
+      tags:
+      - Reports
+components:
+  schemas:
+    Report:
+      type: object
+      example:
+        id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+        user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        reference_id: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+        generated_at: '2023-03-09T16:22:06.081Z'
+        created_at: '2023-03-09T16:22:06.081Z'
+        type: voie
+        status: generated
+        file_url: www.argyle.com/storagename/pdf
+        json_url: www.argyle.com/storagename/json
+        last_synced_at: '2023-03-09T14:08:25.069Z'
+        accounts:
+        - id: 0187c66e-e7e5-811c-b006-2232f00f426a
+          item: item_123456789
+          last_synced_at: '2023-03-09T14:08:25.069105Z'
+        - id: 0185a8b8-60eb-80ca-7482-5f24504573f7
+          item: item_000000001
+          last_synced_at: '2023-03-01T05:10:59.558295Z'
+        metadata: {}
+        external_id: July_Connection
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 'Unique ID of the report object.
+
+
+            Also the "**Reference #**" on the report PDF.
+
+            '
+        user:
+          type: string
+          format: uuid
+          description: ID of the user associated with the report.
+        reference_id:
+          type: string
+          format: uuid
+          description: Report PDF identifier.
+          deprecated: true
+        generated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the report was requested.
+          deprecated: true
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the report was requested.
+        type:
+          type: string
+          enum:
+          - voe
+          - voie
+          - voe-mortgage
+          - voie-mortgage
+          description: 'The type of report.
+
+
+            - `voie` - Verification of Income and Employment
+
+            - `voe` - Verification of Employment
+
+            - `voie-mortgage` - Verification of Income and Employment, integrated with Fannie Mae''s Desktop Underwriter (DU) validation service and Freddie Mac''s asset and income modeler (AIM)
+
+            - `voe-mortgage` - Verification of Employment, integrated with Fannie Mae''s Desktop Underwriter (DU) validation service and Freddie Mac''s asset and income modeler (AIM)
+
+            '
+        status:
+          type: string
+          enum:
+          - waiting_for_sync
+          - generating
+          - generated
+          - failed
+          description: 'Progress of report generation.
+
+
+            - `waiting_for_sync`: Data from the connected payroll account is still being retrieved.
+
+            - `generating`: The report is being generated.
+
+            - `generated`: The report is ready to download.
+
+            - `failed`: A system error occurred, preventing report generation.
+
+            '
+        file_url:
+          type: string
+          description: 'Download link to the report PDF.
+
+
+            This static URL redirects to a download page that requires [Argyle authentication headers](/api-guide/overview#authentication). See the dropdown below for more information.
+
+
+            Implementation requirements for client-side applications:
+
+            '
+        json_url:
+          type: string
+          description: 'Download link to the report in JSON.
+
+
+            This static URL redirects to a download page that requires [Argyle authentication headers](/api-guide/overview#authentication). See the dropdown below for more information.
+
+            '
+        last_synced_at:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account used to generate the report was last scanned for new data before the report was generated. If multiple accounts were used, the more recent timestamp.
+
+
+            Used to populate the "Data as of" date on the report PDF.
+
+            '
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: ID of the account.
+              item:
+                type: string
+                description: ID of the Item in Link through which the account was connected.
+              last_synced_at:
+                type: string
+                format: date-time
+                description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last scanned for new data before the report was generated.
+          description: The accounts used to generate the report.
+        metadata:
+          type: object
+          description: Any metadata for internal use added when generating the report.
+        external_id:
+          type: string
+          description: The [external_id](/api-reference/users#object-external_id) of the user, otherwise `null`.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

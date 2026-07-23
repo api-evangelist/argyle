@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Vehicles API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Vehicles
+paths:
+  /v2/vehicles/{id}:
+    get:
+      summary: Retrieve a vehicle
+      description: Retrieves a vehicle object.
+      parameters:
+      - name: id
+        in: path
+        description: ID of the vehicle object to be retrieved.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+              example:
+                id: 01763a69-5cbe-2edb-ade1-5591157c354d
+                account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                identification: AEWUQ7
+                make: Ford
+                model: Mondeo
+                type: car
+                year: 1998
+                vin: QUICELDKTRQJ4S33C
+                employer: GigAndGo
+                created_at: '2023-02-09T13:42:03.966Z'
+                updated_at: '2023-02-09T13:42:03.966Z'
+                metadata: {}
+      tags:
+      - Vehicles
+  /v2/vehicles:
+    get:
+      summary: List all vehicles
+      description: Returns a paginated list of all vehicle objects.
+      parameters:
+      - name: account
+        in: query
+        description: Filter by account ID.
+        schema:
+          type: string
+          format: uuid
+      - name: user
+        in: query
+        description: Filter by user ID.
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        in: query
+        description: 'Number of vehicle objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.
+
+          '
+        schema:
+          type: integer
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Vehicle'
+              example:
+                next: https://api-sandbox.argyle.com/v2/vehicles?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0176364c-c8a2-4d43-2a12-7b4146a829a9
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  identification: JASJ1Y
+                  make: Ford
+                  model: Focus
+                  type: car
+                  year: 2011
+                  vin: W081C4YIZQYE55DSE
+                  employer: GigAntic
+                  created_at: '2023-02-09T13:28:11.427Z'
+                  updated_at: '2023-02-09T13:32:13.215Z'
+                  metadata:
+                    source: gig platform
+                - id: 01763a69-5cbe-2edb-ade1-5591157c354d
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  identification: AEWUQ7
+                  make: Ford
+                  model: Mondeo
+                  type: car
+                  year: 1998
+                  vin: QUICELDKTRQJ4S33C
+                  employer: GigAndGo
+                  created_at: '2023-02-09T13:42:03.966Z'
+                  updated_at: '2023-02-09T13:42:03.966Z'
+                  metadata: {}
+      tags:
+      - Vehicles
+components:
+  schemas:
+    Vehicle:
+      type: object
+      example:
+        id: 01763a69-5cbe-2edb-ade1-5591157c354d
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        identification: AEWUQ7
+        make: Ford
+        model: Mondeo
+        type: car
+        year: 1998
+        vin: QUICELDKTRQJ4S33C
+        employer: GigAndGo
+        created_at: '2023-02-09T13:42:03.966Z'
+        updated_at: '2023-02-09T13:42:03.966Z'
+        metadata: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the vehicle.
+        account:
+          type: string
+          format: uuid
+          description: ID of the account associated with the vehicle.
+        identification:
+          type: string
+          description: License plate number or similar vehicle identifier.
+        make:
+          type: string
+          description: Vehicle brand or manufacturer.
+        model:
+          type: string
+          description: Vehicle model.
+        type:
+          type: string
+          enum:
+          - car
+          - pedestrian
+          - ebike
+          - bicycle
+          - scooter
+          - motorcycle
+          - other
+          description: The type of vehicle.
+        year:
+          type: string
+          description: Year the vehicle was made.
+        vin:
+          type: string
+          description: Vehicle Identification Number (VIN).
+        employer:
+          type: string
+          description: Name of the user's employer.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the vehicle object was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the vehicle object most recently changed.
+        metadata:
+          type: object
+          description: Additional, non-categorized information.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

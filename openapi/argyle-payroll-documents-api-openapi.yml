@@ -1,0 +1,493 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Payroll Documents API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Payroll Documents
+paths:
+  /v2/payroll-documents/{id}:
+    get:
+      summary: Retrieve a payroll document
+      description: Retrieves a payroll document object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the payroll document object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayrollDocument'
+              example:
+                id: 0183b2c1-02e5-a5e5-38f2-ecd51a5cf3d6
+                account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                document_number: ced46eb3-7586-3cd7-2418-8eb9482bc3ec
+                available_date: '2019-03-14T17:46:25Z'
+                expiration_date: '2027-03-12T17:46:25Z'
+                employer: GigAndGo
+                employment: 42d6531c-520a-26b9-35c3-b7137a6d205a
+                document_type: drivers-licence
+                document_type_description: Driver's license
+                file_url: api.argyle.com/v2/payroll-documents/{id}/file
+                created_at: '2023-03-13T17:46:28.240Z'
+                updated_at: '2023-03-13T17:46:28.240Z'
+                ocr_data: {}
+                metadata: {}
+      tags:
+      - Payroll Documents
+  /v2/payroll-documents:
+    get:
+      summary: List all payroll documents
+      description: Returns a paginated list of all payroll document objects.
+      parameters:
+      - in: query
+        name: account
+        schema:
+          type: string
+          format: uuid
+        description: Filter by account ID.
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        description: Filter by user ID.
+      - in: query
+        name: employment
+        schema:
+          type: string
+          format: uuid
+        description: Filter by employment ID.
+      - in: query
+        name: from_available_date
+        schema:
+          type: string
+          format: date-time
+        description: 'Filter for payroll documents with an `available_date` on or after this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+          '
+      - in: query
+        name: to_available_date
+        schema:
+          type: string
+          format: date-time
+        description: 'Filter for payroll documents with an `available_date` on or before this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+          '
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of payroll document objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PayrollDocument'
+              example:
+                next: https://api-sandbox.argyle.com/v2/payroll-documents?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0186dc02-05b6-b83f-c366-b39a267e1570
+                  account: 0185a8b8-60eb-80ca-7482-5f24504573f7
+                  document_number: null
+                  available_date: '2020-05-13T17:25:59Z'
+                  expiration_date: null
+                  employer: Whole Goods
+                  employment: 0186a27d-e5c6-735a-a359-6315b34d544c
+                  document_type: payout-statement
+                  document_type_description: null
+                  file_url: api.argyle.com/v2/payroll-documents/{id}/file
+                  created_at: '2023-03-13T17:27:01.501Z'
+                  updated_at: '2023-03-13T17:27:01.501Z'
+                  ocr_data: {}
+                  metadata: {}
+                - id: 0176dc14-bb37-402a-7be1-f5261759fae7
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  document_number: ced46eb3-7586-3cd7-2418-8eb9482bc3ec
+                  available_date: '2019-03-14T17:46:25Z'
+                  expiration_date: '2027-03-12T17:46:25Z'
+                  employer: GigAndGo
+                  employment: 42d6531c-520a-26b9-35c3-b7137a6d205a
+                  document_type: drivers-licence
+                  document_type_description: Driver's license
+                  file_url: api.argyle.com/v2/payroll-documents/{id}/file
+                  created_at: '2023-03-13T17:46:28.240Z'
+                  updated_at: '2023-03-13T17:46:28.240Z'
+                  ocr_data: {}
+                  metadata: {}
+      tags:
+      - Payroll Documents
+components:
+  schemas:
+    PayrollDocument:
+      type: object
+      example:
+        id: 0176dc14-bb37-402a-7be1-f5261759fae7
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        document_number: ced46eb3-7586-3cd7-2418-8eb9482bc3ec
+        available_date: '2021-03-14T17:46:25Z'
+        expiration_date: null
+        employer: GigAndGo
+        employment: 42d6531c-520a-26b9-35c3-b7137a6d205a
+        document_type: '1099'
+        document_type_description: 1099 Form 2020
+        file_url: api.argyle.com/partners/v2/payroll-documents/{id}/file
+        created_at: '2023-03-13T17:46:28.240Z'
+        updated_at: '2023-03-13T17:46:28.240Z'
+        ocr_data:
+          form_type: 1099-MISC
+          omb_no: 1545-0115
+          year: '2020'
+          form:
+            recipient:
+              name: BOB JONES
+              address:
+                city: null
+                country: null
+                line1: 759 VICTORIA PLAZA
+                line2: null
+                postal_code: '10014'
+                state: NY
+            recipient_tin: 111-11-1112
+            payer:
+              name: WAREHOUSE SERVICES INC
+              address:
+                city: SEATTLE
+                country: null
+                line1: 202 WESTLAKE AVE N (55
+                line2: null
+                postal_code: '98109'
+                state: WA
+            payer_tin: 11-1111112
+            account_no: 000110CHIC/NHO
+            rent_1: null
+            royalties_2: null
+            other_inc_3: null
+            fed_inc_4: null
+            fishing_5: null
+            med_care_6: null
+            comp_7: null
+            crop_insurance_10: null
+            golden_parachute_13: null
+            gross_attorney_14: null
+            sec_409a_defer_15a: null
+            sec_409a_inc_15b: null
+            state_tax_16: null
+            state_no_17: null
+            state_inc: null
+          warnings:
+          - field_name: rent_1
+            message: rent_1 value empty/bad format
+            severity: 0
+          - field_name: royalties_2
+            message: royalties_2 value empty/bad format
+            severity: 0
+          - field_name: other_inc_3
+            message: other_inc_3 value empty/bad format
+            severity: 0
+          - field_name: fed_inc_4
+            message: fed_inc_4 value empty/bad format
+            severity: 0
+          - field_name: fishing_5
+            message: fishing_5 value empty/bad format
+            severity: 0
+          - field_name: med_care_6
+            message: med_care_6 value empty/bad format
+            severity: 0
+          - field_name: comp_7
+            message: comp_7 not found
+            severity: 0
+          - field_name: crop_insurance_10
+            message: crop_insurance_10 value empty/bad format
+            severity: 0
+          - field_name: golden_parachute_13
+            message: golden_parachute_13 value empty/bad format
+            severity: 0
+          - field_name: gross_attorney_14
+            message: gross_attorney_14 value empty/bad format
+            severity: 0
+          - field_name: sec_409a_defer_15a
+            message: sec_409a_defer_15a value empty/bad format
+            severity: 0
+          - field_name: sec_409a_inc_15b
+            message: sec_409a_inc_15b not found
+            severity: 0
+          - field_name: state_tax_16
+            message: state_tax_16 value empty/bad format
+            severity: 0
+          - field_name: state_no_17
+            message: state_no_17 value empty/bad format
+            severity: 0
+          - field_name: state_inc
+            message: state_inc value empty/bad format
+            severity: 0
+          confidence: EXACT_MATCH
+          ocr_page_count: 1
+        metadata: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 'Unique ID of the payroll document object.
+
+
+            Also the `payroll_document` ID value of the [paystub object](/api-reference/paystubs#object).
+
+            '
+        account:
+          type: string
+          format: uuid
+          description: ID of the account where the payroll document was sourced.
+        document_number:
+          type: string
+          description: Identification number that appears on the payroll document.
+        available_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the payroll document was made available to the user on the underlying payroll system.
+        expiration_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when payroll document (such as a driver's license) expires.
+        employer:
+          type: string
+          description: Employer name.
+        employment:
+          type: string
+          description: '[Employment](/api-reference/employments) ID. Can be used as a filter when [listing payroll documents](/api-reference/partners-data-sets/list-all-payroll-documents).
+
+            '
+        document_type:
+          type: string
+          description: The type of payroll document, as returned by the payroll system. The following values are the most common, but document_type is not restricted to these values.
+          enum:
+          - payout-statement
+          - W-2
+          - W-4
+          - W-9
+          - 1095
+          - 1095-C
+          - 1099
+          - profile-picture
+          - drivers-license
+          - vehicle-insurance
+          - vehicle-registration
+          - vehicle-inspection
+          - other
+        document_type_description:
+          type: string
+          description: Description of the payroll document type.
+        file_url:
+          type: string
+          description: "URL linking to the original payroll document file.\n\nThis static URL redirects to a download page that requires [Argyle authentication headers](/api-guide/overview#authentication). See the dropdown below for more information.\n\n**Implementation requirements for client-side applications**\n  1. Ensure your HTTP client or library (e.g. Axios, Python requests, etc.) or similar tool is configured to pursue redirects. Most tools support this functionality.\n\n  2. [Basic authentication headers](https://docs.argyle.com/api-guide/overview#authentication) for Argyle must be appended to the file download request.\n"
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the payroll document object was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the payroll document object most recently changed.
+        ocr_data:
+          type: object
+          description: 'Argyle scans and provides additional information for 1099 and W-2 documents retrieved from connected payroll accounts.
+
+            '
+          properties:
+            form_type:
+              type: string
+              description: "The specific type of 1099 or W-2 document.\n\n  **W-2 and W-2c**\n    W-2: Wage and Tax Statement\n    W-2c: Corrected Wage and Tax Statement\n\n    - **`control_no_d`**: Identifies the W-2 in the payer's records.  \n    - **`comp_1`**: The amount of wages, tips, and other compensation.  \n    - **`fed_income_tax_2`**: The amount of federal income tax withheld.  \n    - **`ss_wages_3`**: The amount of social security wages.  \n    - **`ss_tax_4`**: The amount of social security tax withheld.  \n    - **`med_wages_5`**: The amount of Medicare wages and tips.  \n    - **`med_tax_6`**: The amount of Medicare tax withheld.  \n    - **`ss_tips_7`**: The amount of social security tips.  \n    - **`tips_8`**: The amount of allocated tips.  \n    - **`verification_9`**: Code used to identify the accuracy of the form's contents for electronic tax returns.  \n    - **`benefits_10`**: The amount of dependent care benefits.  \n    - **`nonqualified_11`**: The amount of contributions made to a non-qualified savings plan.  \n    - **`uncollected_ss_RRTA_12a`**: The amount of uncollected social security or RRTA tax on tips.  \n    - **`uncollected_med_tax_12b`**: The amount of uncollected Medicare tax on tips.  \n    - **`insurance_12c`**: The amount of taxable costs of group-term life insurance over $50,000.  \n    - **`plan_401k_12d`**: The amount of elective deferrals related to contributions to 401-k plans.  \n    - **`other_14`**: Used to report additional tax information.  \n    - **`employers_state_15`**: Lists the states for which the employer withheld the taxes and to which state the employer remitted the taxes, indicated by the employer's state ID number.  \n    - **`state_wages_16`**: The amount of state wages, tips, etc.  \n    - **`state_income_tax_17`**: The amount of state income tax.  \n    - **`local_wages_18`**: The amount of local wages, tips, etc.  \n    - **`local_income_tax_19`**: The amount of local income tax.  \n    - **`locality_name_20`**: The name of the locality where taxes indicated in the `local_income_tax_19` field are paid.  \n\n  **1099-NEC**\n    1099-NEC: Non-Employee Compensation\n\n    - **`account_no`**: A code that is unique to the recipient and the form, for example, a bank account number, employee ID, etc.  \n    - **`comp_1`**: The amount of non-employee compensation.  \n    - **`fed_inc_tax_4`**: The amount of federal income tax withheld.  \n    - **`state_tax_5`**: The amount of state tax withheld.  \n    - **`state_no_6`**: The abbreviated name of the state and the payer's state tax identification number.  \n    - **`state_inc_7`**: The amount of state income.  \n\n  **1099-SSA**\n    1099-SSA: Social Security Benefits\n\n    - **`recipient_name_1`**: The name of the recipient.  \n    - **`benefits_3`**: The amount of benefits paid.  \n    - **`benefits_ssa_4`**: The amount of benefits repaid to the Social Security Administration (SSA).  \n    - **`net_benefits_5`**: The amount of net benefits.  \n    - **`fed_inc_tax_6`**: The amount of voluntary federal income tax withholding.  \n    - **`claim_no`**: The social security number under which a claim is filed or benefits are paid.  \n\n  **1099-MISC**\n    1099-MISC: Miscellaneous Income\n\n    - **`account_no`**: A code that is unique to the recipient and the form, for example, a bank account number, employee ID, etc.  \n    - **`rent_1`**: The amount of rental income.  \n    - **`royalties_2`**: The amount of royalty income.  \n    - **`other_inc_3`**: Other income.  \n    - **`fed_inc_4`**: The amount of federal income tax withheld.  \n    - **`fishing_5`**: The amount of fishing boat proceeds.  \n    - **`med_care_6`**: The amount of medical and health care payment.  \n    - **`comp_7`**: The amount of non-employee compensation.  \n    - **`crop_insurance_10`**: The amount of crop insurance proceeds.  \n    - **`golden_parachute_13`**: The amount of excess golden parachute payments.  \n    - **`gross_attorney_14`**: The amount of gross proceeds paid to an attorney.  \n    - **`sec_409a_defer_15a`**: The amount of section 409A deferrals.  \n    - **`sec_409a_inc_15b`**: The amount of section 409A income.  \n    - **`state_tax_16`**: The amount of state tax withheld.  \n    - **`state_no_17`**: The abbreviated name of the state and the payer's state tax identification number.  \n    - **`state_inc`**: The amount of state income.  \n\n  **1099-INT**\n    1099-INT: Interest Income\n\n    - **`payer_rtn`**: The payer's RTN (Routing and Transit Number).  \n    - **`account_no`**: A code that is unique to the recipient and the form, for example, a bank account number, employee ID, etc.  \n    - **`interest_1`**: The amount of interest income.  \n    - **`withdraw_penalty_2`**: The amount of early withdrawal penalty.  \n    - **`interest_obligations_3`**: The amount of interest earned on U.S. savings bonds or Treasury notes, bills, or bonds.  \n    - **`fed_inc_tax_4`**: The amount of federal income tax withheld.  \n    - **`investment_5`**: The amount of investment expenses.  \n    - **`foreign_tax_6`**: The amount of foreign tax paid.  \n    - **`foreign_possession_7`**: Shows the country or U.S. possession to which the foreign tax was paid.  \n\n  **1099-R**\n    1099-R: Distributions from Pensions and Annuities\n\n    - **`control_no`**: The code that uniquely identifies a particular 1099-R document in the employer's records.  \n    - **`gross_1`**: The amount of gross distribution.  \n    - **`tax_amount_2a`**: The amount of distribution that is taxable.  \n    - **`fed_inc_tax_4`**: The amount of federal income tax withheld.  \n    - **`distribution_code_7`**: A code that identifies the type of distribution received.  \n    - **`distribution_percent_9`**: The percentage of total distribution received.  \n    - **`state_tax_14`**: The amount of state tax withheld.  \n    - **`state_no_15`**: The abbreviated name of the state and the payer's state tax identification number.  \n\n  **1099-G**\n    1099-G: Certain Government Payments\n\n    - **`a_unemployment_comp_1`**: The amount of unemployment compensation.  \n    - **`a_state_inc_tax_2`**: The amount of state or local income tax refunds, credits, or offsets.  \n    - **`a_benefits_this_year_3`**: The amount of benefits repaid for the current year.  \n    - **`a_benefits_prev_year_3`**: The amount of benefits repaid for the previous year.  \n    - **`a_fed_inc_tax_4`**: The amount of federal income tax withheld.  \n    - **`b_unemployment_comp_1`**: The amount of unemployment compensation, paid family leave.  \n    - **`b_state_inc_tax_2`**: The amount of state or local income tax refunds, credits, or offsets.  \n    - **`b_benefits_this_year_3`**: The amount of benefits repaid for the current year.  \n    - **`b_benefits_prev_year_3`**: The amount of benefits repaid for the previous year.  \n    - **`b_fed_inc_tax_4`**: The amount of federal income tax withheld.  \n\n  **1099-K**\n    1099-K: Payment Card and Third Party Network Transactions\n\n    - **`pse_name_phone`**: Payment settlement entity's name and telephone number.  \n    - **`account_no`**: A code that is unique to the recipient and the form, for example, a bank account number, employee ID, etc.  \n    - **`gross_1a`**: Gross amount of payment card/third-party network transactions.  \n    - **`gross_1b`**: The amount of Card Not Present transactions.  \n    - **`category_code_2`**: Merchant category code.  \n    - **`no_transactions_3`**: Number of payment transactions.  \n    - **`fed_inc_tax_4`**: The amount of federal income tax withheld.  \n    - **`january_5a`**: The total reportable payment transactions for this month.  \n    - **`february_5b`**: The total reportable payment transactions for this month.  \n    - **`march_5c`**: The total reportable payment transactions for this month.  \n    - **`april_5d`**: The total reportable payment transactions for this month.  \n    - **`may_5e`**: The total reportable payment transactions for this month.  \n    - **`june_5f`**: The total reportable payment transactions for this month.  \n    - **`july_5g`**: The total reportable payment transactions for this month.  \n    - **`august_5h`**: The total reportable payment transactions for this month.  \n    - **`september_5i`**: The total reportable payment transactions for this month.  \n    - **`october_5j`**: The total reportable payment transactions for this month.  \n    - **`november_5k`**: The total reportable payment transactions for this month.  \n    - **`december_5l`**: The total reportable payment transactions for this month.  \n    - **`state_6`**: State.  \n    - **`state_id_7`**: State identification number.  \n    - **`state_income_8`**: The amount of state income tax withheld.  \n"
+              enum:
+              - W-2
+              - W-2c
+              - 1099-NEC
+              - 1099-SSA
+              - 1099-MISC
+              - 1099-INT
+              - 1099-R
+              - 1099-G
+              - 1099-K
+            omb_no:
+              type: string
+              description: OMB reference number.
+            year:
+              type: string
+              description: Calendar year.
+            form:
+              type: object
+              description: Information scanned from the payroll document.
+              properties:
+                recipient:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Recipient name, as it appears on the form.
+                    address:
+                      type: object
+                      description: Recipient address, as it appears on the form.
+                      properties:
+                        city:
+                          type: string
+                          description: Name of the city, town, district, or similar regional entity.
+                        country:
+                          type: string
+                          description: Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
+                        line1:
+                          type: string
+                          description: Address-Line 1, usually street address or P.O. Box information.
+                        line2:
+                          type: string
+                          description: Address-Line 2, usually the apartment or unit number.
+                        postal_code:
+                          type: string
+                          description: Zip code, or equivalent.
+                        state:
+                          type: string
+                          description: State, county, province, region, or equivalent.
+                recipient_tin:
+                  type: string
+                  description: Recipient's tax identification number.
+                payer:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Payer name, as it appears on the form.
+                    address:
+                      type: object
+                      description: Payer address, as it appears on the form.
+                      properties:
+                        city:
+                          type: string
+                          description: Name of the city, town, district, or similar regional entity.
+                        country:
+                          type: string
+                          description: Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
+                        line1:
+                          type: string
+                          description: Address-Line 1, usually street address or P.O. Box information.
+                        line2:
+                          type: string
+                          description: Address-Line 2, usually the apartment or unit number.
+                        postal_code:
+                          type: string
+                          description: Zip code, or equivalent.
+                        state:
+                          type: string
+                          description: State, county, province, region, or equivalent.
+                payer_tin:
+                  type: string
+                  description: Payer's tax identification number.
+            warnings:
+              type: array
+              description: Information on scan quality and missing fields.
+              items:
+                type: object
+                properties:
+                  field_name:
+                    type: string
+                    description: Which field encountered the error.
+                  message:
+                    type: string
+                    description: The `field_name` and warning message.
+                    enum:
+                    - not found
+                    - value empty/bad format
+                    - obfuscated
+                    - obfuscated last two digits given
+                    - obfuscated last four digits given
+                    - 'field_name had non numeric chars removed, original value: <value>'
+                    - 'field_name invalid - non numeric value, original value: <value>'
+                  severity:
+                    type: number
+                    format: float
+                    description: 'The severity of the encountered issue.
+
+
+                      - `0.0`: The field was found, but its value was unclear or obfuscated.
+
+                      - `0.5`: A field or value was not found, but unclear if it needed to be present.
+
+                      - `1.0`: A field or value was not found.
+
+                      '
+                    enum:
+                    - 0.0
+                    - 0.5
+                    - 1.0
+            confidence:
+              type: string
+              description: "Indicator of how successful the scanning process went.\n\n- **`EXACT_MATCH`**: No errors found.  \n- **`HIGH`**: 1 error was found.  \n- **`MEDIUM`**: 2 errors were found.  \n- **`LOW`**: 3 errors were found.  \n- **`NO_MATCH`**: 4 or more errors were found. This typically indicates the document's `form_type` did not match the scanned document.  \n"
+              enum:
+              - EXACT_MATCH
+              - HIGH
+              - MEDIUM
+              - LOW
+              - NO_MATCH
+            ocr_page_count:
+              type: integer
+              description: Number of pages scanned.
+            error:
+              type: string
+              description: "An error was encountered during document retrieval.\n\n- **`invalid_document`**: The document was empty, cropped, missing required fields, or otherwise incomplete.  \n- **`type_mismatch`**: The document does not match the classified type.  \n- **`unrecognized_document_type`**: The document could not be classified.  \n- **`unsupported_document_type`**: The document type is not supported.  \n- **`unsupported_document_subtype`**: The document sub-type (e.g., 1099-C) is not supported.  \n- **`unknown`**: An unknown issue occurred. The Argyle team will automatically be notified and will investigate.  \n"
+              enum:
+              - invalid_document
+              - type_mismatch
+              - unrecognized_document_type
+              - unsupported_document_type
+              - unsupported_document_subtype
+              - unknown
+              nullable: true
+        metadata:
+          type: object
+          description: Additional, non-categorized information.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

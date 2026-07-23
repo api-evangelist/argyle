@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts User Tokens API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: User Tokens
+paths:
+  /v2/user-tokens:
+    post:
+      summary: Create a user token
+      description: 'Creates a new user token from the `id` of an existing user for direct embedded Link initializations.
+
+
+        <Note>
+
+        [Creating a new user](/api-reference/users#create) will also return a user token in the response.
+
+        </Note>
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserTokenRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserTokenResponse'
+              example:
+                user_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIxNDRhMTRkNJ04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2NzgzOTUwMTEsImZpZCI6ImMyNzFhODRlLWM2MjQtNDNkYS05OGMyLTQzODZkNTk1OWQ4YiIsImlhdCI6MTY3ODM5MTQxMSwiaXNzIjoiYXJneWxlLWNvcmUtYXV0aC1kZXYiLCJqdGkiOiI4ZTk1MTBmNC00YzVlLTRlOTAtOTIyNy1kNjg2MTk3MmMxOTAiLCJzdWIiOiIwMTg2YzRiOC04ZmExLTYyYjMtNDlkZi05NGIzZTE4Y2E4YTciLCJ1c2VyX2lkIjoiMDE4NmM0YjgtOGZhMS02MmIzLTQ5ZGYtOTRiM2UxOGNhOGE3In0.oLrxtzfNHG1RZ85Z4q7VUiv2-kufXmMINJFHeRIjvWo
+      tags:
+      - User Tokens
+components:
+  schemas:
+    CreateUserTokenRequest:
+      type: object
+      properties:
+        user:
+          type: string
+          format: uuid
+          description: ID of the user object.
+      required:
+      - user
+    CreateUserTokenResponse:
+      type: object
+      properties:
+        user_token:
+          type: string
+          description: The generated user token.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

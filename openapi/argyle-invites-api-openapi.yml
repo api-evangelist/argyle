@@ -1,0 +1,765 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Invites API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Invites
+paths:
+  /v2/invites:
+    post:
+      summary: Send an invite
+      description: 'Immediately sends an invite via email, SMS, or both.
+
+        Returns an invite object in the response.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/SendInviteRequest'
+              required:
+              - first_name
+              - last_name
+            examples:
+              default:
+                value:
+                  first_name: Sarah
+                  last_name: Longfield
+                  phone_number: 212-555-5555
+                  email: sarah@email.com
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteObject'
+              example:
+                id: 0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                user_token: bcJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWEiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2ODc3OTMzODAsImZpZCI6IjUyYWM3ZFFiLTI1MzAtNGYyNy04NTZlLTkwOTk1ZDA4NWJkMCIsImlhdCI6MTY4Nzc4OTc4MCwiaXNzIjoiYXJneWxlLWNvcmUtYXV1aC1kZXYiLCJqdGkiOiI2ZWJiOGIxMS0wYzFjLTRiNjEtYmI5NS04ZGQ0YzA0OGQwNzUiLCJzdWIiOiIwMTg4ZjgxYy0zZTFkLTRlZDEtMjEyYy02NmE3YzE4YzVjYzMiLCJ1c2VyX2lkIjoiMDE4OGY4MWMtM2UxZC00ZWQxLTIxMmMtNjZhN2MxN2M1Y2MzIn0.TNiZojOiiXtPVamyCDjz4f2GwR4TA8x6JR3RwjTECjY
+                email: sarah@email.com
+                phone_number: 212-555-5555
+                full_name: Sarah Longfield
+                first_name: Sarah
+                last_name: Longfield
+                revoked_at: null
+                status: sent
+                group_id: d8a07e5b-13a3-11ef-af7e-c7eb00762562
+                url: https://verify.argyle.com/connect/0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                created_at: '2023-03-09T23:57:05.756Z'
+                updated_at: '2023-03-09T23:57:05.756Z'
+                invited_at: '2023-03-09T23:57:05.756Z'
+                flow_id: 8DRRA4XC
+                flow_items:
+                - item_000000001
+                - item_000000002
+                reply_to:
+                - person1@email.com
+                - person2@email.com
+                deliveries:
+                - id: d7c85e44-9729-11f0-b297-f3718e19503e
+                  method: email
+                  status: sent
+                  sent_at: '2023-03-09T23:57:24.000Z'
+                  updated_at: '2023-03-09T23:57:24.000Z'
+                invite_template_id: null
+      tags:
+      - Invites
+    get:
+      summary: List all invites
+      description: Returns an object containing all invite objects.
+      parameters:
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: 'Filter invites by [status](#object-status).
+
+
+          Multiple status values can be searched at once using either method:
+
+
+          1. `/v2/invites?status=sent,initiated`
+
+          2. `/v2/invites?status=sent&status=initiated`
+
+          '
+      - in: query
+        name: reply_to
+        schema:
+          type: string
+        description: Filter invites for a specific [`reply_to`](#object-reply_to) email.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of invite objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.'
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InviteObject'
+              example:
+                next: https://api-sandbox.argyle.com/v2/invites?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                  user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  user_token: null
+                  email: sarah@email.com
+                  phone_number: 212-555-5555
+                  full_name: Sarah Longfield
+                  first_name: Sarah
+                  last_name: Longfield
+                  revoked_at: null
+                  status: completed
+                  group_id: d8a07e5b-13a3-11ef-af7e-c7eb00762562
+                  url: https://verify.argyle.com/connect/0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                  created_at: '2023-03-09T23:57:05.756Z'
+                  updated_at: '2023-03-09T23:57:05.756Z'
+                  invited_at: '2023-03-09T23:57:05.756Z'
+                  flow_id: 8DRRA4XC
+                  flow_items:
+                  - item_000000001
+                  - item_000000002
+                  reply_to:
+                  - person1@email.com
+                  - person2@email.com
+                  deliveries:
+                  - id: d7c85e44-9729-11f0-b297-f3718e19503e
+                    method: email
+                    status: opened
+                    sent_at: '2023-03-09T23:57:24.000Z'
+                    updated_at: '2023-03-09T23:57:24.000Z'
+                  invite_template_id: null
+                - id: 0186c5b8-8fa1-67b3-39af-14b3e18da8a7
+                  user: f3041cb5-bf31-21cb-aa05-df294c161fd9
+                  user_token: null
+                  email: bob@email.com
+                  phone_number: 212-867-5309
+                  full_name: Bob Jones
+                  first_name: Bob
+                  last_name: Jones
+                  revoked_at: null
+                  status: initiated
+                  group_id: null
+                  url: https://verify.argyle.com/connect/f3041cb5-bf31-21cb-aa05-df294c161fd9
+                  created_at: '2023-03-10T01:22:36.432Z'
+                  updated_at: '2023-03-10T01:22:36.432Z'
+                  invited_at: '2023-03-10T01:22:36.432Z'
+                  flow_id: R23CELUZ
+                  flow_items: []
+                  reply_to: []
+                  deliveries:
+                  - id: d7c85e44-9729-11f0-b297-f3718e19503e
+                    method: email
+                    status: opened
+                    sent_at: '2023-03-10T01:22:37.432Z'
+                    updated_at: '2023-03-12T01:22:37.432Z'
+                  invite_template_id: null
+      tags:
+      - Invites
+  /v2/invites/{id}:
+    get:
+      summary: Retrieve an invite
+      description: Retrieves an invite object.
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the invite to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteObject'
+              example:
+                id: 0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                user_token: bcJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWEiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2ODc3OTMzODAsImZpZCI6IjUyYWM3ZFFiLTI1MzAtNGYyNy04NTZlLTkwOTk1ZDA4NWJkMCIsImlhdCI6MTY4Nzc4OTc4MCwiaXNzIjoiYXJneWxlLWNvcmUtYXV1aC1kZXYiLCJqdGkiOiI2ZWJiOGIxMS0wYzFjLTRiNjEtYmI5NS04ZGQ0YzA0OGQwNzUiLCJzdWIiOiIwMTg4ZjgxYy0zZTFkLTRlZDEtMjEyYy02NmE3YzE4YzVjYzMiLCJ1c2VyX2lkIjoiMDE4OGY4MWMtM2UxZC00ZWQxLTIxMmMtNjZhN2MxN2M1Y2MzIn0.TNiZojOiiXtPVamyCDjz4f2GwR4TA8x6JR3RwjTECjY
+                email: sarah@email.com
+                phone_number: 212-555-5555
+                full_name: Sarah Longfield
+                first_name: Sarah
+                last_name: Longfield
+                revoked_at: null
+                status: sent
+                group_id: d8a07e5b-13a3-11ef-af7e-c7eb00762562
+                url: https://verify.argyle.com/connect/0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                created_at: '2023-03-09T23:57:05.756Z'
+                updated_at: '2023-03-09T23:57:05.756Z'
+                invited_at: '2023-03-09T23:57:05.756Z'
+                flow_id: 8DRRA4XC
+                flow_items:
+                - item_000000001
+                - item_000000002
+                reply_to:
+                - person1@email.com
+                - person2@email.com
+                deliveries:
+                - id: d7c85e44-9729-11f0-b297-f3718e19503e
+                  method: email
+                  status: sent
+                  sent_at: '2023-03-09T23:57:24.000Z'
+                  updated_at: '2023-03-09T03:24:58.000Z'
+                invite_template_id: null
+      tags:
+      - Invites
+    post:
+      summary: Re-send an invite
+      description: 'Re-sends a previously sent invite. Updates the `updated_at` and `invited_at` time.
+
+        '
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the invite to be re-sent.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteObject'
+              example:
+                id: 0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                user_token: bcJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWEiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2ODc3OTMzODAsImZpZCI6IjUyYWM3ZFFiLTI1MzAtNGYyNy04NTZlLTkwOTk1ZDA4NWJkMCIsImlhdCI6MTY4Nzc4OTc4MCwiaXNzIjoiYXJneWxlLWNvcmUtYXV1aC1kZXYiLCJqdGkiOiI2ZWJiOGIxMS0wYzFjLTRiNjEtYmI5NS04ZGQ0YzA0OGQwNzUiLCJzdWIiOiIwMTg4ZjgxYy0zZTFkLTRlZDEtMjEyYy02NmE3YzE4YzVjYzMiLCJ1c2VyX2lkIjoiMDE4OGY4MWMtM2UxZC00ZWQxLTIxMmMtNjZhN2MxN2M1Y2MzIn0.TNiZojOiiXtPVamyCDjz4f2GwR4TA8x6JR3RwjTECjY
+                email: sarah@email.com
+                phone_number: 212-555-5555
+                full_name: Sarah Longfield
+                first_name: Sarah
+                last_name: Longfield
+                revoked_at: null
+                status: sent
+                group_id: d8a07e5b-13a3-11ef-af7e-c7eb00762562
+                url: https://verify.argyle.com/connect/0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                created_at: '2023-03-09T23:57:05.756Z'
+                updated_at: '2023-03-09T23:57:05.756Z'
+                invited_at: '2023-03-09T23:57:05.756Z'
+                flow_id: 8DRRA4XC
+                flow_items:
+                - item_000000001
+                - item_000000002
+                reply_to:
+                - person1@email.com
+                - person2@email.com
+                deliveries:
+                - id: d7c85e44-9729-11f0-b297-f3718e19503e
+                  method: email
+                  status: sent
+                  sent_at: '2023-03-11T05:23:12.000Z'
+                  updated_at: '2023-03-11T05:23:12.000Z'
+                - id: d7c85e44-9729-11f0-b297-f3718e19503e
+                  method: email
+                  status: sent
+                  sent_at: '2023-03-09T23:57:24.000Z'
+                  updated_at: '2023-03-09T23:57:24.000Z'
+                invite_template_id: null
+      tags:
+      - Invites
+  /v2/invites/{id}/revoke:
+    post:
+      summary: Revoke an invite
+      description: 'Invalidates a previously sent invite.
+
+
+        If a user clicks a revoked invite URL, the landing page will notify the user the invite has expired.
+
+        '
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the invite to be revoked.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteObject'
+              example:
+                id: 0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                user_token: bcJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWEiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2ODc3OTMzODAsImZpZCI6IjUyYWM3ZFFiLTI1MzAtNGYyNy04NTZlLTkwOTk1ZDA4NWJkMCIsImlhdCI6MTY4Nzc4OTc4MCwiaXNzIjoiYXJneWxlLWNvcmUtYXV1aC1kZXYiLCJqdGkiOiI2ZWJiOGIxMS0wYzFjLTRiNjEtYmI5NS04ZGQ0YzA0OGQwNzUiLCJzdWIiOiIwMTg4ZjgxYy0zZTFkLTRlZDEtMjEyYy02NmE3YzE4YzVjYzMiLCJ1c2VyX2lkIjoiMDE4OGY4MWMtM2UxZC00ZWQxLTIxMmMtNjZhN2MxN2M1Y2MzIn0.TNiZojOiiXtPVamyCDjz4f2GwR4TA8x6JR3RwjTECjY
+                email: sarah@email.com
+                phone_number: 212-555-5555
+                full_name: Sarah Longfield
+                first_name: Sarah
+                last_name: Longfield
+                revoked_at: null
+                status: sent
+                group_id: d8a07e5b-13a3-11ef-af7e-c7eb00762562
+                url: https://verify.argyle.com/connect/0424137bc-edc5-35de-c1b5-1c3cddb4b227
+                created_at: '2023-03-09T23:57:05.756Z'
+                updated_at: '2023-03-09T23:57:05.756Z'
+                invited_at: '2023-03-09T23:57:05.756Z'
+                flow_id: 8DRRA4XC
+                flow_items:
+                - item_000000001
+                - item_000000002
+                reply_to:
+                - person1@email.com
+                - person2@email.com
+                deliveries:
+                - id: d7c85e44-9729-11f0-b297-f3718e19503e
+                  method: email
+                  status: sent
+                  sent_at: '2023-03-09T23:57:24.000Z'
+                  updated_at: '2023-03-09T23:57:24.000Z'
+                invite_template_id: null
+      tags:
+      - Invites
+components:
+  schemas:
+    SendInviteRequest:
+      type: object
+      required:
+      - first_name
+      - last_name
+      example:
+        first_name: Sarah
+        last_name: Longfield
+        phone_number: 212-555-5555
+        email: sarah@email.com
+      properties:
+        first_name:
+          type: string
+          description: First name of the invite recipient.
+        last_name:
+          type: string
+          description: Last name of the invite recipient.
+        full_name:
+          type: string
+          deprecated: true
+          description: 'Full name of the invite recipient.
+
+
+            **Required when** `first_name` and `last_name` are empty.
+
+            '
+        phone_number:
+          type: string
+          description: 'Phone number of the invite recipient.
+
+
+            **Required when** `email` is empty.
+
+            '
+        email:
+          type: string
+          description: 'Email address of the invite recipient.
+
+
+            **Required when** `phone_number` is empty.
+
+            '
+        external_id:
+          type: string
+          description: '[External identifier](/overview/data-structure/users#external-identifiers) often used to group users.
+
+            Will populate the `external_id` property of the [user object](/api-reference/users#object-external_id),
+
+            and can be used to search for users within the [Connections](https://console.argyle.com/connections) section of Console.
+
+            '
+        flow_id:
+          type: string
+          description: 'ID used to [customize](/console/flows/email-sms-templates) the user''s experience in Link.
+
+
+            **Warning:**
+
+            Must be the ID of an [Email/SMS Template](/console/flows/email-sms-templates).
+
+            '
+        flow_items:
+          type: array
+          items:
+            type: string
+          description: 'List of specific Items to display to the invite recipient. Instead of full search, [direct login](/workflows/account-connections#direct-login) will be used (one Item) or [list](/workflows/account-connections#list) (multiple Items).
+
+
+            **Warning:**
+
+            `flow_items` will override direct login Items associated with the `flow_id`.
+
+            '
+        dds_config:
+          type: object
+          description: 'Unencrypted target deposit destination configuration.
+
+            Adds a deposit switching flow after the user connects their payroll accounts.
+
+            '
+        override_invite_template:
+          type: object
+          deprecated: true
+          description: 'Overrides the text and branding of the email/SMS template specified via the [`flow_id`](/api-reference/invites#send-flow_id) property (or default invite settings, if no templates exist).
+
+
+            Also provides a way to Cc members of your team to be notified by email when the user has connected their payroll account(s) by using the `reply_to` parameter.
+
+            '
+          properties:
+            brand:
+              type: object
+              properties:
+                color:
+                  type: string
+                  description: HEX color code.
+                logo:
+                  type: string
+                  description: URL to a logo.
+            email:
+              type: object
+              properties:
+                reply_to:
+                  type: array
+                  items:
+                    type: string
+                  description: Emails to notify after a user connects an account.
+                subject:
+                  type: string
+                sender:
+                  type: string
+                header:
+                  type: string
+                subheader:
+                  type: string
+                body_text_icon_1:
+                  type: string
+                  description: URL to an icon.
+                body_text_header_1:
+                  type: string
+                body_text_subheader_1:
+                  type: string
+                body_text_icon_2:
+                  type: string
+                  description: URL to an icon.
+                body_text_header_2:
+                  type: string
+                body_text_subheader_2:
+                  type: string
+                body_text_icon_3:
+                  type: string
+                  description: URL to an icon.
+                body_text_header_3:
+                  type: string
+                body_text_subheader_3:
+                  type: string
+            sms_text:
+              type: string
+            landing_page:
+              type: object
+              properties:
+                header:
+                  type: string
+                subheader:
+                  type: string
+                step_1:
+                  type: string
+                step_2:
+                  type: string
+                step_3:
+                  type: string
+            flow_id:
+              type: string
+              description: 'ID used to [customize](/console/flows/embedded-experiences) the user''s experience in Link.
+
+
+                **Warning:**
+
+                Must be the ID of an [embedded experience](/console/flows/embedded-experiences).
+
+                Any `flow_id` included outside of this object will take priority.
+
+                '
+            success_page:
+              type: object
+              properties:
+                header:
+                  type: string
+                subheader:
+                  type: string
+                button_text:
+                  type: string
+                button_url:
+                  type: string
+    InviteObject:
+      type: object
+      example:
+        id: 0424137bc-edc5-35de-c1b5-1c3cddb4b227
+        user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        user_token: bcJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWEiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2ODc3OTMzODAsImZpZCI6IjUyYWM3ZFFiLTI1MzAtNGYyNy04NTZlLTkwOTk1ZDA4NWJkMCIsImlhdCI6MTY4Nzc4OTc4MCwiaXNzIjoiYXJneWxlLWNvcmUtYXV1aC1kZXYiLCJqdGkiOiI2ZWJiOGIxMS0wYzFjLTRiNjEtYmI5NS04ZGQ0YzA0OGQwNzUiLCJzdWIiOiIwMTg4ZjgxYy0zZTFkLTRlZDEtMjEyYy02NmE3YzE4YzVjYzMiLCJ1c2VyX2lkIjoiMDE4OGY4MWMtM2UxZC00ZWQxLTIxMmMtNjZhN2MxN2M1Y2MzIn0.TNiZojOiiXtPVamyCDjz4f2GwR4TA8x6JR3RwjTECjY
+        email: sarah@email.com
+        phone_number: 212-555-5555
+        full_name: Sarah Longfield
+        first_name: Sarah
+        last_name: Longfield
+        revoked_at: null
+        status: sent
+        group_id: d8a07e5b-13a3-11ef-af7e-c7eb00762562
+        url: https://verify.argyle.com/connect/0424137bc-edc5-35de-c1b5-1c3cddb4b227
+        created_at: '2023-03-09T23:57:05.756Z'
+        updated_at: '2023-03-09T23:57:05.756Z'
+        invited_at: '2023-03-09T23:57:05.756Z'
+        flow_id: 8DRRA4XC
+        flow_items:
+        - item_000000001
+        - item_000000002
+        reply_to:
+        - person1@email.com
+        - person2@email.com
+        deliveries:
+        - id: d7c85e44-9729-11f0-b297-f3718e19503e
+          method: email
+          status: sent
+          sent_at: '2023-03-09T23:57:24.000Z'
+          updated_at: '2023-03-09T23:57:24.000Z'
+        invite_template_id: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the invite.
+          example: 0424137bc-edc5-35de-c1b5-1c3cddb4b227
+        user:
+          type: string
+          format: uuid
+          description: ID of the user.
+          example: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        user_token:
+          type: string
+          description: '[User token](/link/user-tokens) required to initialize embedded instances of Link for the user.
+
+
+            **Warning:**
+
+            This user token will expire after one hour. A new user token can be created at any time using the [/user-tokens](/api-reference/user-tokens#create) API endpoint.
+
+            '
+          example: bcJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWEiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2ODc3OTMzODAsImZpZCI6IjUyYWM3ZFFiLTI1MzAtNGYyNy04NTZlLTkwOTk1ZDA4NWJkMCIsImlhdCI6MTY4Nzc4OTc4MCwiaXNzIjoiYXJneWxlLWNvcmUtYXV1aC1kZXYiLCJqdGki2eJiZGI4YTExMS0wYzFjLTRiNjEtYmI5NS04ZGQ0YzA0OGQwNzUiLCJzdWIiOiIwMTg4ZjgxYy0zZTFkLTRlZDEtMjEyYy02NmB3YzE4YzVjYzMiLCJ1c2VyX2lkIjoiMDE4OGY4MWMtM2UxZC00ZWQxLTIxMmMtNjZhN2MxN2M1Y2MzIn0.TNiZojOiiXtPVamyCDjz4f2GwR4TA8x6JR3RwjTECjY
+        email:
+          type: string
+          description: Email of the invite recipient.
+          example: sarah@email.com
+        phone_number:
+          type: string
+          description: Phone number of the invite recipient.
+          example: 212-555-5555
+        full_name:
+          type: string
+          deprecated: true
+          description: Full name of the invite recipient.
+          example: Sarah Longfield
+        first_name:
+          type: string
+          description: First name of the invite recipient.
+          example: Sarah
+        last_name:
+          type: string
+          description: Last name of the invite recipient.
+          example: Longfield
+        revoked_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was revoked.
+          example: null
+        status:
+          type: string
+          enum:
+          - sent
+          - initiated
+          - attempted
+          - completed
+          - revoked
+          description: 'The invite''s status.
+
+
+            - `sent` — Invite sent successfully.
+
+            - `initiated` — User clicked the invite URL and was successfully able to enter Link, but has not submitted login credentials, uploaded documents, or completed a response form.
+
+            - `attempted` — User submitted login credentials through Link (creating a user ID), but no accounts were successfully connected. Also includes users who only submitted a response form.
+
+            - `completed` — User successfully connected an account or uploaded a document.
+
+            - `revoked` — The invite was [revoked](/api-reference/invites#revoke-invite). The user can no longer access Link via the invite URL.
+
+            '
+        group_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: ID of the [group](/console/management/groups) associated with the invite.
+          example: d8a07e5b-13a3-11ef-af7e-c7eb00762562
+        url:
+          type: string
+          description: URL included in the invite that connects the user to Link.
+          example: https://verify.argyle.com/connect/0424137bc-edc5-35de-c1b5-1c3cddb4b227
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was created.
+          example: '2023-03-09T23:57:05.756Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was updated.
+
+
+            **Warning:**
+
+            The timestamp is updated after re-sending or revoking an invite.
+
+            '
+          example: '2023-03-09T23:57:05.756Z'
+        invited_at:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was sent.
+
+            **Warning:**
+
+            The timestamp is updated after re-sending or revoking an invite.
+
+            '
+          example: '2023-03-09T23:57:05.756Z'
+        flow_id:
+          type: string
+          nullable: true
+          description: ID of the Flow specified via the `flow_id` parameter when sending the invite.
+          example: 8DRRA4XC
+        flow_items:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Any Items specified via the `flow_items` parameter when sending the invite.
+          example:
+          - item_000000001
+          - item_000000002
+        reply_to:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: 'Emails of your team members that will be notified when the user has connected their payroll account(s).
+
+
+            Depending on the invite method, these emails are sourced from:
+
+
+            1. If sending invites via the API, the `reply_to` parameter of the `override_invite_template` object.
+
+            2. If sending invites [via Console](/console/flows/email-sms-templates#sending-invites), the Console member that sends the invite and any Cc''d members of your team.
+
+            3. If sending invites via Argyle''s POS & LOS integrations ([Encompass](/integrations/pos-los/encompass/payroll-verifications), [Empower](/integrations/pos-los/empower), or [nCino](/integrations/pos-los/ncino)), the email address of the Loan Officer sending the invite.
+
+            4. If sending links to Argyle using [Shareable URLs](/console/flows/shareable-urls), any emails saved in the email notifications toggle of "General settings" of the associated [Shareable URL Flow](https://console.argyle.com/flows).
+
+            5. If sending links to Argyle using [Shareable URLs with URL modifications](/console/flows/shareable-urls#url-modifications), the email overwrite specified at the end of the URL.
+
+            '
+        deliveries:
+          type: array
+          description: Array of objects containing information about the delivery status of the invite.
+          items:
+            $ref: '#/components/schemas/InviteDelivery'
+        invite_template_id:
+          type: string
+          format: uuid
+          nullable: true
+          deprecated: true
+          description: '(Deprecated) Customization ID.
+
+            - Deprecated in favor of [`override_invite_template`](/api-reference/invites#send-override_invite_template).'
+          example: null
+    InviteDelivery:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the invite delivery.
+        method:
+          type: string
+          enum:
+          - email
+          - sms
+          description: Invite delivery method.
+        status:
+          type: string
+          enum:
+          - sent
+          - delivered
+          - undelivered
+          - opened
+          description: Status of the invite delivery.
+        sent_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was sent.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the delivery status was last updated.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

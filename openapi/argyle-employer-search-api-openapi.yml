@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Employer Search API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Employer Search
+paths:
+  /v2/employer-search:
+    get:
+      summary: List all employers
+      description: Returns a paginated list of all Item objects, representing the most relevant search results.
+      operationId: listEmployers
+      parameters:
+      - name: q
+        in: query
+        description: Free-text search filter.
+        required: false
+        schema:
+          type: string
+      - name: kind
+        in: query
+        description: Filter by `kind` value.
+        required: false
+        schema:
+          type: string
+      - name: mapping_status
+        in: query
+        description: 'Filter by `mapping_status` value.
+
+
+          Multiple `mapping_status` values can also be searched at once using either method:
+
+
+          1. `/v2/items?mapping_status=verified,mapped`
+
+          2. `/v2/items?mapping_status=verified&mapping_status=mapped`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: 'Filter by `status` value.
+
+
+          Multiple `status` values can also be searched at once using either method:
+
+
+          1. `/v2/items?status=healthy,issues`
+
+          2. `/v2/items?status=healthy&status=issues`
+
+
+          Filtering by both `healthy` and `issues` will return all Items that currently support new payroll connections.
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: 'Number of Item objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.'
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 200
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employer'
+              example:
+                next: https://api-sandbox.argyle.com/v2/employer-search?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: item_000000002
+                  name: Bullseye
+                  logo_url: argyle.com/image-holdings
+                  kind: employer
+                  mapping_status: verified
+                  status: unavailable
+                - id: item_000000003
+                  name: Triple
+                  logo_url: argyle.com/image-holdings
+                  kind: platform
+                  mapping_status: mapped
+                  status: healthy
+      tags:
+      - Employer Search
+components:
+  schemas:
+    Employer:
+      type: object
+      example:
+        id: item_000000003
+        name: GigAndGo
+        logo_url: argyle.com/image-holdings
+        kind: gig
+        mapping_status: verified
+        status: healthy
+      properties:
+        id:
+          type: string
+          description: Unique ID of the [Item](/api-reference/items). ID format — `item_123456789`
+        name:
+          type: string
+          description: Name of the Item.
+        logo_url:
+          type: string
+          description: URL location of the Item's logo image file.
+        kind:
+          type: string
+          enum:
+          - employer
+          - gig
+          - platform
+          - benefits
+          description: 'Type of Item.
+
+            - `employer` — individual employer
+
+            - `gig` — gig platform
+
+            - `platform` — payroll provider platform
+
+            - `benefits` — government benefits
+
+            '
+        mapping_status:
+          type: string
+          enum:
+          - verified
+          - mapped
+          - unmapped
+          description: 'Verification status of the Item.
+
+            - `verified` — The payroll system associated with the Item is known, and the Item has previously experienced a successful connection that returned paystub data.
+
+
+            - `mapped` — The payroll system associated with the Item is known, but the Item is awaiting a successful connection.
+
+
+            - `unmapped` — The payroll system associated with this Item is not yet known. If an unmapped Item is selected in Link, the user will be given the option to search for the relevant payroll system and attempt to connect using their login credentials.
+
+
+            ![](/images/argyle-guides/api-ref/items/1-mapping-status.png)
+
+            '
+        status:
+          type: string
+          enum:
+          - healthy
+          - issues
+          - unavailable
+          description: 'Health status of the Item.
+
+
+            - `healthy` — Normal service.
+
+            - `issues` — Impacted service. New account connections still supported.
+
+            - `unavailable` — Impacted service. New account connections not supported. [Ongoing refresh](/overview/ongoing-refresh) paused.
+
+            '
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

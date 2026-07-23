@@ -1,0 +1,905 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Gigs API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Gigs
+paths:
+  /v2/gigs/{id}:
+    get:
+      summary: Retrieve a gig
+      description: Retrieves a gig object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the gig object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gig'
+              example:
+                id: 0187dbfa-6f5e-a33a-af26-7e12ff408fea
+                account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                employer: GigAndGo
+                created_at: '2023-03-08T08:31:37.037Z'
+                updated_at: '2023-03-08T08:31:37.037Z'
+                status: completed
+                type: delivery
+                task_count: 2
+                start_datetime: '2023-03-08T08:08:57Z'
+                end_datetime: '2023-03-08T08:31:36Z'
+                all_datetimes:
+                  request_at: '2023-03-08T08:08:57Z'
+                  accept_at: '2023-03-08T08:09:38Z'
+                  pickup_at: '2023-03-08T08:12:57Z'
+                  dropoff_at: '2023-03-08T08:31:36Z'
+                  cancel_at: null
+                  shift_start: null
+                  shift_end: null
+                  breaks: []
+                duration: 2659
+                timezone: America/New_York
+                earning_type: work
+                start_location:
+                  lat: '40.65932120164202'
+                  lng: '-73.8526246331782'
+                  formatted_address: 201 North W St, New York, NY 10014, US
+                end_location:
+                  lat: '40.689177462234504'
+                  lng: '-73.89453884284752'
+                  formatted_address: 102 South E St, New York, NY 10002, US
+                task_details:
+                  events:
+                  - order_id: null
+                    sequence: '1'
+                    type: accept
+                    name: null
+                    formatted_address: 201 North W St, New York, NY 10014, US
+                    lat: '40.65932120164202'
+                    lng: '-73.89453884284752'
+                    datetime: '2023-03-08T08:09:38Z'
+                  - order_id: '1'
+                    sequence: '2'
+                    type: pickup
+                    name: Healthy Snacks
+                    formatted_address: 150 East N St, New York, NY 10014, US
+                    lat: '40.673422892136178'
+                    lng: '-73.88931269893891'
+                    datetime: '2023-03-08T08:12:57Z'
+                  - order_id: '2'
+                    sequence: '3'
+                    type: pickup
+                    name: Gourmet Desserts
+                    formatted_address: 182 East N St, New York, NY 10014, US
+                    lat: '40.673523811763259'
+                    lng: '-73.86335212657626'
+                    datetime: '2023-03-08T08:12:57Z'
+                  - order_id: null
+                    sequence: '4'
+                    type: dropoff
+                    name: null
+                    formatted_address: 102 South E St, New York, NY 10002, US
+                    lat: '40.689177462234504'
+                    lng: '-73.89453884284752'
+                    datetime: '2023-03-08T08:31:36Z'
+                  orders:
+                  - order_id: '1'
+                    sequence: '1'
+                    income:
+                      currency: USD
+                      total_charge: '34.75'
+                      customer_price: '26.38'
+                      fees: '8.37'
+                      total: '19.96'
+                      pay: '22.28'
+                      tips: null
+                      bonus: '0.00'
+                      other: '-2.32'
+                  - order_id: '2'
+                    sequence: '2'
+                    income:
+                      currency: USD
+                      total_charge: '7.25'
+                      customer_price: '7.25'
+                      fees: null
+                      total: '4.30'
+                      pay: '4.30'
+                      tips: '0.00'
+                      bonus: '0.00'
+                      other: null
+                distance: '1.80'
+                distance_unit: miles
+                metadata:
+                  income.other:
+                    name: 'Taxes: Withholding tax'
+                    value: '-15.32'
+                circumstances:
+                  is_pool: false
+                  is_rush: false
+                  is_surge: true
+                  service_type: Comfort Ride
+                  position: null
+                income:
+                  currency: USD
+                  total_charge: '42.00'
+                  customer_price: '33.68'
+                  fees: '8.37'
+                  total: '30.68'
+                  pay: '26.58'
+                  tips: '6.42'
+                  bonus: '0.00'
+                  other: '-2.32'
+                income_rates:
+                  hour: '92.70'
+                  mile: '20.20'
+      tags:
+      - Gigs
+  /v2/gigs:
+    get:
+      summary: List all gigs
+      description: Returns a paginated list of all gig objects.
+      parameters:
+      - in: query
+        name: account
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by account ID.
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by user ID.
+      - in: query
+        name: from_start_datetime
+        schema:
+          type: string
+          format: date-time
+        required: false
+        description: 'Filter by gigs with a `start_datetime` on or after this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
+
+          '
+      - in: query
+        name: to_start_datetime
+        schema:
+          type: string
+          format: date-time
+        required: false
+        description: 'Filter by gigs with a `start_datetime` on or before this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
+
+          '
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        required: false
+        description: 'Number of gig objects returned <a href="/api-guide/overview#pagination">per page</a>. Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gig'
+              example:
+                next: https://api-sandbox.argyle.com/v2/gigs?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0187b43a-35fa-56e2-1a95-f7e4232a4b3a
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  employer: GigAntic
+                  created_at: '2023-03-15T06:10:25.004Z'
+                  updated_at: '2023-03-15T06:10:25.004Z'
+                  status: completed
+                  type: rideshare
+                  task_count: 1
+                  start_datetime: '2023-03-15T05:24:44Z'
+                  end_datetime: '2023-03-15T06:10:24Z'
+                  all_datetimes:
+                    request_at: '2023-03-15T05:24:44Z'
+                    accept_at: '2023-03-15T05:26:51Z'
+                    pickup_at: '2023-03-15T05:30:46Z'
+                    dropoff_at: '2023-03-15T06:10:24Z'
+                    cancel_at: null
+                    shift_start: null
+                    shift_end: null
+                    breaks: []
+                  duration: 2740
+                  timezone: America/New_York
+                  earning_type: work
+                  start_location:
+                    lat: '40.61236518213759'
+                    lng: '-73.58345445703922'
+                    formatted_address: 305 East Ave Apt. 980, New York, NY 10006, US
+                  end_location:
+                    lat: '40.693262037420084'
+                    lng: '-73.83205844061759'
+                    formatted_address: 503 Far West Ave Suite 970, New York, NY 10019, US
+                  task_details:
+                    events: []
+                    orders: []
+                  distance: '24.93'
+                  distance_unit: miles
+                  metadata: {}
+                  circumstances:
+                    is_pool: false
+                    is_rush: false
+                    is_surge: true
+                    service_type: GigAntic XL
+                    position: null
+                  income:
+                    currency: USD
+                    total_charge: '34.79'
+                    customer_price: '25.32'
+                    fees: '9.47'
+                    total: '25.32'
+                    pay: '25.32'
+                    tips: '0.00'
+                    bonus: '0.00'
+                    other: null
+                  income_rates:
+                    hour: '13.62'
+                    mile: '0.60'
+                - id: 0187dbfa-6f5e-a33a-af26-7e12ff408fea
+                  account: 0187c66e-e7e5-811c-b006-2232f00f426a
+                  employer: GigAndGo
+                  created_at: '2023-03-08T08:31:37.037Z'
+                  updated_at: '2023-03-08T08:31:37.037Z'
+                  status: completed
+                  type: delivery
+                  task_count: 2
+                  start_datetime: '2023-03-08T08:08:57Z'
+                  end_datetime: '2023-03-08T08:31:36Z'
+                  all_datetimes:
+                    request_at: '2023-03-08T08:08:57Z'
+                    accept_at: '2023-03-08T08:09:38Z'
+                    pickup_at: '2023-03-08T08:12:57Z'
+                    dropoff_at: '2023-03-08T08:31:36Z'
+                    cancel_at: null
+                    shift_start: null
+                    shift_end: null
+                    breaks: []
+                  duration: 2659
+                  timezone: America/New_York
+                  earning_type: work
+                  start_location:
+                    lat: '40.65932120164202'
+                    lng: '-73.8526246331782'
+                    formatted_address: 201 North W St, New York, NY 10014, US
+                  end_location:
+                    lat: '40.689177462234504'
+                    lng: '-73.89453884284752'
+                    formatted_address: 102 South E St, New York, NY 10002, US
+                  task_details:
+                    events:
+                    - order_id: null
+                      sequence: '1'
+                      type: accept
+                      name: null
+                      formatted_address: 201 North W St, New York, NY 10014, US
+                      lat: '40.65932120164202'
+                      lng: '-73.89453884284752'
+                      datetime: '2023-03-08T08:09:38Z'
+                    - order_id: '1'
+                      sequence: '2'
+                      type: pickup
+                      name: Healthy Snacks
+                      formatted_address: 150 East N St, New York, NY 10014, US
+                      lat: '40.673422892136178'
+                      lng: '-73.88931269893891'
+                      datetime: '2023-03-08T08:12:57Z'
+                    - order_id: '2'
+                      sequence: '3'
+                      type: pickup
+                      name: Gourmet Desserts
+                      formatted_address: 182 East N St, New York, NY 10014, US
+                      lat: '40.673523811763259'
+                      lng: '-73.86335212657626'
+                      datetime: '2023-03-08T08:12:57Z'
+                    - order_id: null
+                      sequence: '4'
+                      type: dropoff
+                      name: null
+                      formatted_address: 102 South E St, New York, NY 10002, US
+                      lat: '40.689177462234504'
+                      lng: '-73.89453884284752'
+                      datetime: '2023-03-08T08:31:36Z'
+                    orders:
+                    - order_id: '1'
+                      sequence: '1'
+                      income:
+                        currency: USD
+                        total_charge: '34.75'
+                        customer_price: '26.38'
+                        fees: '8.37'
+                        total: '19.96'
+                        pay: '22.28'
+                        tips: null
+                        bonus: '0.00'
+                        other: '-2.32'
+                    - order_id: '2'
+                      sequence: '2'
+                      income:
+                        currency: USD
+                        total_charge: '7.25'
+                        customer_price: '7.25'
+                        fees: null
+                        total: '4.30'
+                        pay: '4.30'
+                        tips: '0.00'
+                        bonus: '0.00'
+                        other: null
+                  distance: '1.80'
+                  distance_unit: miles
+                  metadata:
+                    income.other:
+                      name: 'Taxes: Withholding tax'
+                      value: '-15.32'
+                  circumstances:
+                    is_pool: false
+                    is_rush: false
+                    is_surge: true
+                    service_type: Comfort Ride
+                    position: null
+                  income:
+                    currency: USD
+                    total_charge: '42.00'
+                    customer_price: '33.68'
+                    fees: '8.37'
+                    total: '30.68'
+                    pay: '26.58'
+                    tips: '6.42'
+                    bonus: '0.00'
+                    other: '-2.32'
+                  income_rates:
+                    hour: '92.70'
+                    mile: '20.20'
+      tags:
+      - Gigs
+components:
+  schemas:
+    Gig:
+      type: object
+      example:
+        id: 0187dbfa-6f5e-a33a-af26-7e12ff408fea
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        employer: GigAndGo
+        created_at: '2023-03-08T08:31:37.037Z'
+        updated_at: '2023-03-08T08:31:37.037Z'
+        status: completed
+        type: delivery
+        task_count: 2
+        start_datetime: '2023-03-08T08:08:57Z'
+        end_datetime: '2023-03-08T08:31:36Z'
+        all_datetimes:
+          request_at: '2023-03-08T08:08:57Z'
+          accept_at: '2023-03-08T08:09:38Z'
+          pickup_at: '2023-03-08T08:12:57Z'
+          dropoff_at: '2023-03-08T08:31:36Z'
+          cancel_at: null
+          shift_start: null
+          shift_end: null
+          breaks: null
+        duration: 2659
+        timezone: America/New_York
+        earning_type: work
+        start_location:
+          lat: '40.65932120164202'
+          lng: '-73.8526246331782'
+          formatted_address: 201 North W St, New York, NY 10014, US
+        end_location:
+          lat: '40.689177462234504'
+          lng: '-73.89453884284752'
+          formatted_address: 102 South E St, New York, NY 10002, US
+        task_details:
+          events:
+          - order_id: null
+            sequence: '1'
+            type: accept
+            name: null
+            formatted_address: 201 North W St, New York, NY 10014, US
+            lat: '40.65932120164202'
+            lng: '-73.89453884284752'
+            datetime: '2023-03-08T08:09:38Z'
+          - order_id: '1'
+            sequence: '2'
+            type: pickup
+            name: Healthy Snacks
+            formatted_address: 150 East N St, New York, NY 10014, US
+            lat: '40.673422892136178'
+            lng: '-73.88931269893891'
+            datetime: '2023-03-08T08:12:57Z'
+          - order_id: '2'
+            sequence: '3'
+            type: pickup
+            name: Gourmet Desserts
+            formatted_address: 182 East N St, New York, NY 10014, US
+            lat: '40.673523811763259'
+            lng: '-73.86335212657626'
+            datetime: '2023-03-08T08:12:57Z'
+          - order_id: null
+            sequence: '4'
+            type: dropoff
+            name: null
+            formatted_address: 102 South E St, New York, NY 10002, US
+            lat: '40.689177462234504'
+            lng: '-73.89453884284752'
+            datetime: '2023-03-08T08:31:36Z'
+          orders:
+          - order_id: '1'
+            sequence: '1'
+            income:
+              currency: USD
+              total_charge: '34.75'
+              customer_price: '26.38'
+              fees: '8.37'
+              total: '19.96'
+              pay: '22.28'
+              tips: null
+              bonus: '0.00'
+              other: '-2.32'
+          - order_id: '2'
+            sequence: '2'
+            income:
+              currency: USD
+              total_charge: '7.25'
+              customer_price: '7.25'
+              fees: null
+              total: '4.30'
+              pay: '4.30'
+              tips: '0.00'
+              bonus: '0.00'
+              other: null
+        distance: '1.80'
+        distance_unit: miles
+        metadata:
+          income.other:
+            name: 'Taxes: Withholding tax'
+            value: '-15.32'
+        circumstances:
+          is_pool: false
+          is_rush: false
+          is_surge: true
+          service_type: Comfort Ride
+          position: null
+        income:
+          currency: USD
+          total_charge: '42.00'
+          customer_price: '33.68'
+          fees: '8.37'
+          total: '30.68'
+          pay: '26.58'
+          tips: '6.42'
+          bonus: '0.00'
+          other: '-2.32'
+        income_rates:
+          hour: '92.70'
+          mile: '20.20'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the gig assignment.
+        account:
+          type: string
+          format: uuid
+          description: Unique ID of the account associated with the gig assignment.
+        employer:
+          type: string
+          description: Employer name.
+        created_at:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the gig object was created.
+
+            '
+        updated_at:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the gig object most recently changed.
+
+            '
+        status:
+          type: string
+          enum:
+          - scheduled
+          - in_progress
+          - completed
+          - cancelled
+          description: Current state of the gig assignment.
+        type:
+          type: string
+          enum:
+          - delivery
+          - rideshare
+          - hourly
+          - services
+          description: The type of gig assignment.
+        task_count:
+          type: integer
+          description: 'Number of discrete tasks in the gig assignment.
+
+
+            **Note:**
+
+            When `task_count` is greater than 1 (e.g. two pickups in one delivery), the gig object contains aggregated values for the entire gig assignment. Individual task-level details can be found in the [`task_details`](https://docs.argyle.com/api-reference/gigs#object-task_details) object.
+
+            '
+        start_datetime:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the gig assignment started.
+
+            '
+        end_datetime:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the gig assignment ended.
+
+            '
+        all_datetimes:
+          type: object
+          description: Other timestamps related to the gig assignment.
+          properties:
+            request_at:
+              type: string
+              format: date-time
+              description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the gig assignment was created.
+
+                '
+            accept_at:
+              type: string
+              format: date-time
+              description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the gig assignment was accepted.
+
+                '
+            pickup_at:
+              type: string
+              format: date-time
+              description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when "package" (rider, food, or similar) was obtained.
+
+                '
+            dropoff_at:
+              type: string
+              format: date-time
+              description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when "package" (rider, food, or similar) was delivered.
+
+                '
+            cancel_at:
+              type: string
+              format: date-time
+              description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the gig assignment was cancelled.
+
+                '
+            shift_start:
+              type: string
+              format: date-time
+              description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the work shift started.
+
+                '
+            shift_end:
+              type: string
+              format: date-time
+              description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the work shift ended.
+
+                '
+            breaks:
+              type: array
+              items:
+                type: object
+                properties:
+                  break_start:
+                    type: string
+                    format: date-time
+                    description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the break started.
+
+                      '
+                  break_end:
+                    type: string
+                    format: date-time
+                    description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the break ended.
+
+                      '
+        duration:
+          type: integer
+          description: Total time of the gig assignment (in seconds).
+        timezone:
+          type: string
+          description: 'Timezone ([IANA](https://www.iana.org/time-zones)) where the gig assignment took place.
+
+            '
+        earning_type:
+          type: string
+          enum:
+          - offer
+          - work
+          - incentive
+          - adjustment
+          - other
+          description: The earnings category.
+        start_location:
+          type: object
+          description: Starting location information for the gig assignment.
+          properties:
+            lat:
+              type: string
+              description: 'Latitude ([ISO 6709](https://en.wikipedia.org/wiki/ISO_6709)) where the gig assignment started.
+
+                '
+              format: degrees
+            lng:
+              type: string
+              description: 'Longitude ([ISO 6709](https://en.wikipedia.org/wiki/ISO_6709)) where the gig assignment started.
+
+                '
+              format: degrees
+            formatted_address:
+              type: string
+              description: Full address of where the gig assignment started.
+        end_location:
+          type: object
+          description: Ending location information for the gig assignment.
+          properties:
+            lat:
+              type: string
+              format: degrees
+              description: 'Latitude ([ISO 6709](https://en.wikipedia.org/wiki/ISO_6709)) where the gig assignment ended.
+
+                '
+            lng:
+              type: string
+              format: degrees
+              description: 'Longitude ([ISO 6709](https://en.wikipedia.org/wiki/ISO_6709)) where the gig assignment ended.
+
+                '
+            formatted_address:
+              type: string
+              description: Full address of where the gig assignment ended.
+        task_details:
+          type: object
+          description: Task-level details for the gig assignment.
+          properties:
+            events:
+              type: array
+              description: Geographical information and timestamps.
+              items:
+                type: object
+                properties:
+                  order_id:
+                    type: string
+                    description: 'Argyle-added reference ID. Connects `events` to `orders`.
+
+
+                      **Note:**
+
+                      Only available if the underlying gig platform provides a clear link between events and their associated orders (monetary charges).
+
+                      '
+                  sequence:
+                    type: string
+                    description: 'Counter starting at 1. The sequential ordering of each event, as represented by the gig platform.
+
+                      '
+                  type:
+                    type: string
+                    enum:
+                    - request
+                    - accept
+                    - pickup
+                    - dropoff
+                    - other
+                    - cancel
+                    description: The type of event.
+                  name:
+                    type: string
+                    description: 'Name associated with the geographical location.
+
+
+                      **Note:**
+
+                      Primarily available for delivery platforms, where name is the pickup establishment (i.e. restaurant name).
+
+                      '
+                  formatted_address:
+                    type: string
+                    description: Full address of the geographical location.
+                  lat:
+                    type: string
+                    description: 'Latitude ([ISO 6709](https://en.wikipedia.org/wiki/ISO_6709)) of the geographical location.
+
+                      '
+                  lng:
+                    type: string
+                    description: 'Longitude ([ISO 6709](https://en.wikipedia.org/wiki/ISO_6709)) of the geographical location.
+
+                      '
+                  datetime:
+                    type: string
+                    format: date-time
+                    description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the event.
+
+                      '
+            orders:
+              type: array
+              description: Payment and earnings information.
+              items:
+                type: object
+                properties:
+                  order_id:
+                    type: string
+                    description: 'Argyle-added reference ID. Connects `orders` to `events`.
+
+                      '
+                  sequence:
+                    type: string
+                    description: 'Counter starting at 1. The sequential ordering of each order, as represented by the gig platform.
+
+                      '
+                  income:
+                    type: object
+                    description: Payment and earnings information for the order.
+                    properties:
+                      currency:
+                        type: string
+                        description: 'Currency code ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)).
+
+                          '
+                      total_charge:
+                        type: string
+                        description: Total amount charged to the customer.
+                      customer_price:
+                        type: string
+                        description: 'Amount the customer paid for the order, not including `fees` and `tips`.
+
+                          '
+                      fees:
+                        type: string
+                        description: Fees charged to the gig employee by the gig platform.
+                      total:
+                        type: string
+                        description: 'Total earnings received by the gig employee ( `pay` + `tips` + `bonus` + `other` ).
+
+                          '
+                      pay:
+                        type: string
+                        description: Earnings related to the assignment received by the gig employee.
+                      tips:
+                        type: string
+                        description: Tips received by the gig employee.
+                      bonus:
+                        type: string
+                        description: Bonus earnings received by the gig employee.
+                      other:
+                        type: string
+                        description: 'Other payments made or received by the gig employee.
+
+
+                          Common examples: refunds (tolls), taxes, partial cash payments, reimbursements, or miscellaneous payments categorized as "other".
+
+                          '
+        distance:
+          type: string
+          description: Distance traveled during the gig assignment.
+        distance_unit:
+          type: string
+          enum:
+          - miles
+          - km
+          description: Unit of the distance traveled.
+        metadata:
+          type: object
+          description: 'Additional, non-categorized information.
+
+            '
+        circumstances:
+          type: object
+          description: Metadata specific to the gig platform, such as whether the assignment occurred during peak hours.
+        income:
+          type: object
+          description: Payment and earnings information for the gig assignment.
+          properties:
+            currency:
+              type: string
+              description: 'Currency code ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)).
+
+                '
+            total_charge:
+              type: string
+              description: Total amount charged to the customer.
+            customer_price:
+              type: string
+              description: 'Amount the customer paid for the order, not including `fees` and `tips`.
+
+
+                **Note:**
+
+                Only available if directly returned by the gig platform.
+
+                '
+            fees:
+              type: string
+              description: Fees charged to the gig employee by the gig platform.
+            total:
+              type: string
+              description: 'Total earnings received by the gig employee ( `pay` + `tips` + `bonus` + `other` ).
+
+                '
+            pay:
+              type: string
+              description: Earnings related to the assignment received by the gig employee.
+            tips:
+              type: string
+              description: Tips received by the gig employee.
+            bonus:
+              type: string
+              description: Bonus earnings received by the gig employee.
+            other:
+              type: string
+              description: "Other payments made or received by the gig employee.\n\nCommon examples: refunds (tolls), taxes, partial cash payments, reimbursements, or miscellaneous payments categorized as \"other\".\n\n**Note:**\n  Additional details for other income are listed within metadata in the following format:\n\n  ```json\n  \"metadata\": {\n    \"income.other\": {\n      \"name\": \"Taxes: Withholding tax\",\n      \"value\": \"-15.32\"\n    }\n  }\n  ```\n"
+        income_rates:
+          type: object
+          description: 'Amount earned by the gig employee per hour or per mile.
+
+
+            **Note:**
+
+            Values are not calculated, and are only returned if directly provided by the gig platform.
+
+            '
+          properties:
+            hour:
+              type: string
+              description: Earnings per hour. *Not calculated*
+            mile:
+              type: string
+              description: Earnings per mile. *Not calculated*
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

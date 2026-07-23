@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Receipts API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Receipts
+paths:
+  /v2/receipts:
+    post:
+      summary: Generate a receipt
+      description: Returns a PDF listing all billable transactions associated with the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  format: uuid
+                  description: ID of the user.
+              required:
+              - user
+            example:
+              user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+      responses:
+        '200':
+          description: ''
+          headers:
+            Content-Type:
+              description: Content type of response payload.
+              schema:
+                type: string
+                example: application/pdf
+            Content-Disposition:
+              description: Response disposition with receipt filename.
+              schema:
+                type: string
+                example: attachment; filename="receipt.pdf"
+            Content-Length:
+              description: Size of response payload in bytes.
+              schema:
+                type: integer
+                example: 12345
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+              examples:
+                default:
+                  value: '200 OK
+
+                    Content-Type: application/pdf
+
+                    Content-Disposition: attachment; filename="receipt.pdf"
+
+                    Content-Length: 12345
+
+
+                    [PDF binary stream omitted]
+
+                    '
+      tags:
+      - Receipts
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

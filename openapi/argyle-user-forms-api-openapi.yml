@@ -1,0 +1,168 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts User Forms API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: User Forms
+paths:
+  /v2/user-forms/{id}:
+    get:
+      summary: Retrieve a user form
+      description: Retrieves a user form object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the user form object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserForm'
+              example:
+                id: 0186ef31-4a6c-bc77-ffb7-a9db11505d7d
+                account: 0182c1e2-59ec-16ba-34e2-4f20594a7df7
+                data:
+                  income_source: Block & Fish Tackle
+                  payroll_provider: Payroll Corp.
+                created_at: '2023-03-17T10:50:30.414265Z'
+                updated_at: '2023-03-17T10:50:31.621908Z'
+      tags:
+      - User Forms
+  /v2/user-forms:
+    get:
+      summary: List all user forms
+      description: Returns a paginated list of all user form objects.
+      parameters:
+      - in: query
+        name: account
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by account ID.
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        required: false
+        description: Filter by user ID.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        required: false
+        description: 'Number of user form objects returned <a href="/api-guide/overview#pagination">per page</a>. Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserForm'
+              example:
+                next: https://api-sandbox.argyle.com/v2/user-forms?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0186ef31-4a6c-bc77-ffb7-a9db11505d7d
+                  account: 0182c1e2-59ec-16ba-34e2-4f20594a7df7
+                  data:
+                    income_source: Block & Fish Tackle
+                    payroll_provider: Payroll Corp.
+                  created_at: '2023-03-17T10:50:30.414265Z'
+                  updated_at: '2023-03-17T10:50:31.621908Z'
+                - id: 0187bf23-cd80-118d-c0b8-58023e21c8e5
+                  account: 01856c65-43b6-8b5d-b32a-56b8fbda5c28
+                  data:
+                    income_source: Spanner & Gear Innovations
+                    payroll_provider: Payroll Corp.
+                  created_at: '2023-03-17T10:40:00.672839Z'
+                  updated_at: '2023-03-17T10:45:20.035736Z'
+      tags:
+      - User Forms
+components:
+  schemas:
+    UserForm:
+      type: object
+      example:
+        id: 0186ef31-4a6c-bc77-ffb7-a9db11505d7d
+        account: 0182c1e2-59ec-16ba-34e2-4f20594a7df7
+        data:
+          income_source: Block & Fish Tackle
+          payroll_provider: Payroll Corp.
+        created_at: '2023-03-17T10:50:30.414Z'
+        updated_at: '2023-03-17T10:50:31.621Z'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the user form.
+        account:
+          type: string
+          format: uuid
+          description: ID of the account associated with the user form.
+        data:
+          type: object
+          properties:
+            income_source:
+              type: string
+              description: User response entered into the `Income source` input field.
+              example: Block & Fish Tackle
+            payroll_provider:
+              type: string
+              description: User response entered into the `Payroll provider (optional)` input field.
+              example: Payroll Corp.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user form was submitted.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user form object was last updated.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

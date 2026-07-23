@@ -1,0 +1,556 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts Users API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Users
+paths:
+  /v2/users:
+    post:
+      summary: Create a user
+      description: Creates a new user object. Includes a new [user token](/link/user-tokens) in the response.
+      requestBody:
+        content:
+          application/json:
+            example: {}
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: Pre-fill Link's login screen with this first name.
+                last_name:
+                  type: string
+                  description: Pre-fill Link's login screen with this last name.
+                email:
+                  type: string
+                  description: "Pre-fill Link's login screen with this email.\n\nInvalid email addresses will cause the request to fail.\nWe recommend client-side validation and retrying the request without the invalid email if you receive:\n```json\n{\n  \"email\": [\n    \"Enter a valid email address.\"\n  ]\n}\n```\n"
+                phone_number:
+                  type: string
+                  description: "Pre-fill Link's login screen with this phone number.\nE.164 international format recommended.\n\nInvalid phone numbers will cause the request to fail.\nWe recommend client-side validation and retrying the request without the invalid phone number if you receive:\n```json\n{\n  \"phone_number\": [\n    \"Enter a valid phone number.\"\n  ]\n}\n```\n"
+                ssn:
+                  type: string
+                  description: Social Security number.
+                address:
+                  type: object
+                  description: Address of the user.
+                  properties:
+                    city:
+                      type: string
+                      description: Name of the city, town, district, or similar regional entity.
+                    line1:
+                      type: string
+                      description: Address-Line 1, usually street address or P.O. Box information.
+                    line2:
+                      type: string
+                      description: Address-Line 2, usually the apartment or unit number.
+                    state:
+                      type: string
+                      description: State, county, province, region, or equivalent.
+                    country:
+                      type: string
+                      description: Two-letter country code (ISO 3166-1 alpha-2 format).
+                    postal_code:
+                      type: string
+                      description: Zip code, or equivalent.
+                birth_date:
+                  type: object
+                  description: Date of birth of the user.
+                  properties:
+                    year:
+                      type: integer
+                      description: Birth year (1900 or later).
+                    month:
+                      type: integer
+                      description: Birth month (between 1 and 12).
+                    day:
+                      type: integer
+                      description: Birth day (between 1 and 31).
+                external_metadata:
+                  type: object
+                  description: Any valid JSON.
+                open_banking:
+                  type: object
+                  description: Can be optionally included when ordering [banking verifications](/api-reference/verifications-guide).
+                  properties:
+                    end_user:
+                      type: object
+                      description: Contains details about the person or entity making the lending decision.
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the lender or entity.
+                        address:
+                          type: string
+                          description: Street address or P.O. Box information (include apartment or unit numbers).
+                        city:
+                          type: string
+                          description: Name of the city, town, district, or similar regional entity.
+                        state:
+                          type: string
+                          description: State, county, province, region, or equivalent.
+                        zip:
+                          type: string
+                          description: Zip code, or equivalent.
+                        phone:
+                          type: string
+                          description: 'Phone number of the lender or entity.
+
+
+                            Must be 10 or 11 digits (with or without hyphens).
+
+                            '
+                external_id:
+                  type: string
+                  description: Any string. Maximum 100 characters.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              example:
+                user_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2NzgzNDExNDMsImZpZCI6ImIyYzY4YzUwLTc2MTQtNDAwNy1iMzNmLWZiMzlkMDFmMmM3MCIsImlhdCI6MTY3ODMzNzU0MywiaXNzIjoiYXJneWxlLWNvcmUtYXV0aC1kZXYiLCJqdGkiOiI3ZTU0ZTY1NS05YWN2LTRiZDctOWI3OC0xODMxMjVkYjM1MzMiLCJzdWIiOiIwMTg2YzRiNi04ZTgyLWQ5OWMtOGY4Mi1mNjMyMjgxMzk2ZTQiLCJ1c2VyX2lkIjoiMDE4NmM0YjYtOGU4Mi1kOTljLThmODItZjYzMjI4MTM5NmU0In0.q5bkZTFAohISOcjJDb2wSzKcHmwrOM4pp9imOVybaWk
+                id: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+              schema:
+                type: object
+                properties:
+                  user_token:
+                    type: string
+                    description: Token associated with the created user.
+                  id:
+                    type: string
+                    format: uuid
+                    description: Unique ID of the user.
+      tags:
+      - Users
+    get:
+      summary: List all users
+      description: Returns a paginated list of all user objects.
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of user objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.
+
+          '
+      - in: query
+        name: external_id
+        schema:
+          type: string
+        description: Filter users by `external_id`. Exact matches only.
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+              example:
+                next: https://api-sandbox.argyle.com/v2/users?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                  created_at: '2023-01-30T22:25:38.971Z'
+                  items_connected:
+                  - item_123456789
+                  - item_987654321
+                  employers_connected:
+                  - Whole Goods
+                  - Bullseye
+                  external_metadata:
+                    notes: In stage 3 of loan approval.
+                    category: Summer Initiative
+                  external_id: July Connection
+                  first_name: Sarah
+                  last_name: Longfield
+                  email: sarah@email.com
+                  phone_number: '+12125555555'
+                  ssn: null
+                  address:
+                    city: null
+                    line1: null
+                    line2: null
+                    state: null
+                    country: null
+                    postal_code: null
+                  birth_date:
+                    year: null
+                    month: null
+                    day: null
+                - id: 0186c5b8-8fa1-67b3-39af-14b3e18da8a7
+                  created_at: '2023-01-30T23:25:38.971Z'
+                  items_connected:
+                  - item_000000001
+                  - item_000000002
+                  employers_connected:
+                  - Half Bads
+                  - Triple
+                  external_metadata:
+                    notes: In stage 1 of loan approval.
+                    category: Summer Initiative
+                  external_id: August Connection
+                  first_name: null
+                  last_name: null
+                  email: null
+                  phone_number: null
+                  ssn: null
+                  address:
+                    city: null
+                    line1: null
+                    line2: null
+                    state: null
+                    country: null
+                    postal_code: null
+                  birth_date:
+                    year: null
+                    month: null
+                    day: null
+      tags:
+      - Users
+  /v2/users/{id}:
+    get:
+      summary: Retrieve a user
+      description: Retrieves a user object.
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the user object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - Users
+    patch:
+      summary: Update a user
+      description: Updates a user object.
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the user object to be updated.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: Pre-fill Link's login screen with this first name.
+                last_name:
+                  type: string
+                  description: Pre-fill Link's login screen with this last name.
+                email:
+                  type: string
+                  description: 'Pre-fill Link''s login screen with this email.
+
+
+                    Invalid email addresses will cause the request to fail.
+
+                    '
+                phone_number:
+                  type: string
+                  description: 'Pre-fill Link''s login screen with this phone number.
+
+
+                    [E.164](https://en.wikipedia.org/wiki/E.164) international format recommended.
+
+                    Invalid phone numbers will cause the request to fail.
+
+                    '
+                ssn:
+                  type: string
+                  description: Social Security number.
+                address:
+                  type: object
+                  properties:
+                    city:
+                      type: string
+                      description: Name of the city, town, district, or similar regional entity.
+                    line1:
+                      type: string
+                      description: Address-Line 1, usually street address or P.O. Box information.
+                    line2:
+                      type: string
+                      description: Address-Line 2, usually the apartment or unit number.
+                    state:
+                      type: string
+                      description: State, county, province, region, or equivalent.
+                    country:
+                      type: string
+                      description: Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
+                    postal_code:
+                      type: string
+                      description: Zip code, or equivalent.
+                birth_date:
+                  type: object
+                  properties:
+                    year:
+                      type: integer
+                      description: Birth year (1900 or later).
+                    month:
+                      type: integer
+                      description: Birth month (between 1 and 12).
+                    day:
+                      type: integer
+                      description: Birth day (between 1 and 31).
+                external_metadata:
+                  type: object
+                  description: 'Any valid JSON.
+
+
+                    Must be an object `{}` when used for [banking reports](/api-reference/banking-overview#create-an-argyle-user).
+
+                    '
+                open_banking:
+                  type: object
+                  description: Only relevant to [banking reports](/api-reference/banking-overview#create-an-argyle-user).
+                  properties:
+                    end_user:
+                      type: object
+                      description: Contains details about the person or entity making the lending decision.
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the lender or entity.
+                        address:
+                          type: string
+                          description: Street address or P.O. Box information (include apartment or unit numbers).
+                        city:
+                          type: string
+                          description: Name of the city, town, district, or similar regional entity.
+                        state:
+                          type: string
+                          description: State, county, province, region, or equivalent.
+                        zip:
+                          type: string
+                          description: Zip code, or equivalent.
+                        phone:
+                          type: string
+                          description: 'Phone number of the lender or entity.
+
+
+                            Must be 10 or 11 digits (with or without hyphens).
+
+                            '
+                external_id:
+                  type: string
+                  description: Any string. Maximum 100 characters.
+            example:
+              first_name: Sarah
+              last_name: Longfield
+              email: sarah@email.com
+              phone_number: '+12125555555'
+              external_metadata:
+                notes: Moved to stage 2 of loan approval.
+                category: Summer Initiative
+              external_id: July_Connection
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - Users
+    delete:
+      summary: Delete a user
+      description: 'Deletes a user object.
+
+
+        <Warning>Deleting a user object will also delete all accounts and resources associated with the user.</Warning>
+
+        '
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the user object to be deleted.
+      responses:
+        '204':
+          description: '204 status code: No content.'
+      tags:
+      - Users
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the user.
+          example: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp (ISO 8601) when the user object was created.
+          example: '2023-01-30T22:25:38.971Z'
+        items_connected:
+          type: array
+          items:
+            type: string
+          description: Items the user has connected through Link. Typically employers or payroll platforms.
+          example:
+          - item_123456789
+          - item_987654321
+        employers_connected:
+          type: array
+          items:
+            type: string
+          description: Individual employers associated with the connected Items.
+          example:
+          - Whole Goods
+          - Bullseye
+        external_metadata:
+          type: object
+          description: 'Free-text field where additional context for the user can be added.
+
+            - Can be any valid JSON, such as a string or object.
+
+
+            Using `external_id` (see below) is recommended when the ability to filter users by an external value is needed.
+
+            '
+          example:
+            notes: Moved to stage 2 of loan approval.
+            category: Summer Initiative
+        external_id:
+          type: string
+          description: 'Free-text field where [additional context](/overview/data-structure/users#external-identifiers) for the user can be added.
+
+            - Can be any string of 100 characters or less.
+
+            - Multiple users can have the same `external_id`.
+
+
+            Often used to group users, or associate your internal ID''s to users.
+
+            - Can be attached to [invites](/console/flows/email-sms-templates#inviting-new-users) or [shareable URLs](/console/flows/shareable-urls#customizations).
+
+            - Can be used as a query parameter when [listing users](/api-reference/users#list). (Only exact matches are supported)
+
+            - Can be used to search for specific users within the [Connections](https://console.argyle.com/connections) section of Console.
+
+            - Will appear on billing CSVs if associated with a user.
+
+            '
+          example: July_Connection
+        first_name:
+          type: string
+          description: First name of the user.
+          example: Sarah
+        last_name:
+          type: string
+          description: Last name of the user.
+          example: Longfield
+        email:
+          type: string
+          description: Email of the user.
+          example: sarah@email.com
+        phone_number:
+          type: string
+          description: Phone number of the user. E.164 international format.
+          example: '+12125555555'
+        ssn:
+          type: string
+          description: Social Security number of the user.
+          example: null
+        address:
+          type: object
+          description: Address of the user.
+          properties:
+            city:
+              type: string
+              description: Name of the city, town, district, or similar regional entity.
+              example: null
+            line1:
+              type: string
+              description: Address-Line 1, usually street address or P.O. Box information.
+              example: null
+            line2:
+              type: string
+              description: Address-Line 2, usually the apartment or unit number.
+              example: null
+            state:
+              type: string
+              description: State, county, province, region, or equivalent.
+              example: null
+            country:
+              type: string
+              description: Two-letter country code (ISO 3166-1 alpha-2 format).
+              example: null
+            postal_code:
+              type: string
+              description: Zip code, or equivalent.
+              example: null
+        birth_date:
+          type: object
+          description: Date of birth of the user.
+          properties:
+            year:
+              type: integer
+              description: Birth year (1900 or later).
+              example: null
+            month:
+              type: integer
+              description: Birth month (between 1 and 12).
+              example: null
+            day:
+              type: integer
+              description: Birth day (between 1 and 31).
+              example: null
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret

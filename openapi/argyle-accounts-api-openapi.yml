@@ -1,0 +1,679 @@
+openapi: 3.0.0
+info:
+  title: Argyle Accounts API
+  version: '2.0'
+  description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
+  contact:
+    name: Argyle Support
+    url: https://docs.argyle.com/
+  x-api-id: argyle
+  x-audience: public
+servers:
+- url: https://api.argyle.com
+  description: Production
+- url: https://api-sandbox.argyle.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Accounts
+paths:
+  /v2/accounts/{id}:
+    get:
+      summary: Retrieve an account
+      description: Retrieves an account object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the account object to be retrieved.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+              example:
+                id: 0187c66e-e7e5-811c-b006-2232f00f426a
+                user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+                employers:
+                - Whole Goods
+                item: item_123456789
+                source: thepayrollcompany
+                created_at: '2023-01-30T12:53:22.561Z'
+                updated_at: '2023-01-30T12:55:04.478Z'
+                scanned_at: '2023-01-30T12:55:04.016Z'
+                connection:
+                  status: connected
+                  error_code: null
+                  error_message: null
+                  updated_at: '2023-01-30T12:53:25.561Z'
+                direct_deposit_switch:
+                  status: success
+                  error_code: null
+                  error_message: null
+                  updated_at: '2023-01-30T12:55:03.478Z'
+                availability:
+                  shifts:
+                    status: synced
+                    updated_at: '2023-01-30T12:55:03Z'
+                    available_count: 94
+                    available_from: '2020-04-11T12:53:27Z'
+                    available_to: '2023-01-25T00:00:00Z'
+                  gigs:
+                    status: synced
+                    updated_at: '2023-01-30T12:55:03Z'
+                    available_count: 217
+                    available_from: '2020-04-11T12:53:27Z'
+                    available_to: '2023-01-25T00:00:00Z'
+                  paystubs:
+                    status: synced
+                    updated_at: '2023-01-30T12:55:03Z'
+                    available_count: 68
+                    available_from: '2020-05-11T12:53:27Z'
+                    available_to: '2023-01-29T23:59:59Z'
+                  payroll_documents:
+                    status: synced
+                    updated_at: '2023-01-30T12:53:44.308912Z'
+                  identities:
+                    status: synced
+                    updated_at: '2023-01-30T12:53:44.028552Z'
+                  ratings:
+                    status: synced
+                    updated_at: '2023-01-30T12:55:03.359356Z'
+                  vehicles:
+                    status: synced
+                    updated_at: '2023-01-30T12:53:44.321951Z'
+                  deposit_destinations:
+                    status: synced
+                    updated_at: '2023-01-30T12:53:42.586391Z'
+                  user_forms:
+                    status: in_progress
+                    updated_at: '2023-01-30T12:53:42.586391Z'
+                    available_count: 0
+                    files_count: 1
+                    in_progress_count: 1
+                    user_uploads:
+                      status: synced
+                      updated_at: '2023-01-30T12:54:41.621Z'
+                      files_count: 2
+                      in_progress_count: 0
+                ongoing_refresh:
+                  status: enabled
+      tags:
+      - Accounts
+    delete:
+      summary: Delete an account
+      description: 'Deletes an account object.
+
+
+        <Warning>**Caution** - Deleting an account object will delete all resources associated with the account, such as paystubs or uploaded documents.</Warning>
+
+        '
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the account object to be deleted.
+      responses:
+        '204':
+          description: '204 status code: No content.'
+      tags:
+      - Accounts
+  /v2/accounts:
+    get:
+      summary: List all accounts
+      description: Returns a paginated list of all account objects.
+      parameters:
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
+        description: Filter by user ID.
+      - in: query
+        name: item
+        schema:
+          type: string
+          format: uuid
+        description: Filter by Item ID.
+      - in: query
+        name: ongoing_refresh_status
+        schema:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          - idle
+        description: Filter by `status` of the `ongoing_refresh` object.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: 'Number of account objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.'
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the next page of results, if available.
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: URL for the previous page of results, if available.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+              example:
+                next: https://api-sandbox.argyle.com/v2/accounts?cursor=ZXhhbXBsZV9jdXJzb3I
+                previous: null
+                results:
+                - id: 0185a8b8-60eb-80ca-7482-5f24504573f7
+                  user: 0186c5b8-8fa1-67b3-39af-14b3e18da8a7
+                  employers:
+                  - Half Bads
+                  item: item_000000001
+                  source: payrollcorp
+                  created_at: '2023-01-30T18:25:13.491Z'
+                  updated_at: '2023-01-30T18:46:44.034Z'
+                  scanned_at: '2023-01-30T18:46:43.446Z'
+                  connection:
+                    status: connected
+                    error_code: null
+                    error_message: null
+                    updated_at: '2023-01-30T18:25:30.334956Z'
+                    direct_deposit_switch:
+                      status: error
+                      error_code: confirmation_timeout
+                      error_message: This user did not finish confirming the direct deposit switch.
+                      updated_at: '2023-01-30T18:35:31.961Z'
+                  availability:
+                    shifts:
+                      status: synced
+                      updated_at: '2023-01-30T18:46:43Z'
+                      available_count: 132
+                      available_from: '2020-03-03T18:25:30Z'
+                      available_to: '2023-01-28T00:00:00Z'
+                    gigs:
+                      status: synced
+                      updated_at: '2023-01-30T18:46:43Z'
+                      available_count: 242
+                      available_from: '2020-03-03T18:25:30Z'
+                      available_to: '2023-01-28T00:00:00Z'
+                    paystubs:
+                      status: synced
+                      updated_at: '2023-01-30T18:46:43Z'
+                      available_count: 40
+                      available_from: '2020-03-03T18:25:30Z'
+                      available_to: '2023-01-02T00:00:00Z'
+                    payroll_documents:
+                      status: synced
+                      updated_at: '2023-01-30T18:45:35.228Z'
+                    identities:
+                      status: synced
+                      updated_at: '2023-01-30T18:45:34.960Z'
+                    ratings:
+                      status: synced
+                      updated_at: '2023-01-30T18:45:35.235Z'
+                    vehicles:
+                      status: synced
+                      updated_at: '2023-01-30T18:45:35.237Z'
+                    deposit_destinations:
+                      status: synced
+                      updated_at: '2023-01-30T18:25:31.438Z'
+                    user_forms: null
+                    user_uploads: null
+                  ongoing_refresh:
+                    status: enabled
+                - id: 01856c65-43b6-8b5d-b32a-56b8fbda5c28
+                  user: 0186c5b8-8fa1-67b3-39af-14b3e18da8a7
+                  employers: []
+                  item: item_000012271
+                  source: doc_upload_item
+                  created_at: '2023-01-30T15:15:53.176Z'
+                  updated_at: '2023-01-30T15:16:12.042Z'
+                  scanned_at: null
+                  connection:
+                    status: connecting
+                    error_code: null
+                    error_message: null
+                    updated_at: '2023-01-30T15:16:14.695Z'
+                  direct_deposit_switch:
+                    status: idle
+                    error_code: null
+                    error_message: null
+                    updated_at: '2023-01-30T15:16:11.703Z'
+                  availability:
+                    shifts: null
+                    gigs: null
+                    paystubs: null
+                    payroll_documents: null
+                    identities: null
+                    ratings: null
+                    vehicles: null
+                    deposit_destinations: null
+                    user_forms:
+                      status: synced
+                      updated_at: '2023-01-30T15:16:12.012Z'
+                      available_count: 1
+                      files_count: 3
+                      in_progress_count: 0
+                    user_uploads: null
+                  ongoing_refresh:
+                    status: idle
+      tags:
+      - Accounts
+  /v2/accounts/{id}/disable-ongoing-refresh:
+    post:
+      summary: Disable account updates
+      description: "Disables `ongoing_refresh` for an individual account.\n\nTo access this feature, reach out to our team for assistance.\n\n*   Link will display the [ongoing\\_refresh\\_disabled](/api-reference/account-connection-errors#ongoingrefreshdisabled) account connection error when users return to view this account.\n*   Changes the account's [`ongoing_refresh.status`](/api-reference/accounts#object-ongoing_refresh) value from `enabled` to `disabled` and causes the [`accounts.updated`](/api-reference/accounts-webhooks/updated) webhook to be sent.\n\n<br/>\n\nAfter `ongoing_refresh` is disabled:\n\n*   The specified account will no longer receive [data updates](/overview/ongoing-refresh).\n*   If the user returns to Link and [reconnects the account](/workflows/reconnecting-accounts#reconnecting-disconnected-accounts):\n    1.  The account will immediately be re-scanned and its data updated.\n    2.  The account will be billed as a new account connection.\n    3.  Ongoing refresh will be re-enabled for the account.\n"
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: ID of the account object.
+      responses:
+        '200':
+          description: '200 status code: Request succeeded.'
+      tags:
+      - Accounts
+components:
+  schemas:
+    AvailabilityItem:
+      type: object
+      description: 'Status of the account''s most recent data scan (initial data retrieval included) or [document upload](/api-reference/user-uploads) submission.
+
+
+        - `in_progress` — A data scan is in progress, or a document was uploaded but not submitted.
+
+        - `synced` — The most recent data scan of the account was successful, or an uploaded document was submitted.
+
+        - `sync_failed` — Data retrieval during the most recent data scan failed, resulting in an [account connection error](/api-reference/account-connection-errors).
+
+        '
+      properties:
+        status:
+          type: string
+          enum:
+          - in_progress
+          - synced
+          - sync_failed
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the most recent change to available data.
+        available_count:
+          type: integer
+          description: 'Number of gig events, paystubs available, or response form submissions.
+
+
+            During initial data retrieval, the `available_count` will increase until all data has been retrieved and `availability.status` becomes `synced`.
+
+            '
+        files_count:
+          type: integer
+          description: Total number of uploaded documents.
+        in_progress_count:
+          type: integer
+          description: Total number of documents uploaded or response forms in progress but not submitted.
+        available_from:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the earliest gig or paystub available.
+        available_to:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest gig or paystub available.
+    Account:
+      type: object
+      example:
+        id: 0187c66e-e7e5-811c-b006-2232f00f426a
+        user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        employers:
+        - Whole Goods
+        item: item_123456789
+        source: thepayrollcompany
+        created_at: '2023-01-30T12:53:22.561Z'
+        updated_at: '2023-01-30T12:55:04.478Z'
+        scanned_at: '2023-01-30T12:55:04.016Z'
+        connection:
+          status: connected
+          error_code: null
+          error_message: null
+          updated_at: '2023-01-30T12:53:25.561Z'
+        direct_deposit_switch:
+          status: success
+          error_code: null
+          error_message: null
+          updated_at: '2023-01-30T12:55:03.478Z'
+        availability:
+          shifts:
+            status: synced
+            updated_at: '2023-01-30T12:55:03Z'
+            available_count: 94
+            available_from: '2020-04-11T12:53:27Z'
+            available_to: '2023-01-25T00:00:00Z'
+          gigs:
+            status: synced
+            updated_at: '2023-01-30T12:55:03Z'
+            available_count: 217
+            available_from: '2020-04-11T12:53:27Z'
+            available_to: '2023-01-25T00:00:00Z'
+          paystubs:
+            status: synced
+            updated_at: '2023-01-30T12:55:03Z'
+            available_count: 68
+            available_from: '2020-05-11T12:53:27Z'
+            available_to: '2023-01-29T23:59:59Z'
+          payroll_documents:
+            status: synced
+            updated_at: '2023-01-30T12:53:44.308Z'
+          identities:
+            status: synced
+            updated_at: '2023-01-30T12:53:44.028Z'
+          ratings:
+            status: synced
+            updated_at: '2023-01-30T12:55:03.359Z'
+          vehicles:
+            status: synced
+            updated_at: '2023-01-30T12:53:44.321Z'
+          deposit_destinations:
+            status: synced
+            updated_at: '2023-01-30T12:53:42.586Z'
+          user_forms:
+            status: in_progress
+            updated_at: '2023-01-30T12:53:42.586Z'
+            available_count: 0
+            files_count: 1
+            in_progress_count: 1
+          user_uploads:
+            status: synced
+            updated_at: '2023-01-30T12:54:41.621Z'
+            files_count: 2
+            in_progress_count: 0
+        ongoing_refresh:
+          status: enabled
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the connected payroll account.
+        user:
+          type: string
+          format: uuid
+          description: ID of the user that connected the account.
+        employers:
+          type: array
+          items:
+            type: string
+          description: 'Employers associated with the account.
+
+
+            A single employer is usually returned per account. Exceptions can occur when an LLC and Co. version of the same employer is returned.
+
+            '
+        item:
+          type: string
+          description: ID of the Item in Link through which the account was connected.
+        source:
+          type: string
+          description: Payroll data source. Typically a third-party payroll system unless the employer uses an in-house system.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user connected the account.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last updated. An update occurs every time an account is scanned for new data, and when any values of the account object change (such as an updated connection status).
+        scanned_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last scanned for new data. A `null` value indicates the account was never connected.
+        connection:
+          type: object
+          description: Object containing information about the account's connection status.
+          properties:
+            status:
+              type: string
+              enum:
+              - connecting
+              - connected
+              - error
+              description: 'Status of Argyle''s connection with the user''s payroll system.
+
+
+                - `connecting` — The user submitted new or revised login credentials through Link and Argyle is establishing the connection.
+
+                - `connected` — An account connection was successfully made. See the `availability` object for updates on initial data retrieval.
+
+                - `error` — An [account connection error](/api-reference/account-connection-errors) has occurred. Data refreshes have been paused.
+
+                '
+            error_code:
+              type: string
+              enum:
+              - account_disabled
+              - account_inaccessible
+              - account_incomplete
+              - account_nonunique
+              - account_not_found
+              - all_employers_connected
+              - auth_method_temporarily_unavailable
+              - auth_required
+              - connection_unavailable
+              - credentials_managed_by_organization
+              - existing_account_found
+              - expired_credentials
+              - full_auth_required
+              - insufficient_account_data
+              - invalid_account_type
+              - invalid_auth
+              - invalid_credentials
+              - invalid_employer_identifier
+              - invalid_login_method
+              - invalid_login_url
+              - invalid_mfa
+              - invalid_store_identifier
+              - known_employer_redirect
+              - login_attempts_exceeded
+              - login_cancelled_by_the_user
+              - login_gov_not_linked
+              - mfa_attempts_exceeded
+              - mfa_cancelled_by_the_user
+              - mfa_exhausted
+              - mfa_not_configured
+              - mfa_timeout
+              - multi_driver_account
+              - ongoing_refresh_disabled
+              - passkey_limit_reached
+              - personal_data_access_not_granted
+              - physical_mfa_unsupported
+              - platform_temporarily_unavailable
+              - platform_unavailable
+              - service_unavailable
+              - session_limit_reached
+              - system_error
+              - temporary_credentials
+              - tos_required
+              - trial_connections_exhausted
+              - trial_period_expired
+              - unrecognized_employer_email
+              - unsupported_auth_type
+              - unsupported_business_account
+              - unsupported_language
+              - unsupported_mfa_method
+              - user_action_timeout
+              description: The [account connection error](/api-reference/account-connection-errors) that occurred.
+            error_message:
+              type: string
+              description: Description of the error. Common causes and troubleshooting steps can be found in account connection errors.
+            updated_at:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the connection status last changed.
+        direct_deposit_switch:
+          type: object
+          description: Object containing deposit switch status information.
+          properties:
+            status:
+              type: string
+              enum:
+              - idle
+              - awaiting_confirmation
+              - awaiting_user_action
+              - awaiting_connection
+              - scanning
+              - updating
+              - success
+              - error
+              description: 'Status of a deposit switch.
+
+
+                - `idle` — The deposit switch process has not started.
+
+                - `awaiting_confirmation` — The user started the deposit switch flow in Link but has not clicked "Confirm".
+
+                - `awaiting_user_action` — The user has confirmed the deposit switch but needs to complete a multi-factor authentication (MFA) step.
+
+                - `awaiting_connection` — Argyle is connecting to the user''s payroll system.
+
+                - `scanning` — Argyle is scanning the user''s existing direct deposits before initiating the deposit switch.
+
+                - `updating` — The deposit switch is in progress.
+
+                - `success` — The deposit switch was successful.
+
+                - `error` — A deposit switch error occurred, and the deposit switch could not be completed.
+
+                '
+            error_code:
+              type: string
+              enum:
+              - account_invalid
+              - account_closed
+              - account_blocked
+              - confirmation_expired
+              - confirmation_invalid
+              - confirmation_timeout
+              - deposit_account_mismatch
+              - deposit_destination_unsupported
+              - employer_unsupported
+              - employer_account_invalid
+              - employer_account_closed
+              - employer_account_blocked
+              - employer_confirmation_invalid
+              - internal_server_error
+              - invalid_request
+              - item_invalid
+              - name_mismatch
+              - payroll_account_mismatch
+              - temporarily_unavailable
+              - terminate_flow
+              - unauthorized
+              - unexpected
+              - user_input_required
+              description: The deposit switch error that occurred.
+            error_message:
+              type: string
+              description: Description of the error. Common causes and troubleshooting steps can be found in deposit switch errors.
+            updated_at:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the deposit switch status last changed.
+        availability:
+          type: object
+          description: Object containing information on data availability for each of Argyle's data sets, and any user-uploaded documents or "can't find my income" response forms.
+          properties:
+            shifts:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            gigs:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            paystubs:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            payroll_documents:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            identities:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            ratings:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            vehicles:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            deposit_destinations:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            user_forms:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+            user_uploads:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+              nullable: true
+        ongoing_refresh:
+          type: object
+          description: Object containing the account's `ongoing_refresh` status (whether the account will be updated with new data after each [data refresh](/overview/ongoing-refresh#refresh-frequency)).
+          properties:
+            status:
+              type: string
+              enum:
+              - enabled
+              - disabled
+              - idle
+              description: 'The account''s `ongoing_refresh` status.
+
+
+                - `idle` — This account never experienced a successful payroll connection — only uploading documents or only completing a "can''t find my income source" response form is not considered a successful payroll connection.
+
+                - `enabled` — Ongoing refresh is currently enabled for this connected payroll account.
+
+                - `disabled` — Ongoing refresh is currently disabled for this connected payroll account.
+
+
+                Ongoing refresh can be [disabled manually](/api-reference/accounts#disable) via the API for individual accounts.
+
+                '
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Username = api_key_id, Password = api_key_secret
