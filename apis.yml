@@ -7,7 +7,20 @@ description: Argyle is an employment data connectivity platform offering a REST 
   platforms, and government payroll systems, with webhook alerts for employment and
   income changes.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/argyle.png
 url: https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -22,23 +35,18 @@ tags:
 - Earned Wage Access
 - Direct Deposit
 apis:
-- name: Argyle API
-  description: RESTful API providing user-consented access to payroll and employment
-    data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll
-    documents, and deposit destinations across thousands of employers and gig platforms.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: argyle:argyle-accounts-api
+  name: Argyle Accounts API
+  description: The Accounts API from Argyle — 3 operation(s) for accounts.
   humanURL: https://docs.argyle.com/api-guide/overview
   baseURL: https://api.argyle.com/v2
   tags:
-  - Payroll
-  - Employment
-  - Income Verification
-  - Gig Economy
+  - Accounts
   properties:
+  - type: OpenAPI
+    url: openapi/argyle-accounts-api-openapi.yml
   - type: Documentation
     url: https://docs.argyle.com/
-  - type: OpenAPI
-    url: https://docs.argyle.com/api-reference
   - type: Sandbox
     url: https://api-sandbox.argyle.com/v2
   - type: Postman
@@ -47,8 +55,6 @@ apis:
     url: https://docs.argyle.com/api-guide/webhooks
   - type: Authentication
     url: https://docs.argyle.com/api-guide/overview
-  - type: OpenAPI
-    url: openapi/argyle-api-openapi.yml
   - type: JSONSchema
     url: json-schema/
   - type: Examples
@@ -57,8 +63,758 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - url: graphql/argyle-graphql.md
-    type: GraphQL
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-deposit-destinations-api
+  name: Argyle Deposit Destinations API
+  description: The Deposit Destinations API from Argyle — 2 operation(s) for deposit destinations.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Deposit Destinations
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-deposit-destinations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-employer-search-api
+  name: Argyle Employer Search API
+  description: The Employer Search API from Argyle — 1 operation(s) for employer search.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Employer Search
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-employer-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-employments-api
+  name: Argyle Employments API
+  description: The Employments API from Argyle — 1 operation(s) for employments.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Employments
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-employments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-gigs-api
+  name: Argyle Gigs API
+  description: The Gigs API from Argyle — 2 operation(s) for gigs.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Gigs
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-gigs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-identities-api
+  name: Argyle Identities API
+  description: The Identities API from Argyle — 2 operation(s) for identities.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Identities
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-identities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-invites-api
+  name: Argyle Invites API
+  description: The Invites API from Argyle — 3 operation(s) for invites.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Invites
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-invites-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-item-filters-api
+  name: Argyle Item Filters API
+  description: The Item Filters API from Argyle — 2 operation(s) for item filters.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Item Filters
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-item-filters-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-item-migrations-api
+  name: Argyle Item Migrations API
+  description: The Item Migrations API from Argyle — 1 operation(s) for item migrations.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Item Migrations
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-item-migrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-items-api
+  name: Argyle Items API
+  description: The Items API from Argyle — 2 operation(s) for items.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Items
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-items-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-open-banking-api
+  name: Argyle Open Banking API
+  description: The Open Banking API from Argyle — 6 operation(s) for open banking.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Open Banking
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-open-banking-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-partners-api
+  name: Argyle Partners API
+  description: The Partners API from Argyle — 15 operation(s) for partners.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Partners
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-partners-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-payroll-documents-api
+  name: Argyle Payroll Documents API
+  description: The Payroll Documents API from Argyle — 2 operation(s) for payroll documents.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Payroll Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-payroll-documents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-paystubs-api
+  name: Argyle Paystubs API
+  description: The Paystubs API from Argyle — 2 operation(s) for paystubs.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Paystubs
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-paystubs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-ratings-api
+  name: Argyle Ratings API
+  description: The Ratings API from Argyle — 2 operation(s) for ratings.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Ratings
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-ratings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-receipts-api
+  name: Argyle Receipts API
+  description: The Receipts API from Argyle — 1 operation(s) for receipts.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Receipts
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-receipts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-reports-api
+  name: Argyle Reports API
+  description: The Reports API from Argyle — 3 operation(s) for reports.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-sessions-api
+  name: Argyle Sessions API
+  description: The Sessions API from Argyle — 1 operation(s) for sessions.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-shifts-api
+  name: Argyle Shifts API
+  description: The Shifts API from Argyle — 2 operation(s) for shifts.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Shifts
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-shifts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-user-forms-api
+  name: Argyle User Forms API
+  description: The User Forms API from Argyle — 2 operation(s) for user forms.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - User Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-user-forms-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-user-tokens-api
+  name: Argyle User Tokens API
+  description: The User Tokens API from Argyle — 1 operation(s) for user tokens.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - User Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-user-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-user-uploads-api
+  name: Argyle User Uploads API
+  description: The User Uploads API from Argyle — 2 operation(s) for user uploads.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - User Uploads
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-user-uploads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-users-api
+  name: Argyle Users API
+  description: The Users API from Argyle — 2 operation(s) for users.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-vehicles-api
+  name: Argyle Vehicles API
+  description: The Vehicles API from Argyle — 2 operation(s) for vehicles.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Vehicles
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-vehicles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-verifications-api
+  name: Argyle Verifications API
+  description: The Verifications API from Argyle — 4 operation(s) for verifications.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Verifications
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-verifications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
+- aid: argyle:argyle-webhooks-api
+  name: Argyle Webhooks API
+  description: The Webhooks API from Argyle — 1 operation(s) for webhooks.
+  humanURL: https://docs.argyle.com/api-guide/overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/argyle-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.argyle.com/
+  - type: Sandbox
+    url: https://api-sandbox.argyle.com/v2
+  - type: Postman
+    url: https://www.postman.com/argyledocs/argyle/collection/ib2pyjs/argyle-api-v2
+  - type: Webhooks
+    url: https://docs.argyle.com/api-guide/webhooks
+  - type: Authentication
+    url: https://docs.argyle.com/api-guide/overview
+  - type: JSONSchema
+    url: json-schema/
+  - type: Examples
+    url: examples/
+  - type: Vocabulary
+    url: vocabulary/argyle-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/argyle-context.jsonld
+  - type: GraphQL
+    url: graphql/argyle-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/argyle-agentic-access.yml
