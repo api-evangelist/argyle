@@ -1,0 +1,145 @@
+{
+  "item": [
+    {
+      "id": "56b60d09-5e5d-4a28-8b4e-d32ba81146bb",
+      "name": "Item Migrations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0f922077-7108-4ab6-a37d-380d8bb7a0a5",
+          "name": "Migrate a Link item ID",
+          "request": {
+            "name": "Migrate a Link item ID",
+            "description": {
+              "content": "Returns the Item ID's that correspond to a provided list of Link item ID's.\n\n- Link item ID's were used in Link 4 initializations.\n- Item ID's are used in [Link 5 initializations](/link/initialization).\n\nItem ID's use the convention: \"item_[9 digits]\" - `\"item_123456789\"` for example.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "item-migrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"link_items\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d605e98-1746-4cbc-8b7e-d72ab4eb750d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "item-migrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"link_items\": [\n    \"GigAndGo\",\n    \"GigDrive\",\n    \"GigAntic\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"GigAndGo\": {\n    \"id\": \"item_000000003\"\n  },\n  \"GigDrive\": {\n    \"id\": \"item_000000042\"\n  },\n  \"GigAntic\": {\n    \"id\": \"item_000000819\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c140f6fd-245c-40aa-a177-3a24c79ba7d6",
+    "name": "Argyle Accounts Item Migrations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

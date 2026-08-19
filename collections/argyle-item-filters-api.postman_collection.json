@@ -1,0 +1,549 @@
+{
+  "item": [
+    {
+      "id": "727fd137-60e6-42c3-b212-7f3f2cf21f48",
+      "name": "Item Filters",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "757d5c06-f31c-4191-8cec-3ccc894f0707",
+          "name": "Create an Item filter",
+          "request": {
+            "name": "Create an Item filter",
+            "description": {
+              "content": "Filters are applied to properties of the `field_coverage` object of [Items](/api-reference/items#object) using the comparison operators below. You can also filter Items by their `status` property using the `eq` operator.\n\nThe name and ID of the new Item filter are returned in the response, which can be used as a query parameter when [listing Items](/api-reference/items#list).\n\n## Comparison operators\n\n`eq` — equals  \n`gt` — greater than  \n`gte` — greater than or equal to  \n`lt` — less than  \n`lte` — less than or equal to\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "item-filters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"filters\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e03bfeaa-c6db-42e7-971a-f2f41b626d44",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "item-filters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Key paystub fields supported\",\n  \"filters\": {\n    \"status\": {\n      \"eq\": \"healthy\"\n    },\n    \"field_coverage\": {\n      \"paystubs\": {\n        \"gross_pay\": {\n          \"supported\": {\n            \"eq\": true\n          }\n        },\n        \"paystub_date\": {\n          \"supported\": {\n            \"eq\": true\n          }\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"087394d4-83b5-4722-8c5e-0235362c12f5\",\n  \"name\": \"Key paystub fields supported\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e0ed79ad-a170-4c02-bfe8-20417b5ae7cc",
+          "name": "List all Item filters",
+          "request": {
+            "name": "List all Item filters",
+            "description": {
+              "content": "Returns a paginated list of all Item filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "item-filters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of Item filters returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "157afe79-1732-459d-85bd-e634d59fd19c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "item-filters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"http://IwXSHFOqgwMnEKQEZkElCGhprg.izvC7RicJF1P6b,wpECbC0Zsvt8pb-fY.ao37BNKraAgNfovED8zszuPPzdfxOMlNNaLnIZVoABWu\",\n  \"previous\": \"http://gsbTx.cmwgXosTGvPN8I18+fexRMl+PXnUWjMsy71IyXtSBDRLmyTda-RDC,.fO4OYQjtetx2da,s\",\n  \"results\": [\n    {\n      \"name\": \"Candidate for new car loan fields supported\",\n      \"filters\": {\n        \"field_coverage\": {\n          \"gigs\": {\n            \"distance\": {\n              \"supported\": true\n            }\n          },\n          \"vehicles\": {\n            \"year\": {\n              \"supported\": true\n            }\n          }\n        }\n      }\n    },\n    {\n      \"name\": \"Key paystub fields supported\",\n      \"filters\": {\n        \"status\": {\n          \"eq\": \"healthy\"\n        },\n        \"field_coverage\": {\n          \"paystubs\": {\n            \"gross_pay\": {\n              \"supported\": {\n                \"eq\": true\n              }\n            },\n            \"paystub_date\": {\n              \"supported\": {\n                \"eq\": true\n              }\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa072f8a-db33-4b4a-bb4f-a7a9f147a0b9",
+          "name": "Retrieve an Item filter",
+          "request": {
+            "name": "Retrieve an Item filter",
+            "description": {
+              "content": "Retrieves an Item filter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "item-filters",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the Item filter to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "81a953c7-f04a-448d-9f55-66b055f95161",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "item-filters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the Item filter to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"087394d4-83b5-4722-8c5e-0235362c12f5\",\n  \"name\": \"Key paystub fields supported\",\n  \"filters\": {\n    \"status\": {\n      \"eq\": \"healthy\"\n    },\n    \"field_coverage\": {\n      \"paystubs\": {\n        \"gross_pay\": {\n          \"supported\": {\n            \"eq\": true\n          }\n        },\n        \"paystub_date\": {\n          \"supported\": {\n            \"eq\": true\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9efa78af-aed4-466a-9368-8c660b46b83f",
+          "name": "Replace an Item filter",
+          "request": {
+            "name": "Replace an Item filter",
+            "description": {
+              "content": "Replaces the filters of an Item filter with a new set of filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "item-filters",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the Item filter whose filters are to be replaced."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"filters\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "23a8b904-7062-44ad-b44c-95999a5cc9aa",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "item-filters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the Item filter whose filters are to be replaced."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Key paystub fields supported\",\n  \"filters\": {\n    \"status\": {\n      \"eq\": \"healthy\"\n    },\n    \"field_coverage\": {\n      \"paystubs\": {\n        \"gross_pay\": {\n          \"supported\": {\n            \"eq\": true\n          }\n        },\n        \"paystub_date\": {\n          \"supported\": {\n            \"eq\": true\n          }\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"087394d4-83b5-4722-8c5e-0235362c12f5\",\n  \"name\": \"Key paystub fields supported\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c4cb72d-3c5b-4455-9e86-4ecc2c79139c",
+          "name": "Delete an Item filter",
+          "request": {
+            "name": "Delete an Item filter",
+            "description": {
+              "content": "Deletes an Item filter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "item-filters",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the Item filter to be deleted."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f81e556-6f0a-4d62-87d2-faccf176b110",
+              "name": "204 status code: No content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "item-filters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the Item filter to be deleted."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0a90e0ef-a35f-4cac-9a48-31e68299a5f8",
+    "name": "Argyle Accounts Item Filters API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Items API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/items/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Item. ID format — `item_123456789`\n"
+              }
+            ]
+          },
+          "docs": "Retrieves an Item object."
+        },
+        {
+          "info": {
+            "name": "List all Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/items",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search filter. For best results, use the payroll platform or employer's full name.\n"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Item ID.\nMultiple Item IDs can also be searched at once using either method:\n\n1. `/v2/items?id=item_000000001,item_000000002`\n2. `/v2/items?id=item_000000001&id=item_000000002`\n"
+              },
+              {
+                "name": "kind",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `kind` value."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `status` value.\n\nMultiple `status` values can also be searched at once using either method:\n\n1. `/v2/items?status=healthy,issues`\n2. `/v2/items?status=healthy&status=issues`\n\nFiltering by both `healthy` and `issues` will return all Items that currently support new payroll connections.\n"
+              },
+              {
+                "name": "mapping_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `mapping_status` value.\n\nMultiple `mapping_status` values can also be searched at once using either method:\n\n1. `/v2/items?mapping_status=verified,mapped`\n2. `/v2/items?mapping_status=verified&mapping_status=mapped`\n"
+              },
+              {
+                "name": "min_matching_score",
+                "value": "",
+                "type": "query",
+                "description": "Only returns items with a [matching_score](/api-reference/items#object-matching_score) greater than or equal to this value.\n`min_matching_score` should be used together with the `q` \"free-text search\" query parameter.\n"
+              },
+              {
+                "name": "filter_set",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Item filter ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of Item objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all Item objects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

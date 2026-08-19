@@ -1,0 +1,480 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Partners API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Partners",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/partners/v2/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user object for partner verification workflows."
+        },
+        {
+          "info": {
+            "name": "Update a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.argyle.com/partners/v2/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the user object to be updated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a user object."
+        },
+        {
+          "info": {
+            "name": "Create a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/partners/v2/sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a connection session and return a `link` URL that launches the frontend experience.\n\nSession links expire after one hour. A new session link can be created at any time by creating another session for the active verification.\n\n<Note>This endpoint is for payroll and banking verifications only.</Note>"
+        },
+        {
+          "info": {
+            "name": "List all verifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/verifications",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "status_state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status `state`."
+              },
+              {
+                "name": "status_code",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status `code`."
+              },
+              {
+                "name": "report_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by report `type`."
+              },
+              {
+                "name": "loan_number",
+                "value": "",
+                "type": "query",
+                "description": "Filter by loan `number`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of verification objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all verification objects."
+        },
+        {
+          "info": {
+            "name": "Order a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/partners/v2/verifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Orders a new verification.\n\n<Note>\n[Create a user](/api-reference/partners-verifications-guide#create-a-user) or update an existing user with the required details before ordering payroll, banking, or document verifications.\n</Note>"
+        },
+        {
+          "info": {
+            "name": "Refresh a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/partners/v2/verifications/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new payroll, banking, or Doc VOI verification without requiring the user to reconnect or upload additional documents.\n\nFor payroll and banking, a valid connection must already exist. For Doc VOI, the new report is generated from the user's existing uploaded documents."
+        },
+        {
+          "info": {
+            "name": "Retrieve a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/verifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the verification to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves a verification."
+        },
+        {
+          "info": {
+            "name": "Update a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.argyle.com/partners/v2/verifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the verification to be updated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates verification metadata or employments.\n\n<Note>\nAfter a verification is updated, it will re-enter the `PROCESSING` state.\n</Note>\n"
+        },
+        {
+          "info": {
+            "name": "Cancel a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/partners/v2/verifications/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the verification to be cancelled."
+              }
+            ]
+          },
+          "docs": "Cancels a verification order.\n\n<Note>\nOnly verifications in the `PAUSED` state can be cancelled.\n</Note>\n"
+        },
+        {
+          "info": {
+            "name": "Upload a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/partners/v2/user-uploads",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "user",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "document_type",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "upload",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a document via the API."
+        },
+        {
+          "info": {
+            "name": "Retrieve an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the account object to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves an account object."
+        },
+        {
+          "info": {
+            "name": "List all accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/accounts",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "item",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Item ID."
+              },
+              {
+                "name": "ongoing_refresh_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `status` of the `ongoing_refresh` object."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of account objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all account objects."
+        },
+        {
+          "info": {
+            "name": "Retrieve a payroll document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/payroll-documents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payroll document object to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves a payroll document object."
+        },
+        {
+          "info": {
+            "name": "List all payroll documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/payroll-documents",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "account",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account ID."
+              },
+              {
+                "name": "employment",
+                "value": "",
+                "type": "query",
+                "description": "Filter by employment ID."
+              },
+              {
+                "name": "from_available_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter for payroll documents with an `available_date` on or after this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+              },
+              {
+                "name": "to_available_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter for payroll documents with an `available_date` on or before this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of payroll document objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all payroll document objects."
+        },
+        {
+          "info": {
+            "name": "Retrieve a paystub",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/paystubs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the paystub object to be retrieved.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a paystub object."
+        },
+        {
+          "info": {
+            "name": "List all paystubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/partners/v2/paystubs",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account ID."
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "employment",
+                "value": "",
+                "type": "query",
+                "description": "Filter by employment ID."
+              },
+              {
+                "name": "from_start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter for paystubs with a `paystub_date` on or after this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+              },
+              {
+                "name": "to_start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter for paystubs with a `paystub_date` on or before this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of paystubs objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all paystub objects."
+        },
+        {
+          "info": {
+            "name": "Generate a receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/partners/v2/receipts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a PDF listing all billable transactions associated with the user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

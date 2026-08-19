@@ -1,0 +1,157 @@
+{
+  "item": [
+    {
+      "id": "4af4ed10-fcd8-4994-93de-4a5290be09b0",
+      "name": "Receipts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6c598de4-79fa-46bf-9ce9-99b6f72de424",
+          "name": "Generate a receipt",
+          "request": {
+            "name": "Generate a receipt",
+            "description": {
+              "content": "Returns a PDF listing all billable transactions associated with the user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "receipts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9aa1f472-719f-4303-9c9c-680ea58e498d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/pdf"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Response disposition with receipt filename.",
+                  "key": "Content-Disposition",
+                  "value": "attachment; filename=\"receipt.pdf\""
+                },
+                {
+                  "disabled": false,
+                  "description": "Size of response payload in bytes.",
+                  "key": "Content-Length",
+                  "value": "12345"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/pdf"
+                }
+              ],
+              "body": "200 OK\nContent-Type: application/pdf\nContent-Disposition: attachment; filename=\"receipt.pdf\"\nContent-Length: 12345\n\n[PDF binary stream omitted]\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "47c869d5-3721-48c2-a842-b763fca45312",
+    "name": "Argyle Accounts Receipts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

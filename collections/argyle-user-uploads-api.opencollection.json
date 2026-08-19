@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts User Uploads API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Uploads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a user upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/user-uploads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the user upload object to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves a user upload object."
+        },
+        {
+          "info": {
+            "name": "List all user uploads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/user-uploads",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all user upload objects."
+        },
+        {
+          "info": {
+            "name": "Upload a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/v2/user-uploads",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "user",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "document_type",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "upload",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a document via the API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

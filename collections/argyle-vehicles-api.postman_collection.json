@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "6891ab17-d0ea-4d0e-bc0e-927f4334a1e2",
+      "name": "Vehicles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5c4d4787-491c-414b-b6ab-7db0809d309f",
+          "name": "Retrieve a vehicle",
+          "request": {
+            "name": "Retrieve a vehicle",
+            "description": {
+              "content": "Retrieves a vehicle object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "vehicles",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the vehicle object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "62350cc5-3224-42db-93d0-07d8455ab5be",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the vehicle object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01763a69-5cbe-2edb-ade1-5591157c354d\",\n  \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"identification\": \"AEWUQ7\",\n  \"make\": \"Ford\",\n  \"model\": \"Mondeo\",\n  \"type\": \"car\",\n  \"year\": 1998,\n  \"vin\": \"QUICELDKTRQJ4S33C\",\n  \"employer\": \"GigAndGo\",\n  \"created_at\": \"2023-02-09T13:42:03.966Z\",\n  \"updated_at\": \"2023-02-09T13:42:03.966Z\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "05394c45-1a07-4ec3-849b-fe4e1858bd99",
+          "name": "List all vehicles",
+          "request": {
+            "name": "List all vehicles",
+            "description": {
+              "content": "Returns a paginated list of all vehicle objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of vehicle objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "296f495f-c9a9-4009-a361-5edf1049ca30",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/vehicles?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0176364c-c8a2-4d43-2a12-7b4146a829a9\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"identification\": \"JASJ1Y\",\n      \"make\": \"Ford\",\n      \"model\": \"Focus\",\n      \"type\": \"car\",\n      \"year\": 2011,\n      \"vin\": \"W081C4YIZQYE55DSE\",\n      \"employer\": \"GigAntic\",\n      \"created_at\": \"2023-02-09T13:28:11.427Z\",\n      \"updated_at\": \"2023-02-09T13:32:13.215Z\",\n      \"metadata\": {\n        \"source\": \"gig platform\"\n      }\n    },\n    {\n      \"id\": \"01763a69-5cbe-2edb-ade1-5591157c354d\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"identification\": \"AEWUQ7\",\n      \"make\": \"Ford\",\n      \"model\": \"Mondeo\",\n      \"type\": \"car\",\n      \"year\": 1998,\n      \"vin\": \"QUICELDKTRQJ4S33C\",\n      \"employer\": \"GigAndGo\",\n      \"created_at\": \"2023-02-09T13:42:03.966Z\",\n      \"updated_at\": \"2023-02-09T13:42:03.966Z\",\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "16c9df74-9b45-45d1-9ab6-b11242d676ce",
+    "name": "Argyle Accounts Vehicles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

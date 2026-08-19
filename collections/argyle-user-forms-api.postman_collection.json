@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "9f3dc967-e724-489c-9c1e-cc54ce3c8165",
+      "name": "User Forms",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "83a0ceda-e823-4829-a823-357eb33ceb19",
+          "name": "Retrieve a user form",
+          "request": {
+            "name": "Retrieve a user form",
+            "description": {
+              "content": "Retrieves a user form object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "user-forms",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the user form object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f604d012-5d58-4d68-b7be-6de6400db1d2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user-forms",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the user form object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0186ef31-4a6c-bc77-ffb7-a9db11505d7d\",\n  \"account\": \"0182c1e2-59ec-16ba-34e2-4f20594a7df7\",\n  \"data\": {\n    \"income_source\": \"Block & Fish Tackle\",\n    \"payroll_provider\": \"Payroll Corp.\"\n  },\n  \"created_at\": \"2023-03-17T10:50:30.414265Z\",\n  \"updated_at\": \"2023-03-17T10:50:31.621908Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3214fda5-55da-4050-926d-63c1402c07d1",
+          "name": "List all user forms",
+          "request": {
+            "name": "List all user forms",
+            "description": {
+              "content": "Returns a paginated list of all user form objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "user-forms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of user form objects returned <a href=\"/api-guide/overview#pagination\">per page</a>. Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "be376cee-1bd2-409b-9689-62a4da2afcb8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user-forms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/user-forms?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0186ef31-4a6c-bc77-ffb7-a9db11505d7d\",\n      \"account\": \"0182c1e2-59ec-16ba-34e2-4f20594a7df7\",\n      \"data\": {\n        \"income_source\": \"Block & Fish Tackle\",\n        \"payroll_provider\": \"Payroll Corp.\"\n      },\n      \"created_at\": \"2023-03-17T10:50:30.414265Z\",\n      \"updated_at\": \"2023-03-17T10:50:31.621908Z\"\n    },\n    {\n      \"id\": \"0187bf23-cd80-118d-c0b8-58023e21c8e5\",\n      \"account\": \"01856c65-43b6-8b5d-b32a-56b8fbda5c28\",\n      \"data\": {\n        \"income_source\": \"Spanner & Gear Innovations\",\n        \"payroll_provider\": \"Payroll Corp.\"\n      },\n      \"created_at\": \"2023-03-17T10:40:00.672839Z\",\n      \"updated_at\": \"2023-03-17T10:45:20.035736Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "71d29513-457f-4a16-9bf0-57df06c6c8dd",
+    "name": "Argyle Accounts User Forms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

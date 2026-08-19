@@ -1,0 +1,186 @@
+{
+  "item": [
+    {
+      "id": "ddf28d58-46f4-4c0a-81b8-8dc5048be91f",
+      "name": "Employer Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6440bede-1f06-4bee-ac58-f9d8bb3f763d",
+          "name": "List all employers",
+          "request": {
+            "name": "List all employers",
+            "description": {
+              "content": "Returns a paginated list of all Item objects, representing the most relevant search results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "employer-search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text search filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "kind",
+                  "value": "<string>",
+                  "description": "Filter by `kind` value."
+                },
+                {
+                  "disabled": false,
+                  "key": "mapping_status",
+                  "value": "<string>",
+                  "description": "Filter by `mapping_status` value.\n\nMultiple `mapping_status` values can also be searched at once using either method:\n\n1. `/v2/items?mapping_status=verified,mapped`\n2. `/v2/items?mapping_status=verified&mapping_status=mapped`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by `status` value.\n\nMultiple `status` values can also be searched at once using either method:\n\n1. `/v2/items?status=healthy,issues`\n2. `/v2/items?status=healthy&status=issues`\n\nFiltering by both `healthy` and `issues` will return all Items that currently support new payroll connections.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of Item objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4baaa527-0e2d-46bb-a141-86178db745ce",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "employer-search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kind",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mapping_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/employer-search?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"item_000000002\",\n      \"name\": \"Bullseye\",\n      \"logo_url\": \"argyle.com/image-holdings\",\n      \"kind\": \"employer\",\n      \"mapping_status\": \"verified\",\n      \"status\": \"unavailable\"\n    },\n    {\n      \"id\": \"item_000000003\",\n      \"name\": \"Triple\",\n      \"logo_url\": \"argyle.com/image-holdings\",\n      \"kind\": \"platform\",\n      \"mapping_status\": \"mapped\",\n      \"status\": \"healthy\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "db26e605-41ef-4f9d-80ad-ccf75e72d9bc",
+    "name": "Argyle Accounts Employer Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

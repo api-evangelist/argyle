@@ -1,0 +1,293 @@
+{
+  "item": [
+    {
+      "id": "ee2229d5-96c9-405f-acdc-04c2166cabd8",
+      "name": "Payroll Documents",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4a529279-f589-45ce-8c17-48386e626e2d",
+          "name": "Retrieve a payroll document",
+          "request": {
+            "name": "Retrieve a payroll document",
+            "description": {
+              "content": "Retrieves a payroll document object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payroll-documents",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the payroll document object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e2ff1aff-2256-4631-b367-6444ca9eb73a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payroll-documents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the payroll document object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0183b2c1-02e5-a5e5-38f2-ecd51a5cf3d6\",\n  \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"document_number\": \"ced46eb3-7586-3cd7-2418-8eb9482bc3ec\",\n  \"available_date\": \"2019-03-14T17:46:25Z\",\n  \"expiration_date\": \"2027-03-12T17:46:25Z\",\n  \"employer\": \"GigAndGo\",\n  \"employment\": \"42d6531c-520a-26b9-35c3-b7137a6d205a\",\n  \"document_type\": \"drivers-licence\",\n  \"document_type_description\": \"Driver's license\",\n  \"file_url\": \"api.argyle.com/v2/payroll-documents/{id}/file\",\n  \"created_at\": \"2023-03-13T17:46:28.240Z\",\n  \"updated_at\": \"2023-03-13T17:46:28.240Z\",\n  \"ocr_data\": {},\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c0ab56c9-f13e-4c69-8c7d-343a4ddee12a",
+          "name": "List all payroll documents",
+          "request": {
+            "name": "List all payroll documents",
+            "description": {
+              "content": "Returns a paginated list of all payroll document objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payroll-documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "employment",
+                  "value": "<uuid>",
+                  "description": "Filter by employment ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_available_date",
+                  "value": "<dateTime>",
+                  "description": "Filter for payroll documents with an `available_date` on or after this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "to_available_date",
+                  "value": "<dateTime>",
+                  "description": "Filter for payroll documents with an `available_date` on or before this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of payroll document objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cea5b8e4-07f9-4973-83a7-e1df3afa4bd7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payroll-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "employment",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "from_available_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to_available_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/payroll-documents?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0186dc02-05b6-b83f-c366-b39a267e1570\",\n      \"account\": \"0185a8b8-60eb-80ca-7482-5f24504573f7\",\n      \"document_number\": null,\n      \"available_date\": \"2020-05-13T17:25:59Z\",\n      \"expiration_date\": null,\n      \"employer\": \"Whole Goods\",\n      \"employment\": \"0186a27d-e5c6-735a-a359-6315b34d544c\",\n      \"document_type\": \"payout-statement\",\n      \"document_type_description\": null,\n      \"file_url\": \"api.argyle.com/v2/payroll-documents/{id}/file\",\n      \"created_at\": \"2023-03-13T17:27:01.501Z\",\n      \"updated_at\": \"2023-03-13T17:27:01.501Z\",\n      \"ocr_data\": {},\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"0176dc14-bb37-402a-7be1-f5261759fae7\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"document_number\": \"ced46eb3-7586-3cd7-2418-8eb9482bc3ec\",\n      \"available_date\": \"2019-03-14T17:46:25Z\",\n      \"expiration_date\": \"2027-03-12T17:46:25Z\",\n      \"employer\": \"GigAndGo\",\n      \"employment\": \"42d6531c-520a-26b9-35c3-b7137a6d205a\",\n      \"document_type\": \"drivers-licence\",\n      \"document_type_description\": \"Driver's license\",\n      \"file_url\": \"api.argyle.com/v2/payroll-documents/{id}/file\",\n      \"created_at\": \"2023-03-13T17:46:28.240Z\",\n      \"updated_at\": \"2023-03-13T17:46:28.240Z\",\n      \"ocr_data\": {},\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9ee52a0e-9d9d-4855-9eac-e75c82c18d7e",
+    "name": "Argyle Accounts Payroll Documents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

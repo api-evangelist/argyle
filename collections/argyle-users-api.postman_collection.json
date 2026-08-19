@@ -1,0 +1,559 @@
+{
+  "item": [
+    {
+      "id": "4dbaf80a-a564-4cc5-869c-99a37fd9b1a7",
+      "name": "Users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "531e720c-54b7-493d-b94c-ce66655e9b14",
+          "name": "Create a user",
+          "request": {
+            "name": "Create a user",
+            "description": {
+              "content": "Creates a new user object. Includes a new [user token](/link/user-tokens) in the response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"ssn\": \"<string>\",\n  \"address\": {\n    \"city\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postal_code\": \"<string>\"\n  },\n  \"birth_date\": {\n    \"year\": \"<integer>\",\n    \"month\": \"<integer>\",\n    \"day\": \"<integer>\"\n  },\n  \"external_metadata\": \"<object>\",\n  \"open_banking\": {\n    \"end_user\": {\n      \"name\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  },\n  \"external_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29ba3058-8a50-42c1-88b7-485145c5c721",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIxNDRhMTRkNS04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2NzgzNDExNDMsImZpZCI6ImIyYzY4YzUwLTc2MTQtNDAwNy1iMzNmLWZiMzlkMDFmMmM3MCIsImlhdCI6MTY3ODMzNzU0MywiaXNzIjoiYXJneWxlLWNvcmUtYXV0aC1kZXYiLCJqdGkiOiI3ZTU0ZTY1NS05YWN2LTRiZDctOWI3OC0xODMxMjVkYjM1MzMiLCJzdWIiOiIwMTg2YzRiNi04ZTgyLWQ5OWMtOGY4Mi1mNjMyMjgxMzk2ZTQiLCJ1c2VyX2lkIjoiMDE4NmM0YjYtOGU4Mi1kOTljLThmODItZjYzMjI4MTM5NmU0In0.q5bkZTFAohISOcjJDb2wSzKcHmwrOM4pp9imOVybaWk\",\n  \"id\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77840254-ddea-4645-9bff-59a9f8e48f85",
+          "name": "List all users",
+          "request": {
+            "name": "List all users",
+            "description": {
+              "content": "Returns a paginated list of all user objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of user objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "external_id",
+                  "value": "<string>",
+                  "description": "Filter users by `external_id`. Exact matches only."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4d2cf842-a542-4294-a528-f98f772f894b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/users?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n      \"created_at\": \"2023-01-30T22:25:38.971Z\",\n      \"items_connected\": [\n        \"item_123456789\",\n        \"item_987654321\"\n      ],\n      \"employers_connected\": [\n        \"Whole Goods\",\n        \"Bullseye\"\n      ],\n      \"external_metadata\": {\n        \"notes\": \"In stage 3 of loan approval.\",\n        \"category\": \"Summer Initiative\"\n      },\n      \"external_id\": \"July Connection\",\n      \"first_name\": \"Sarah\",\n      \"last_name\": \"Longfield\",\n      \"email\": \"sarah@email.com\",\n      \"phone_number\": \"+12125555555\",\n      \"ssn\": null,\n      \"address\": {\n        \"city\": null,\n        \"line1\": null,\n        \"line2\": null,\n        \"state\": null,\n        \"country\": null,\n        \"postal_code\": null\n      },\n      \"birth_date\": {\n        \"year\": null,\n        \"month\": null,\n        \"day\": null\n      }\n    },\n    {\n      \"id\": \"0186c5b8-8fa1-67b3-39af-14b3e18da8a7\",\n      \"created_at\": \"2023-01-30T23:25:38.971Z\",\n      \"items_connected\": [\n        \"item_000000001\",\n        \"item_000000002\"\n      ],\n      \"employers_connected\": [\n        \"Half Bads\",\n        \"Triple\"\n      ],\n      \"external_metadata\": {\n        \"notes\": \"In stage 1 of loan approval.\",\n        \"category\": \"Summer Initiative\"\n      },\n      \"external_id\": \"August Connection\",\n      \"first_name\": null,\n      \"last_name\": null,\n      \"email\": null,\n      \"phone_number\": null,\n      \"ssn\": null,\n      \"address\": {\n        \"city\": null,\n        \"line1\": null,\n        \"line2\": null,\n        \"state\": null,\n        \"country\": null,\n        \"postal_code\": null\n      },\n      \"birth_date\": {\n        \"year\": null,\n        \"month\": null,\n        \"day\": null\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7e6c720-6b2a-4573-9f4a-e63c5738ea2a",
+          "name": "Retrieve a user",
+          "request": {
+            "name": "Retrieve a user",
+            "description": {
+              "content": "Retrieves a user object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the user object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e826352a-bcf6-4cbe-9069-0166ddb3a7d1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the user object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"created_at\": \"2023-01-30T22:25:38.971Z\",\n  \"items_connected\": [\n    \"item_123456789\",\n    \"item_987654321\"\n  ],\n  \"employers_connected\": [\n    \"Whole Goods\",\n    \"Bullseye\"\n  ],\n  \"external_metadata\": {\n    \"notes\": \"Moved to stage 2 of loan approval.\",\n    \"category\": \"Summer Initiative\"\n  },\n  \"external_id\": \"July_Connection\",\n  \"first_name\": \"Sarah\",\n  \"last_name\": \"Longfield\",\n  \"email\": \"sarah@email.com\",\n  \"phone_number\": \"+12125555555\",\n  \"ssn\": \"string\",\n  \"address\": {\n    \"city\": \"string\",\n    \"line1\": \"string\",\n    \"line2\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postal_code\": \"string\"\n  },\n  \"birth_date\": {\n    \"year\": 8464,\n    \"month\": 9189,\n    \"day\": 1466\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "939b1179-0389-4d5b-8314-3c54e1aca8fb",
+          "name": "Update a user",
+          "request": {
+            "name": "Update a user",
+            "description": {
+              "content": "Updates a user object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the user object to be updated."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"ssn\": \"<string>\",\n  \"address\": {\n    \"city\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postal_code\": \"<string>\"\n  },\n  \"birth_date\": {\n    \"year\": \"<integer>\",\n    \"month\": \"<integer>\",\n    \"day\": \"<integer>\"\n  },\n  \"external_metadata\": \"<object>\",\n  \"open_banking\": {\n    \"end_user\": {\n      \"name\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  },\n  \"external_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "96ee1f66-2012-46e8-9df0-880fb5a6771d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the user object to be updated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Sarah\",\n  \"last_name\": \"Longfield\",\n  \"email\": \"sarah@email.com\",\n  \"phone_number\": \"+12125555555\",\n  \"external_metadata\": {\n    \"notes\": \"Moved to stage 2 of loan approval.\",\n    \"category\": \"Summer Initiative\"\n  },\n  \"external_id\": \"July_Connection\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"created_at\": \"2023-01-30T22:25:38.971Z\",\n  \"items_connected\": [\n    \"item_123456789\",\n    \"item_987654321\"\n  ],\n  \"employers_connected\": [\n    \"Whole Goods\",\n    \"Bullseye\"\n  ],\n  \"external_metadata\": {\n    \"notes\": \"Moved to stage 2 of loan approval.\",\n    \"category\": \"Summer Initiative\"\n  },\n  \"external_id\": \"July_Connection\",\n  \"first_name\": \"Sarah\",\n  \"last_name\": \"Longfield\",\n  \"email\": \"sarah@email.com\",\n  \"phone_number\": \"+12125555555\",\n  \"ssn\": \"string\",\n  \"address\": {\n    \"city\": \"string\",\n    \"line1\": \"string\",\n    \"line2\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postal_code\": \"string\"\n  },\n  \"birth_date\": {\n    \"year\": 1768,\n    \"month\": 1679,\n    \"day\": 6283\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58ee80f8-7f94-4dfd-b141-601bae3f85af",
+          "name": "Delete a user",
+          "request": {
+            "name": "Delete a user",
+            "description": {
+              "content": "Deletes a user object.\n\n<Warning>Deleting a user object will also delete all accounts and resources associated with the user.</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the user object to be deleted."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ce47908-b8ed-412a-9cd0-d11aabf67a04",
+              "name": "204 status code: No content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the user object to be deleted."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5dd4b1c5-23af-4ae2-91e3-dfb2413c5760",
+    "name": "Argyle Accounts Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

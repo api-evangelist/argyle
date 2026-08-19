@@ -1,0 +1,273 @@
+{
+  "item": [
+    {
+      "id": "e7aba38c-8713-4824-881b-31effe30afe8",
+      "name": "Identities",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff441509-43de-4a10-bd14-4dce77efde3b",
+          "name": "Retrieve an identity",
+          "request": {
+            "name": "Retrieve an identity",
+            "description": {
+              "content": "Retrieves an identity object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the identity object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ad793cb2-b153-478e-810b-e53671e9e07f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the identity object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0153b145-7ab9-bea2-cc16-a8b71328942f\",\n  \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"address\": {\n    \"city\": \"New York\",\n    \"line1\": \"852 North W St\",\n    \"line2\": \"Apt 221\",\n    \"state\": \"NY\",\n    \"country\": \"US\",\n    \"postal_code\": \"10014\"\n  },\n  \"first_name\": \"Sarah\",\n  \"last_name\": \"Longfield\",\n  \"full_name\": \"Sarah Longfield\",\n  \"birth_date\": \"1980-10-30\",\n  \"email\": \"[email protected]\",\n  \"phone_number\": \"+12125555555\",\n  \"picture_url\": \"www.argyle.com/logofoldername\",\n  \"employment_status\": \"active\",\n  \"employment_type\": \"full-time\",\n  \"job_title\": \"Store Manager\",\n  \"ssn\": \"522-09-1191\",\n  \"marital_status\": \"Married filing jointly\",\n  \"gender\": \"Female\",\n  \"original_hire_date\": \"2019-01-03\",\n  \"hire_date\": \"2020-04-08\",\n  \"termination_date\": null,\n  \"termination_reason\": null,\n  \"employer\": \"Whole Goods\",\n  \"employment\": \"0183d52a-d3b2-331d-c753-3662a20e352b\",\n  \"base_pay\": {\n    \"amount\": \"58024.50\",\n    \"period\": \"annual\",\n    \"currency\": \"USD\"\n  },\n  \"pay_cycle\": \"semimonthly\",\n  \"platform_ids\": {\n    \"employee_id\": \"OB238HDW5\",\n    \"position_id\": \"6ELL4O7PM\",\n    \"platform_user_id\": \"JLH7B9V6O6YGN9O7\"\n  },\n  \"created_at\": \"2023-01-30T12:53:24.561594Z\",\n  \"updated_at\": \"2023-01-30T12:55:06.478699Z\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1938f24a-2f9b-4bf1-ae7b-6d3c4672fb80",
+          "name": "List all identities",
+          "request": {
+            "name": "List all identities",
+            "description": {
+              "content": "Returns a paginated list of all identity objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "employment",
+                  "value": "<uuid>",
+                  "description": "Filter by employment ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of identity objects returned per page. Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "686e0c6b-0596-4963-bd01-fe276ab1241a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "employment",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/identities?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0186da0b-6569-0ea0-eb50-b64e97cb29e9\",\n      \"account\": \"0186da0b-9923-0d27-4b05-6ce3b7b07b89\",\n      \"address\": {\n        \"city\": \"San Diego\",\n        \"line1\": \"54 N Shea Ridge\",\n        \"line2\": null,\n        \"state\": \"CA\",\n        \"country\": \"US\",\n        \"postal_code\": \"92092\"\n      },\n      \"first_name\": \"Joe\",\n      \"last_name\": \"Burnam\",\n      \"full_name\": \"Joe Burnam\",\n      \"birth_date\": \"1978-08-29\",\n      \"email\": \"[email protected]\",\n      \"phone_number\": \"+12123338708\",\n      \"picture_url\": \"www.argyle.com/logofoldername\",\n      \"employment_status\": \"active\",\n      \"employment_type\": \"part-time\",\n      \"job_title\": \"Hourly staff\",\n      \"ssn\": \"301-06-1225\",\n      \"marital_status\": \"Married filing jointly\",\n      \"gender\": \"Male\",\n      \"original_hire_date\": \"2022-05-18\",\n      \"hire_date\": \"2022-05-18\",\n      \"termination_date\": null,\n      \"termination_reason\": null,\n      \"employer\": \"Double Double\",\n      \"employment\": \"0183d52a-d3b2-331d-c753-3662a20e352b\",\n      \"base_pay\": {\n        \"amount\": \"18.08\",\n        \"period\": \"hourly\",\n        \"currency\": \"USD\"\n      },\n      \"pay_cycle\": \"monthly\",\n      \"platform_ids\": {\n        \"employee_id\": \"32ULINA8\",\n        \"position_id\": \"67LKUKA8\",\n        \"platform_user_id\": \"332512349952\"\n      },\n      \"created_at\": \"2023-01-31T12:13:24.561594Z\",\n      \"updated_at\": \"2023-01-31T12:45:06.478699Z\",\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"0353c142-4ab9-baa1-cb44-c8b51225877e\",\n      \"account\": \"0185a8b8-60eb-80ca-7482-5f24504573f7\",\n      \"address\": {\n        \"city\": \"Oklahoma City\",\n        \"line1\": \"312 Main Ave\",\n        \"line2\": null,\n        \"state\": \"OK\",\n        \"country\": \"US\",\n        \"postal_code\": \"73008\"\n      },\n      \"first_name\": \"Bob\",\n      \"last_name\": \"Jones\",\n      \"full_name\": \"Bob Jones\",\n      \"birth_date\": \"1983-07-02\",\n      \"email\": \"[email protected]\",\n      \"phone_number\": \"+13228675309\",\n      \"picture_url\": \"www.argyle.com/logofoldername\",\n      \"employment_status\": \"active\",\n      \"employment_type\": \"contractor\",\n      \"job_title\": \"Data analyst\",\n      \"ssn\": \"507-18-3058\",\n      \"marital_status\": \"Single\",\n      \"gender\": \"Female\",\n      \"original_hire_date\": \"2019-01-03\",\n      \"hire_date\": \"2021-04-08\",\n      \"termination_date\": null,\n      \"termination_reason\": null,\n      \"employer\": \"Half Bads\",\n      \"employment\": \"0183d52a-d3b2-331d-c753-3662a20e352b\",\n      \"base_pay\": {\n        \"amount\": \"39.72\",\n        \"period\": \"hourly\",\n        \"currency\": \"USD\"\n      },\n      \"pay_cycle\": \"biweekly\",\n      \"platform_ids\": {\n        \"employee_id\": \"bd823Lk\",\n        \"position_id\": \"ab3EkU2\",\n        \"platform_user_id\": \"832355\"\n      },\n      \"created_at\": \"2023-01-30T13:53:24.561594Z\",\n      \"updated_at\": \"2023-01-30T13:55:06.478699Z\",\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2d67ad7a-5198-456a-be34-de70b9c1c931",
+    "name": "Argyle Accounts Identities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

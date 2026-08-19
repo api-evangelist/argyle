@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Item Migrations API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Item Migrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Migrate a Link item ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/v2/item-migrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the Item ID's that correspond to a provided list of Link item ID's.\n\n- Link item ID's were used in Link 4 initializations.\n- Item ID's are used in [Link 5 initializations](/link/initialization).\n\nItem ID's use the convention: \"item_[9 digits]\" - `\"item_123456789\"` for example.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,293 @@
+{
+  "item": [
+    {
+      "id": "fdb51e0a-fc96-439b-bc17-652f8d927465",
+      "name": "Paystubs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45c81a22-e723-4a14-83f6-03ed6c257352",
+          "name": "Retrieve a paystub",
+          "request": {
+            "name": "Retrieve a paystub",
+            "description": {
+              "content": "Retrieves a paystub object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "paystubs",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the paystub object to be retrieved.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "290e7721-5c5b-415b-8d24-da3456bd2241",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "paystubs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the paystub object to be retrieved.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"61f13b60-c968-606d-f9aa-8657cf2ab178\",\n  \"account\": \"e057ffa9-444e-3ea6-2091-dd3a87de8856\",\n  \"payroll_document\": \"dabe2b5d-712f-6ec3-f479-bcf69b587941\",\n  \"deduction_list\": [\n    {\n      \"amount\": \"string\",\n      \"name\": \"string\",\n      \"tax_classification\": \"post_tax\",\n      \"amount_ytd\": \"string\"\n    },\n    {\n      \"amount\": \"string\",\n      \"name\": \"string\",\n      \"tax_classification\": \"post_tax\",\n      \"amount_ytd\": \"string\"\n    }\n  ],\n  \"filing_status\": [\n    {\n      \"type\": \"local\",\n      \"location\": \"string\",\n      \"status\": \"string\"\n    },\n    {\n      \"type\": \"local\",\n      \"location\": \"string\",\n      \"status\": \"string\"\n    }\n  ],\n  \"tax_list\": [\n    {\n      \"amount\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"federal\",\n      \"amount_ytd\": \"string\"\n    },\n    {\n      \"amount\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"local\",\n      \"amount_ytd\": \"string\"\n    }\n  ],\n  \"status\": \"cancelled\",\n  \"paystub_date\": \"2007-05-19T05:00:32.446Z\",\n  \"paystub_period\": {\n    \"start_date\": \"1981-10-30T06:25:22.964Z\",\n    \"end_date\": \"1976-12-30T20:01:23.801Z\"\n  },\n  \"currency\": \"string\",\n  \"gross_pay\": \"string\",\n  \"deductions\": \"string\",\n  \"taxes\": \"string\",\n  \"net_pay\": \"string\",\n  \"reimbursements\": \"string\",\n  \"hours\": \"string\",\n  \"fees\": \"string\",\n  \"net_pay_ytd\": \"string\",\n  \"gross_pay_ytd\": \"string\",\n  \"employer\": \"string\",\n  \"employment\": \"string\",\n  \"employer_address\": {\n    \"city\": \"string\",\n    \"line1\": \"string\",\n    \"line2\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postal_code\": \"string\"\n  },\n  \"created_at\": \"1981-11-25T14:25:41.190Z\",\n  \"updated_at\": \"1990-09-27T23:14:27.555Z\",\n  \"destinations\": [\n    {\n      \"reference\": \"string\",\n      \"amount\": \"string\",\n      \"method\": \"string\",\n      \"ach_deposit_account\": {\n        \"bank_name\": \"string\",\n        \"routing_number\": \"string\",\n        \"account_number\": \"string\"\n      },\n      \"card\": {\n        \"name\": \"string\",\n        \"number\": \"string\"\n      }\n    },\n    {\n      \"reference\": \"string\",\n      \"amount\": \"string\",\n      \"method\": \"string\",\n      \"ach_deposit_account\": {\n        \"bank_name\": \"string\",\n        \"routing_number\": \"string\",\n        \"account_number\": \"string\"\n      },\n      \"card\": {\n        \"name\": \"string\",\n        \"number\": \"string\"\n      }\n    }\n  ],\n  \"hours_ytd\": \"string\",\n  \"deductions_ytd\": \"string\",\n  \"taxes_ytd\": \"string\",\n  \"gross_pay_list\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"overtime\",\n      \"start_date\": \"1960-07-22T01:41:25.728Z\",\n      \"end_date\": \"1970-09-17T18:26:14.760Z\",\n      \"rate\": \"string\",\n      \"hours\": \"string\",\n      \"amount\": \"string\",\n      \"hours_ytd\": \"string\",\n      \"amount_ytd\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"pto\",\n      \"start_date\": \"1999-09-30T06:15:15.171Z\",\n      \"end_date\": \"1958-03-03T19:39:49.891Z\",\n      \"rate\": \"string\",\n      \"hours\": \"string\",\n      \"amount\": \"string\",\n      \"hours_ytd\": \"string\",\n      \"amount_ytd\": \"string\"\n    }\n  ],\n  \"gross_pay_list_totals\": {\n    \"base\": {\n      \"amount\": \"string\",\n      \"amount_ytd\": \"string\",\n      \"hours\": \"string\",\n      \"hours_ytd\": \"string\",\n      \"rate_implied\": \"string\",\n      \"rate_implied_ytd\": \"string\"\n    },\n    \"overtime\": {\n      \"amount\": \"string\",\n      \"amount_ytd\": \"string\",\n      \"hours\": \"string\",\n      \"hours_ytd\": \"string\",\n      \"rate_implied\": \"string\",\n      \"rate_implied_ytd\": \"string\"\n    },\n    \"commission\": {\n      \"amount\": \"string\",\n      \"amount_ytd\": \"string\",\n      \"hours\": \"string\",\n      \"hours_ytd\": \"string\",\n      \"rate_implied\": \"string\",\n      \"rate_implied_ytd\": \"string\"\n    },\n    \"bonus\": {\n      \"amount\": \"string\",\n      \"amount_ytd\": \"string\",\n      \"hours\": \"string\",\n      \"hours_ytd\": \"string\",\n      \"rate_implied\": \"string\",\n      \"rate_implied_ytd\": \"string\"\n    },\n    \"other\": {\n      \"amount\": \"string\",\n      \"amount_ytd\": \"string\",\n      \"hours\": \"string\",\n      \"hours_ytd\": \"string\",\n      \"rate_implied\": \"string\",\n      \"rate_implied_ytd\": \"string\"\n    }\n  },\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ecdbc89-afa5-42f8-8ce3-2ead2be73e88",
+          "name": "List all paystubs",
+          "request": {
+            "name": "List all paystubs",
+            "description": {
+              "content": "Returns a paginated list of all paystub objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "paystubs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "employment",
+                  "value": "<uuid>",
+                  "description": "Filter by employment ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_start_date",
+                  "value": "<dateTime>",
+                  "description": "Filter for paystubs with a `paystub_date` on or after this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "to_start_date",
+                  "value": "<dateTime>",
+                  "description": "Filter for paystubs with a `paystub_date` on or before this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of paystubs objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28cf438f-5f1f-40b7-9aef-79db706bfe56",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "paystubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "employment",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "from_start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to_start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://MnhBbNjnDPiqxKO.dyoCHTP-UcjA9ODTo8W+jlkKa47iGOoQIC4IQHtdn43Ju-SHq\",\n  \"previous\": \"http://KNVObeboy.tdbaSjuvH.U4SLLooLaCSa3,O7tdI3U\",\n  \"results\": [\n    {\n      \"id\": \"c1b49623-35c0-c4ab-7db7-e7ba10cf772b\",\n      \"account\": \"3eb268c3-9ca0-b064-c53e-38831c725d55\",\n      \"payroll_document\": \"c089b816-8d01-3a39-9566-76f6501e03ce\",\n      \"deduction_list\": [\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"tax_classification\": \"post_tax\",\n          \"amount_ytd\": \"string\"\n        },\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"tax_classification\": \"post_tax\",\n          \"amount_ytd\": \"string\"\n        }\n      ],\n      \"filing_status\": [\n        {\n          \"type\": \"federal\",\n          \"location\": \"string\",\n          \"status\": \"string\"\n        },\n        {\n          \"type\": \"state\",\n          \"location\": \"string\",\n          \"status\": \"string\"\n        }\n      ],\n      \"tax_list\": [\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"state\",\n          \"amount_ytd\": \"string\"\n        },\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"other\",\n          \"amount_ytd\": \"string\"\n        }\n      ],\n      \"status\": \"scheduled\",\n      \"paystub_date\": \"1980-05-16T03:16:03.440Z\",\n      \"paystub_period\": {\n        \"start_date\": \"1976-05-03T23:06:28.281Z\",\n        \"end_date\": \"1957-05-29T05:30:59.745Z\"\n      },\n      \"currency\": \"string\",\n      \"gross_pay\": \"string\",\n      \"deductions\": \"string\",\n      \"taxes\": \"string\",\n      \"net_pay\": \"string\",\n      \"reimbursements\": \"string\",\n      \"hours\": \"string\",\n      \"fees\": \"string\",\n      \"net_pay_ytd\": \"string\",\n      \"gross_pay_ytd\": \"string\",\n      \"employer\": \"string\",\n      \"employment\": \"string\",\n      \"employer_address\": {\n        \"city\": \"string\",\n        \"line1\": \"string\",\n        \"line2\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"postal_code\": \"string\"\n      },\n      \"created_at\": \"2013-05-23T16:50:49.934Z\",\n      \"updated_at\": \"1989-11-22T07:07:09.572Z\",\n      \"destinations\": [\n        {\n          \"reference\": \"string\",\n          \"amount\": \"string\",\n          \"method\": \"string\",\n          \"ach_deposit_account\": {\n            \"bank_name\": \"string\",\n            \"routing_number\": \"string\",\n            \"account_number\": \"string\"\n          },\n          \"card\": {\n            \"name\": \"string\",\n            \"number\": \"string\"\n          }\n        },\n        {\n          \"reference\": \"string\",\n          \"amount\": \"string\",\n          \"method\": \"string\",\n          \"ach_deposit_account\": {\n            \"bank_name\": \"string\",\n            \"routing_number\": \"string\",\n            \"account_number\": \"string\"\n          },\n          \"card\": {\n            \"name\": \"string\",\n            \"number\": \"string\"\n          }\n        }\n      ],\n      \"hours_ytd\": \"string\",\n      \"deductions_ytd\": \"string\",\n      \"taxes_ytd\": \"string\",\n      \"gross_pay_list\": [\n        {\n          \"name\": \"string\",\n          \"type\": \"commission\",\n          \"start_date\": \"1972-03-10T05:38:16.015Z\",\n          \"end_date\": \"2008-10-30T16:28:27.347Z\",\n          \"rate\": \"string\",\n          \"hours\": \"string\",\n          \"amount\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"amount_ytd\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"type\": \"other\",\n          \"start_date\": \"1995-09-19T08:26:26.618Z\",\n          \"end_date\": \"1999-09-12T20:01:46.262Z\",\n          \"rate\": \"string\",\n          \"hours\": \"string\",\n          \"amount\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"amount_ytd\": \"string\"\n        }\n      ],\n      \"gross_pay_list_totals\": {\n        \"base\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"overtime\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"commission\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"bonus\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"other\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        }\n      },\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"39eaca97-ac7d-34fc-96ad-831fa012abf0\",\n      \"account\": \"971d8dc7-eeb5-06c0-1291-77891304f58b\",\n      \"payroll_document\": \"86a44bad-96c5-945f-2746-6652bc6bbbd2\",\n      \"deduction_list\": [\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"tax_classification\": \"pre_tax\",\n          \"amount_ytd\": \"string\"\n        },\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"tax_classification\": \"pre_tax\",\n          \"amount_ytd\": \"string\"\n        }\n      ],\n      \"filing_status\": [\n        {\n          \"type\": \"federal\",\n          \"location\": \"string\",\n          \"status\": \"string\"\n        },\n        {\n          \"type\": \"state\",\n          \"location\": \"string\",\n          \"status\": \"string\"\n        }\n      ],\n      \"tax_list\": [\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"federal\",\n          \"amount_ytd\": \"string\"\n        },\n        {\n          \"amount\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"local\",\n          \"amount_ytd\": \"string\"\n        }\n      ],\n      \"status\": \"excluded\",\n      \"paystub_date\": \"1948-02-02T20:32:23.027Z\",\n      \"paystub_period\": {\n        \"start_date\": \"2012-11-05T14:35:23.907Z\",\n        \"end_date\": \"2018-01-23T02:01:18.818Z\"\n      },\n      \"currency\": \"string\",\n      \"gross_pay\": \"string\",\n      \"deductions\": \"string\",\n      \"taxes\": \"string\",\n      \"net_pay\": \"string\",\n      \"reimbursements\": \"string\",\n      \"hours\": \"string\",\n      \"fees\": \"string\",\n      \"net_pay_ytd\": \"string\",\n      \"gross_pay_ytd\": \"string\",\n      \"employer\": \"string\",\n      \"employment\": \"string\",\n      \"employer_address\": {\n        \"city\": \"string\",\n        \"line1\": \"string\",\n        \"line2\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"postal_code\": \"string\"\n      },\n      \"created_at\": \"1948-08-27T01:59:14.699Z\",\n      \"updated_at\": \"1963-02-25T10:05:51.441Z\",\n      \"destinations\": [\n        {\n          \"reference\": \"string\",\n          \"amount\": \"string\",\n          \"method\": \"string\",\n          \"ach_deposit_account\": {\n            \"bank_name\": \"string\",\n            \"routing_number\": \"string\",\n            \"account_number\": \"string\"\n          },\n          \"card\": {\n            \"name\": \"string\",\n            \"number\": \"string\"\n          }\n        },\n        {\n          \"reference\": \"string\",\n          \"amount\": \"string\",\n          \"method\": \"string\",\n          \"ach_deposit_account\": {\n            \"bank_name\": \"string\",\n            \"routing_number\": \"string\",\n            \"account_number\": \"string\"\n          },\n          \"card\": {\n            \"name\": \"string\",\n            \"number\": \"string\"\n          }\n        }\n      ],\n      \"hours_ytd\": \"string\",\n      \"deductions_ytd\": \"string\",\n      \"taxes_ytd\": \"string\",\n      \"gross_pay_list\": [\n        {\n          \"name\": \"string\",\n          \"type\": \"benefits\",\n          \"start_date\": \"1970-07-08T04:18:30.182Z\",\n          \"end_date\": \"1970-12-07T06:30:09.434Z\",\n          \"rate\": \"string\",\n          \"hours\": \"string\",\n          \"amount\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"amount_ytd\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"type\": \"other\",\n          \"start_date\": \"2003-07-13T04:28:20.318Z\",\n          \"end_date\": \"1948-08-22T21:04:39.440Z\",\n          \"rate\": \"string\",\n          \"hours\": \"string\",\n          \"amount\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"amount_ytd\": \"string\"\n        }\n      ],\n      \"gross_pay_list_totals\": {\n        \"base\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"overtime\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"commission\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"bonus\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        },\n        \"other\": {\n          \"amount\": \"string\",\n          \"amount_ytd\": \"string\",\n          \"hours\": \"string\",\n          \"hours_ytd\": \"string\",\n          \"rate_implied\": \"string\",\n          \"rate_implied_ytd\": \"string\"\n        }\n      },\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0cf9b674-b132-4c5b-a80d-6785137eb445",
+    "name": "Argyle Accounts Paystubs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

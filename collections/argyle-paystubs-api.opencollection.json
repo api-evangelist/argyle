@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Paystubs API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Paystubs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a paystub",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/paystubs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the paystub object to be retrieved.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a paystub object."
+        },
+        {
+          "info": {
+            "name": "List all paystubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/paystubs",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account ID."
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "employment",
+                "value": "",
+                "type": "query",
+                "description": "Filter by employment ID."
+              },
+              {
+                "name": "from_start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter for paystubs with a `paystub_date` on or after this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+              },
+              {
+                "name": "to_start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter for paystubs with a `paystub_date` on or before this timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of paystubs objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all paystub objects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

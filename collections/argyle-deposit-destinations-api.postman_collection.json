@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "976ffe37-a940-4d6a-a48d-7c3c75d34fef",
+      "name": "Deposit Destinations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "36f950ae-1050-486a-92e2-a5c11c65c354",
+          "name": "Retrieve a deposit destination",
+          "request": {
+            "name": "Retrieve a deposit destination",
+            "description": {
+              "content": "Retrieves a deposit destination object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "deposit-destinations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the deposit destination object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b04fc70-7d25-4e22-a2a6-c200308ac76e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deposit-destinations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the deposit destination object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0176e1ea-60ca-c561-eb8e-6dcdb33b1b55\",\n  \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"employer\": \"Whole Goods\",\n  \"destination_type\": \"ach_deposit_account\",\n  \"status\": \"active\",\n  \"allocation_type\": \"amount\",\n  \"currency\": \"USD\",\n  \"allocation_value\": \"325.70\",\n  \"method\": \"Direct deposit\",\n  \"ach_deposit_account\": {\n    \"account_number\": \"123456780000\",\n    \"bank_name\": \"NW Bank\",\n    \"routing_number\": \"026010000\",\n    \"account_type\": \"savings\"\n  },\n  \"created_at\": \"2023-03-14T16:00:49.420Z\",\n  \"updated_at\": \"2023-03-14T16:00:49.420Z\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3724e949-f1ee-45b8-871e-6d2bb5643fa0",
+          "name": "List all deposit destinations",
+          "request": {
+            "name": "List all deposit destinations",
+            "description": {
+              "content": "Returns a paginated list of all deposit destination objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "deposit-destinations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of deposit destination objects returned <a href=\"/api-guide/overview#pagination\">per page</a>. Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93c70799-17e6-489a-a065-cdfcf54ff710",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deposit-destinations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/deposit-destinations?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0185da22-3322-eeaf-57b2-a6527214e456\",\n      \"account\": \"0185a8b8-60eb-80ca-7482-5f24504573f7\",\n      \"employer\": \"Half Bads\",\n      \"destination_type\": \"card\",\n      \"status\": \"active\",\n      \"allocation_type\": null,\n      \"currency\": null,\n      \"allocation_value\": null,\n      \"method\": \"Instant payout\",\n      \"card\": {\n        \"card_number\": \"****5678\",\n        \"card_name\": \"Visa\",\n        \"is_platform_card\": false\n      },\n      \"created_at\": \"2023-03-13T19:53:49.090Z\",\n      \"updated_at\": \"2023-03-13T19:53:49.091Z\",\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"0185e091-cbe2-775c-bc32-7bc943cb4264\",\n      \"account\": \"0187e091-b47d-3cc6-a273-2b5e3cab83af\",\n      \"employer\": \"Bullseye\",\n      \"destination_type\": \"ach_deposit_account\",\n      \"status\": \"inactive\",\n      \"allocation_type\": \"amount\",\n      \"currency\": \"USD\",\n      \"allocation_value\": \"remainder\",\n      \"method\": \"Direct deposit\",\n      \"ach_deposit_account\": {\n        \"account_number\": \"757127245584\",\n        \"bank_name\": \"SW Bank\",\n        \"routing_number\": 16012008,\n        \"account_type\": \"checking\"\n      },\n      \"created_at\": \"2023-03-14T14:41:37.989Z\",\n      \"updated_at\": \"2023-03-14T14:41:37.989Z\",\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "868d46e5-05d7-4052-bf59-02a617db15c9",
+    "name": "Argyle Accounts Deposit Destinations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

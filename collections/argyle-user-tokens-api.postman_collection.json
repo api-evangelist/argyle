@@ -1,0 +1,145 @@
+{
+  "item": [
+    {
+      "id": "c90a69de-6c39-4257-b635-5af602553045",
+      "name": "User Tokens",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "63244409-f6e2-458f-aaa9-c215058bc342",
+          "name": "Create a user token",
+          "request": {
+            "name": "Create a user token",
+            "description": {
+              "content": "Creates a new user token from the `id` of an existing user for direct embedded Link initializations.\n\n<Note>\n[Creating a new user](/api-reference/users#create) will also return a user token in the response.\n</Note>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "user-tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "51d05196-2b61-4153-8b7d-7e13f9b9e0e9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user-tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIxNDRhMTRkNJ04YzEzLTQzZGYtOTI4Ni01OWY4NjFkOWEyMDIiLCJleHAiOjE2NzgzOTUwMTEsImZpZCI6ImMyNzFhODRlLWM2MjQtNDNkYS05OGMyLTQzODZkNTk1OWQ4YiIsImlhdCI6MTY3ODM5MTQxMSwiaXNzIjoiYXJneWxlLWNvcmUtYXV0aC1kZXYiLCJqdGkiOiI4ZTk1MTBmNC00YzVlLTRlOTAtOTIyNy1kNjg2MTk3MmMxOTAiLCJzdWIiOiIwMTg2YzRiOC04ZmExLTYyYjMtNDlkZi05NGIzZTE4Y2E4YTciLCJ1c2VyX2lkIjoiMDE4NmM0YjgtOGZhMS02MmIzLTQ5ZGYtOTRiM2UxOGNhOGE3In0.oLrxtzfNHG1RZ85Z4q7VUiv2-kufXmMINJFHeRIjvWo\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "23628e25-fc1a-49aa-b634-67142668b880",
+    "name": "Argyle Accounts User Tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

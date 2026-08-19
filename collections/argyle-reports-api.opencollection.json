@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Reports API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/v2/reports/:type",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "The type of report to generate.\n\n- `voie` - Verification of Income and Employment\n- `voe` - Verification of Employment\n- `voie-mortgage` - Verification of Income and Employment, integrated with Fannie Mae's Desktop Underwriter (DU) validation service and Freddie Mac's asset and income modeler (AIM)\n- `voe-mortgage` - Verification of Employment, integrated with Fannie Mae's Desktop Underwriter (DU) validation service and Freddie Mac's asset and income modeler (AIM)\n\nVisit our [Day 1 Certainty and AIM guide](/integrations/d1c-aim/verifications#requesting-verification-reports) for more information on mortgage reports.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a new report and returns a report object.\n\n<Warning>There is a daily limit of 10 reports per user to prevent excessive report generation due to accidental client-side errors.</Warning>\n\nIf the daily report limit is reached, deleting a previously generated report from the same 24 hour period will allow another report to be generated.\n"
+        },
+        {
+          "info": {
+            "name": "List all reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/reports",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of report objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all report objects."
+        },
+        {
+          "info": {
+            "name": "Retrieve a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the report object to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves a report object."
+        },
+        {
+          "info": {
+            "name": "Delete a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.argyle.com/v2/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the report object to be deleted."
+              }
+            ]
+          },
+          "docs": "Deletes a report object.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

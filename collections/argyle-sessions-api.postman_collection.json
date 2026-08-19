@@ -1,0 +1,145 @@
+{
+  "item": [
+    {
+      "id": "33a2bc92-1814-4c30-9111-a3ccc11582df",
+      "name": "Sessions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1c75c0a5-0f69-473d-b6e0-2de715423019",
+          "name": "Create a session",
+          "request": {
+            "name": "Create a session",
+            "description": {
+              "content": "Create a connection session and return a `link` URL that launches the frontend experience.\n\nSession links expire after one hour. A new session link can be created at any time by creating another session for the active verification.\n\n<Note>This endpoint is for payroll and banking verifications only.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"verification\": \"<uuid>\",\n  \"configuration\": {\n    \"experience\": \"<uuid>\",\n    \"single_use_url\": \"<boolean>\",\n    \"redirect_url\": \"<string>\",\n    \"flow_id\": \"<string>\",\n    \"items\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"language\": \"<string>\",\n    \"mobile_app\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a8ae3630-1820-4e87-b1ac-93d5fd9c8f49",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n  \"configuration\": {\n    \"redirect_url\": \"https://your-application.com/return\",\n    \"flow_id\": \"12ABCD3E\",\n    \"items\": [\n      \"item_000000001\",\n      \"item_000000002\"\n    ],\n    \"language\": \"EN\",\n    \"mobile_app\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"verification\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n  \"configuration\": {\n    \"experience\": null,\n    \"single_use_url\": false,\n    \"redirect_url\": \"https://your-application.com/return\",\n    \"flow_id\": \"12ABCD3E\",\n    \"items\": [\n      \"item_000000001\",\n      \"item_000000002\"\n    ],\n    \"language\": \"EN\",\n    \"mobile_app\": true\n  },\n  \"link\": \"https://connect.argyle.com/?...\",\n  \"data_source\": \"payroll\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8339061e-6974-4fb8-a472-3917ea8a96d2",
+    "name": "Argyle Accounts Sessions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

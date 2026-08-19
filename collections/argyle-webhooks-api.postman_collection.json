@@ -1,0 +1,147 @@
+{
+  "item": [
+    {
+      "id": "4660c8fa-a3cd-4d4d-bfe2-9f5ce496f73c",
+      "name": "Webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cb32fa0e-0f74-49ff-86bb-1b907e47d523",
+          "name": "Create webhook subscription",
+          "request": {
+            "name": "Create webhook subscription",
+            "description": {
+              "content": "Creates a partner webhook subscription for `verifications.updated` or `verifications.creation_failed`.\n\nFor `verifications.updated`, set `config.include_resource = true` to include the full verification object in `data.resource`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "partners",
+                "v2",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": \"<string>\",\n  \"url\": \"<string>\",\n  \"secret\": \"<string>\",\n  \"config\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b45a4af5-b873-4832-a42c-c8a434c245a0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v2",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    \"verifications.updated\"\n  ],\n  \"name\": \"name-for-the-webhook-subscription\",\n  \"url\": \"https://your-webhook-backend.com\",\n  \"secret\": \"optional-secret\",\n  \"config\": {\n    \"include_resource\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event\": \"verifications.updated\",\n  \"name\": \"name-for-the-webhook-subscription\",\n  \"data\": {\n    \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n    \"verification\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n    \"client\": \"39096494-45c8-4fd8-9454-3d1cb2d62db7\",\n    \"resource\": {\n      \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n      \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n      \"client\": \"39096494-45c8-4fd8-9454-3d1cb2d62db7\",\n      \"created_at\": \"2023-03-09T16:22:06.081Z\",\n      \"updated_at\": \"2023-03-09T16:22:06.081Z\",\n      \"channel\": \"api\",\n      \"status\": {\n        \"state\": \"COMPLETED\",\n        \"code\": \"completed\",\n        \"errors\": []\n      },\n      \"report\": {\n        \"id\": \"2a14ce6f-3aed-4c15-8ea2-92a17b6edb95\",\n        \"type\": \"doc-voi-mortgage\",\n        \"file_url\": \"www.argyle.com/storagename/pdf\",\n        \"json_url\": \"www.argyle.com/storagename/json\"\n      },\n      \"employments\": [\n        {\n          \"employer\": \"Starbucks\",\n          \"status\": \"active\",\n          \"hire_date\": \"2015-08-28\",\n          \"termination_date\": null\n        }\n      ],\n      \"loan\": {\n        \"number\": \"1234\",\n        \"borrower_id\": \"ABC789\",\n        \"application_id\": \"2121313\",\n        \"officer_email\": \"john.doe@mortgage.com\"\n      },\n      \"billing\": {\n        \"cost_center\": \"5\"\n      },\n      \"data_source\": \"documents\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "50e06e2b-efa0-41d1-a179-c2d007d01cb7",
+    "name": "Argyle Accounts Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

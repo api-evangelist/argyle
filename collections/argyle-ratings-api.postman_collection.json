@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "e1159314-90cb-46c2-bac4-1048d6aaf4fd",
+      "name": "Ratings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f010018c-9c68-404f-8780-75916ea08a51",
+          "name": "Retrieve a rating",
+          "request": {
+            "name": "Retrieve a rating",
+            "description": {
+              "content": "Retrieves a rating object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "ratings",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the rating object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60a3a7bc-d837-4e60-b41c-6fbb2eb11324",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "ratings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the rating object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0176a5bd-6ed4-1a21-8661-32bc3546e6de\",\n  \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"rating\": \"4.98\",\n  \"acceptance_rate\": \"0.91\",\n  \"ontime_rate\": \"0.94\",\n  \"achievements\": [\n    {\n      \"count\": 1,\n      \"label\": \"excellent_service\",\n      \"points\": null,\n      \"metadata\": {},\n      \"badge_url\": \"www.partner.com/badgeinfo\",\n      \"description\": \"Excellent Service\"\n    },\n    {\n      \"count\": 1,\n      \"label\": \"great_amenities\",\n      \"points\": null,\n      \"metadata\": {},\n      \"badge_url\": \"www.partner.com/badgeinfo\",\n      \"description\": \"Great Amenities\"\n    }\n  ],\n  \"employer\": \"GigAndGo\",\n  \"created_at\": \"2023-03-15T13:19:55.723Z\",\n  \"updated_at\": \"2023-03-15T13:19:55.723Z\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d679911c-a01f-4387-bb31-b01c39aa76bb",
+          "name": "List all ratings",
+          "request": {
+            "name": "List all ratings",
+            "description": {
+              "content": "Returns a paginated list of all rating objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "ratings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of rating objects returned <a href=\"/api-guide/overview#pagination\">per page</a>. Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4718e046-b2be-446b-b64c-96325ef8cd4b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "ratings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/ratings?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0186b4eb-1e33-bb38-a45a-1db105b5bed0\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"rating\": \"4.14\",\n      \"acceptance_rate\": \"0.87\",\n      \"ontime_rate\": \"0.85\",\n      \"achievements\": [\n        {\n          \"count\": 3,\n          \"label\": \"excellent_service\",\n          \"points\": \"300\",\n          \"award\": null,\n          \"description\": \"Excellent Service\",\n          \"metadata\": {}\n        },\n        {\n          \"count\": 2,\n          \"label\": \"speed_demon\",\n          \"points\": \"200\",\n          \"award\": \"Speed Demon\",\n          \"description\": \"Fast Service\",\n          \"metadata\": {}\n        }\n      ],\n      \"employer\": \"GigAntic\",\n      \"created_at\": \"2023-03-15T11:15:20.359Z\",\n      \"updated_at\": \"2023-03-15T11:15:20.359Z\",\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"0176a5bd-6ed4-1a21-8661-32bc3546e6de\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"rating\": \"4.98\",\n      \"acceptance_rate\": \"0.91\",\n      \"ontime_rate\": \"0.94\",\n      \"achievements\": [\n        {\n          \"count\": 3,\n          \"label\": \"excellent_service\",\n          \"points\": null,\n          \"metadata\": {},\n          \"badge_url\": \"www.partner.com/badgeinfo\",\n          \"description\": \"Excellent Service\"\n        },\n        {\n          \"count\": 1,\n          \"label\": \"great_amenities\",\n          \"points\": null,\n          \"metadata\": {},\n          \"badge_url\": \"www.partner.com/badgeinfo\",\n          \"description\": \"Great Amenities\"\n        }\n      ],\n      \"employer\": \"GigAndGo\",\n      \"created_at\": \"2023-03-15T13:19:55.723Z\",\n      \"updated_at\": \"2023-03-15T13:19:55.723Z\",\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4be46d2f-2fe4-49a5-a74e-e822df0ed920",
+    "name": "Argyle Accounts Ratings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

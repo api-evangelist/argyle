@@ -1,0 +1,283 @@
+{
+  "item": [
+    {
+      "id": "f5577c34-1247-45be-b619-6a746c51076d",
+      "name": "Shifts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bbdd4368-0853-4fc2-86a2-33bbc399dd84",
+          "name": "Retrieve a shift",
+          "request": {
+            "name": "Retrieve a shift",
+            "description": {
+              "content": "Retrieves a shift object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "shifts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the shift object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6789e1c0-0b0d-4a61-898f-aed0f3c53494",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "shifts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the shift object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0183d245-b5c1-2a6d-5e37-1b831d765c5d\",\n  \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"employer\": \"Whole Goods\",\n  \"created_at\": \"2023-04-27T07:02:01.279Z\",\n  \"updated_at\": \"2023-04-27T07:02:01.279Z\",\n  \"status\": \"completed\",\n  \"type\": \"hourly\",\n  \"start_datetime\": \"2023-04-26T00:00:00Z\",\n  \"end_datetime\": \"2023-04-26T08:00:00Z\",\n  \"all_datetimes\": {\n    \"shift_start\": \"2023-04-26T00:00:00Z\",\n    \"shift_end\": \"2023-04-26T08:00:00Z\",\n    \"breaks\": [\n      {\n        \"break_start\": \"2023-04-26T03:36:00Z\",\n        \"break_end\": \"2023-04-26T04:24:00Z\"\n      }\n    ]\n  },\n  \"hours\": \"7.2\",\n  \"timezone\": \"America/New_York\",\n  \"location\": \"302 East N St, New York, NY 10014, US\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ba1a2ca-6747-418d-a427-8e4350273779",
+          "name": "List all shifts",
+          "request": {
+            "name": "List all shifts",
+            "description": {
+              "content": "Returns a paginated list of all shift objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "shifts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_start_datetime",
+                  "value": "<dateTime>",
+                  "description": "Filter by shifts with a `start_datetime` on or after this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_start_datetime",
+                  "value": "<dateTime>",
+                  "description": "Filter by shifts with a `start_datetime` on or before this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of shift objects returned <a href=\"/api-guide/overview#pagination\">per page</a>. Default: 10. Maximum: 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26b9dff4-a7f8-4d6c-b65c-82dac49d1020",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "from_start_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to_start_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/shifts?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0183c13c-5d3d-2d36-4d6d-5ac7a7eb2b2d\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"employer\": \"Bullseye\",\n      \"created_at\": \"2023-04-27T17:37:43.977Z\",\n      \"updated_at\": \"2023-04-27T17:37:43.977Z\",\n      \"status\": \"completed\",\n      \"type\": \"hourly\",\n      \"start_datetime\": \"2023-04-26T00:00:00Z\",\n      \"end_datetime\": \"2023-04-26T10:00:00Z\",\n      \"all_datetimes\": {\n        \"shift_start\": \"2023-04-26T00:00:00Z\",\n        \"shift_end\": \"2023-04-26T10:00:00Z\",\n        \"breaks\": [\n          {\n            \"break_start\": \"2023-04-26T04:30:00Z\",\n            \"break_end\": \"2023-04-26T05:30:00Z\"\n          }\n        ]\n      },\n      \"hours\": \"9.0\",\n      \"timezone\": \"America/New_York\",\n      \"location\": \"605 Far West Ave Suite 970, New York, NY 10019, US\",\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"0183c5c3-2c9e-f2d1-3c7d-3ac5b73d3a5d\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"employer\": \"Bullseye\",\n      \"created_at\": \"2023-04-28T17:38:43.977Z\",\n      \"updated_at\": \"2023-04-28T17:38:43.977Z\",\n      \"status\": \"scheduled\",\n      \"type\": \"hourly\",\n      \"start_datetime\": \"2023-04-29T00:00:00Z\",\n      \"end_datetime\": \"2023-04-29T10:00:00Z\",\n      \"all_datetimes\": {\n        \"shift_start\": \"2023-04-29T00:00:00Z\",\n        \"shift_end\": \"2023-04-29T10:00:00Z\",\n        \"breaks\": []\n      },\n      \"hours\": \"10.0\",\n      \"timezone\": \"America/New_York\",\n      \"location\": \"605 Far West Ave Suite 970, New York, NY 10019, US\",\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "845b7329-81a0-426e-b12a-aefaf6a95d7f",
+    "name": "Argyle Accounts Shifts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

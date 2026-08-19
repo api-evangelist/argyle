@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the account object to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves an account object."
+        },
+        {
+          "info": {
+            "name": "Delete an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.argyle.com/v2/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the account object to be deleted."
+              }
+            ]
+          },
+          "docs": "Deletes an account object.\n\n<Warning>**Caution** - Deleting an account object will delete all resources associated with the account, such as paystubs or uploaded documents.</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "List all accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/accounts",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "item",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Item ID."
+              },
+              {
+                "name": "ongoing_refresh_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `status` of the `ongoing_refresh` object."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of account objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all account objects."
+        },
+        {
+          "info": {
+            "name": "Disable account updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/v2/accounts/:id/disable-ongoing-refresh",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the account object."
+              }
+            ]
+          },
+          "docs": "Disables `ongoing_refresh` for an individual account.\n\nTo access this feature, reach out to our team for assistance.\n\n*   Link will display the [ongoing\\_refresh\\_disabled](/api-reference/account-connection-errors#ongoingrefreshdisabled) account connection error when users return to view this account.\n*   Changes the account's [`ongoing_refresh.status`](/api-reference/accounts#object-ongoing_refresh) value from `enabled` to `disabled` and causes the [`accounts.updated`](/api-reference/accounts-w"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

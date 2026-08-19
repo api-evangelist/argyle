@@ -1,0 +1,723 @@
+{
+  "item": [
+    {
+      "id": "5b53f242-a7f9-4c1c-99a4-1a0c916b8d34",
+      "name": "Open Banking",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c4cfea1f-a903-476b-96ed-6fa5bbbafeb3",
+          "name": "Create a Connect URL",
+          "request": {
+            "name": "Create a Connect URL",
+            "description": {
+              "content": "Creates a new Connect URL for the specified user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "open-banking",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"<uuid>\",\n  \"webhook\": \"<uri>\",\n  \"webhook_data\": \"<object>\",\n  \"experience\": \"<string>\",\n  \"single_use_url\": \"<boolean>\",\n  \"redirect_url\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9bf3294d-bce4-4ebc-8c62-1f0cdb756c05",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "open-banking",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"webhook\": \"https://your-webhook-backend.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"open_banking_link\": \"https://connect_url_link.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c67bfbb-993c-4340-8ff9-fc7f2ea0ff1e",
+          "name": "Generate a banking report",
+          "request": {
+            "name": "Generate a banking report",
+            "description": {
+              "content": "Generates a new banking report and returns a report object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "open-banking",
+                "reports",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) The type of report to generate."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"<uuid>\",\n  \"webhook\": \"<uri>\",\n  \"bank_accounts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"from_date\": \"<dateTime>\",\n  \"income_from_date\": \"<dateTime>\",\n  \"report_custom_fields\": [\n    {\n      \"label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"shown\": \"<boolean>\"\n    },\n    {\n      \"label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"shown\": \"<boolean>\"\n    }\n  ],\n  \"income_stream_confidence_minimum\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c7a54107-7d94-41a5-88b1-b83fb094ce2a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "open-banking",
+                    "reports",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The type of report to generate."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"01975b3b-5ba6-3ec1-2148-f595b6d92614\",\n  \"webhook\": \"https://your-webhook-backend.com\",\n  \"bank_accounts\": [\n    \"8057637863\"\n  ],\n  \"from_date\": \"1970-01-19T17:30:50Z\",\n  \"report_custom_fields\": [\n    {\n      \"label\": \"loanID\",\n      \"value\": \"12345\",\n      \"shown\": true\n    }\n  ],\n  \"income_stream_confidence_minimum\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"cde25bb1-5cf4-4544-9df8-04212a781e1b\",\n  \"user\": \"01975b3b-5ba6-3ec1-2148-f595b6d92614\",\n  \"reference_id\": \"cde25bb1-5cf4-4544-9df8-04212a781e1b\",\n  \"generated_at\": \"2025-06-10T20:39:35.000Z\",\n  \"created_at\": \"2025-06-10T20:39:35.000Z\",\n  \"type\": \"voai\",\n  \"status\": \"generating\",\n  \"file_url\": \"www.argyle.com/storagename/pdf\",\n  \"json_url\": \"www.argyle.com/storagename/json\",\n  \"accounts\": [],\n  \"last_synced_at\": null,\n  \"external_id\": null,\n  \"source\": \"open-banking\",\n  \"metadata\": {\n    \"origin_report_id\": \"5u6fx59dnw4b\",\n    \"bank_accounts_requested\": [\n      \"8057637863\"\n    ],\n    \"from_date\": \"1970-01-19T17:30:50.000Z\",\n    \"report_custom_fields\": [\n      {\n        \"label\": \"loanID\",\n        \"value\": \"12345\",\n        \"shown\": true\n      }\n    ],\n    \"income_stream_confidence_minimum\": 50\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0288fb0e-066f-49e6-aae3-aaeb0da427cf",
+          "name": "Retrieve a bank account",
+          "request": {
+            "name": "Retrieve a bank account",
+            "description": {
+              "content": "Retrieves a bank account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "open-banking",
+                "bank-accounts",
+                ":bank_account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "(Required) ID of the user."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bank_account_id",
+                  "description": "(Required) ID of the bank account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b0b42306-f416-4eb1-8dd9-1231c53c4eab",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "open-banking",
+                    "bank-accounts",
+                    ":bank_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bank_account_id",
+                      "description": "(Required) ID of the bank account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"8057637863\",\n  \"user\": \"01975b3b-5ba6-3ec1-2148-f595b6d92614\",\n  \"account_number_display\": \"2203\",\n  \"name\": \"Savings\",\n  \"type\": \"savings\",\n  \"aggregation_status_code\": 0,\n  \"status\": \"active\",\n  \"institution\": \"102168\",\n  \"aggregation_success_date\": \"2026-06-04T16:57:26.000Z\",\n  \"aggregation_attempt_date\": \"2026-06-04T16:57:26.000Z\",\n  \"created_date\": \"2026-06-04T16:57:17.000Z\",\n  \"currency\": \"USD\",\n  \"institution_login\": 8029158291,\n  \"display_position\": 1,\n  \"parent_bank_account\": null,\n  \"linked_account_date\": \"2026-06-04T16:57:22.000Z\",\n  \"error_code\": null,\n  \"error_message\": null,\n  \"real_account_number_last4\": \"2203\",\n  \"balance\": 22327.3,\n  \"balance_date\": \"2026-06-04T16:57:26.000Z\",\n  \"last_updated_date\": \"2026-06-04T16:57:22.000Z\",\n  \"market_segment\": \"personal\",\n  \"last_transaction_date\": \"2026-06-04T16:57:23.000Z\",\n  \"oldest_transaction_date\": \"2024-06-08T12:00:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d4655a5-45ea-477c-a69e-c9424dead161",
+          "name": "List all bank accounts",
+          "request": {
+            "name": "List all bank accounts",
+            "description": {
+              "content": "Returns a paginated list of the user's bank accounts.\n\nEach result is a bank account object with two bank connection error fields:\n- `error_code` - Bank connection error code. Returned when `aggregation_status_code` indicates an error; otherwise `null`.\n- `error_message` - Bank connection error message. Returned when `aggregation_status_code` indicates an error; otherwise `null`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "open-banking",
+                "bank-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "(Required) ID of the user."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of bank account objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6bf4c3a1-385f-49e4-b320-6972c7865ee0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "open-banking",
+                    "bank-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"8057637863\",\n      \"user\": \"01975b3b-5ba6-3ec1-2148-f595b6d92614\",\n      \"account_number_display\": \"2203\",\n      \"name\": \"Savings\",\n      \"type\": \"savings\",\n      \"aggregation_status_code\": 0,\n      \"status\": \"active\",\n      \"institution\": \"102168\",\n      \"aggregation_success_date\": \"2026-06-04T16:57:26.000Z\",\n      \"aggregation_attempt_date\": \"2026-06-04T16:57:26.000Z\",\n      \"created_date\": \"2026-06-04T16:57:17.000Z\",\n      \"currency\": \"USD\",\n      \"institution_login\": 8029158291,\n      \"display_position\": 1,\n      \"parent_bank_account\": null,\n      \"linked_account_date\": \"2026-06-04T16:57:22.000Z\",\n      \"error_code\": null,\n      \"error_message\": null,\n      \"real_account_number_last4\": \"2203\",\n      \"balance\": 22327.3,\n      \"balance_date\": \"2026-06-04T16:57:26.000Z\",\n      \"last_updated_date\": \"2026-06-04T16:57:22.000Z\",\n      \"market_segment\": \"personal\",\n      \"last_transaction_date\": \"2026-06-04T16:57:23.000Z\",\n      \"oldest_transaction_date\": \"2024-06-08T12:00:00.000Z\"\n    },\n    {\n      \"id\": \"8057637864\",\n      \"user\": \"01975b3b-5ba6-3ec1-2148-f595b6d92614\",\n      \"account_number_display\": \"1111\",\n      \"name\": \"Checking\",\n      \"type\": \"checking\",\n      \"aggregation_status_code\": 0,\n      \"status\": \"active\",\n      \"institution\": \"102168\",\n      \"aggregation_success_date\": \"2026-06-04T16:57:27.000Z\",\n      \"aggregation_attempt_date\": \"2026-06-04T16:57:27.000Z\",\n      \"created_date\": \"2026-06-04T16:57:17.000Z\",\n      \"currency\": \"USD\",\n      \"institution_login\": 8029158291,\n      \"display_position\": 2,\n      \"parent_bank_account\": null,\n      \"linked_account_date\": \"2026-06-04T16:57:22.000Z\",\n      \"error_code\": null,\n      \"error_message\": null,\n      \"real_account_number_last4\": \"1111\",\n      \"balance\": 9357.24,\n      \"balance_date\": \"2026-06-04T16:57:27.000Z\",\n      \"last_updated_date\": \"2026-06-04T16:57:22.000Z\",\n      \"market_segment\": \"personal\",\n      \"last_transaction_date\": \"2026-06-04T16:57:25.000Z\",\n      \"oldest_transaction_date\": \"2024-06-08T12:00:00.000Z\"\n    }\n  ],\n  \"next\": \"https://api-sandbox.argyle.com/v2/open-banking/bank-accounts?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8dbe57ce-80e8-4f59-bf7f-f79e3ae38118",
+          "name": "Retrieve an institution",
+          "request": {
+            "name": "Retrieve an institution",
+            "description": {
+              "content": "Retrieves a financial institution.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "open-banking",
+                "institutions",
+                ":institution_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "institution_id",
+                  "description": "(Required) ID of the financial institution."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "15cbd6e5-6f2f-4665-b84e-f60c1c607dc7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "open-banking",
+                    "institutions",
+                    ":institution_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "institution_id",
+                      "description": "(Required) ID of the financial institution."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 10,\n  \"name\": \"Discover Card (All Account Types)\",\n  \"trans_agg\": true,\n  \"ach\": true,\n  \"state_agg\": true,\n  \"voi\": true,\n  \"voa\": true,\n  \"aha\": false,\n  \"avail_balance\": true,\n  \"account_owner\": true,\n  \"student_loan_data\": false,\n  \"loan_payment_details\": false,\n  \"account_type_description\": \"Credit Cards/Accounts\",\n  \"phone\": \"1-800-DISCOVER\",\n  \"url_home_app\": \"www.discovercard.com\",\n  \"url_logon_app\": \"https://www.discover.com/login/\",\n  \"oauth_enabled\": false,\n  \"url_forgot_password\": \"https://bank.discover.com/bankac/loginreg/loadloginassist?Aff=Bank\",\n  \"url_online_registration\": \"\",\n  \"special_text\": \"Please enter your Discover Card personalized User ID and Password required to login.\",\n  \"time_zone\": null,\n  \"special_instructions\": [],\n  \"special_instutions_title\": null,\n  \"address\": {\n    \"city\": \"Wilmington\",\n    \"state\": \"DE\",\n    \"country\": \"USA\",\n    \"postal_code\": \"19886\",\n    \"address_line1\": \"\",\n    \"address_line2\": \"\"\n  },\n  \"currency\": \"USD\",\n  \"email\": \"https://customerservice.novusnet.com/EMS/html/usemsform.html\",\n  \"status\": \"online\",\n  \"new_institution\": 0,\n  \"branding\": {\n    \"logo\": \"https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/logo.svg\",\n    \"alternate_logo\": \"https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/alternateLogo.svg\",\n    \"icon\": \"https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/icon.svg\",\n    \"primary_color\": \"#115892\",\n    \"tile\": \"https://prod-carpintero-branding.s3.us-west-2.amazonaws.com/10/tile.svg\"\n  },\n  \"oauth_institution\": 0,\n  \"class\": \"creditCards\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e684a624-8ca2-43c4-82df-4cb9ba1566f4",
+          "name": "List all institutions",
+          "request": {
+            "name": "List all institutions",
+            "description": {
+              "content": "Returns a paginated list of supported financial institutions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "open-banking",
+                "institutions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search term (financial institution name)."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Report type eligibility.\n\nPossible values:\n- `voa` - Verification of Assets\n- `voi` - Verification of Income\n\nIf `voa` is `true` but `voi` is `false`, VOAI reports contain only asset data.\nIf `voi` is `true` but `voa` is `false`, VOAI reports contain only income data.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of institutions per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<integer>",
+                  "description": "Index of page results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ce078962-ba07-4715-aac7-c0c0908b3cdb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "open-banking",
+                    "institutions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"found\": 8263,\n  \"displaying\": 25,\n  \"more_available\": true,\n  \"requested_date\": \"2025-06-10T17:39:43.000Z\",\n  \"institutions\": [\n    {\n      \"id\": 10,\n      \"rssd\": 0,\n      \"name\": \"Discover Card (All Account Types)\",\n      \"trans_agg\": true,\n      \"ach\": true,\n      \"state_agg\": true,\n      \"voi\": true,\n      \"voa\": true,\n      \"aha\": false,\n      \"avail_balance\": true,\n      \"account_owner\": true,\n      \"student_loan_data\": false,\n      \"loan_payment_details\": false,\n      \"child_institutions\": []\n    },\n    {\n      \"id\": 12,\n      \"rssd\": 0,\n      \"name\": \"E*TRADE\",\n      \"trans_agg\": true,\n      \"ach\": true,\n      \"state_agg\": false,\n      \"voi\": true,\n      \"voa\": true,\n      \"aha\": false,\n      \"avail_balance\": true,\n      \"account_owner\": true,\n      \"student_loan_data\": false,\n      \"loan_payment_details\": false,\n      \"child_institutions\": []\n    },\n    {\n      \"id\": 18,\n      \"rssd\": 0,\n      \"name\": \"SouthTrust\",\n      \"trans_agg\": true,\n      \"ach\": false,\n      \"state_agg\": false,\n      \"voi\": true,\n      \"voa\": true,\n      \"aha\": false,\n      \"avail_balance\": false,\n      \"account_owner\": true,\n      \"student_loan_data\": false,\n      \"loan_payment_details\": false,\n      \"child_institutions\": []\n    },\n    {\n      \"id\": 23,\n      \"rssd\": 0,\n      \"name\": \"Merrill Lynch\",\n      \"trans_agg\": true,\n      \"ach\": false,\n      \"state_agg\": true,\n      \"voi\": true,\n      \"voa\": true,\n      \"aha\": false,\n      \"avail_balance\": false,\n      \"account_owner\": true,\n      \"student_loan_data\": false,\n      \"loan_payment_details\": false,\n      \"child_institutions\": []\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b8c3e885-5f2f-4efc-9cf3-78d62e957fbc",
+    "name": "Argyle Accounts Open Banking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

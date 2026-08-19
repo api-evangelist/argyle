@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Gigs API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gigs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a gig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/gigs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the gig object to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves a gig object."
+        },
+        {
+          "info": {
+            "name": "List all gigs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/gigs",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account ID."
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "from_start_datetime",
+                "value": "",
+                "type": "query",
+                "description": "Filter by gigs with a `start_datetime` on or after this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).\n"
+              },
+              {
+                "name": "to_start_datetime",
+                "value": "",
+                "type": "query",
+                "description": "Filter by gigs with a `start_datetime` on or before this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of gig objects returned <a href=\"/api-guide/overview#pagination\">per page</a>. Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all gig objects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

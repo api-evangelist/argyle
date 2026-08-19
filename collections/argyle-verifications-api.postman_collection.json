@@ -1,0 +1,712 @@
+{
+  "item": [
+    {
+      "id": "2d7a3b16-bb92-4a59-8124-3cd291cb00dc",
+      "name": "Verifications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "50204aae-b267-4aa8-91f4-6e1813bed8ce",
+          "name": "Order a verification",
+          "request": {
+            "name": "Order a verification",
+            "description": {
+              "content": "Orders a new verification.\n\n<Note>\n[Create a user](/api-reference/verifications-guide#create-a-user) or update an existing user with the required details before ordering payroll, banking, or document verifications.\n</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "verifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"<uuid>\",\n  \"report\": {\n    \"type\": \"<string>\",\n    \"configuration\": {\n      \"bank_accounts\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"from_date\": \"<dateTime>\",\n      \"income_from_date\": \"<dateTime>\",\n      \"income_stream_confidence_minimum\": \"<integer>\",\n      \"report_custom_fields\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"shown\": \"<boolean>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"shown\": \"<boolean>\"\n        }\n      ]\n    }\n  },\n  \"employments\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"loan\": {\n    \"number\": \"<string>\",\n    \"borrower_id\": \"<string>\",\n    \"application_id\": \"<string>\",\n    \"officer_email\": \"<string>\"\n  },\n  \"billing\": {\n    \"cost_center\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "62109519-7ebe-49fd-b600-6ba7fb936ad9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"report\": {\n    \"type\": \"voie\"\n  },\n  \"loan\": {\n    \"number\": \"1234\",\n    \"borrower_id\": \"ABC789\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"5\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"created_at\": \"2023-03-09T16:22:06.081Z\",\n  \"updated_at\": \"2023-03-09T16:22:06.081Z\",\n  \"channel\": \"api\",\n  \"status\": {\n    \"state\": \"PENDING\",\n    \"code\": \"pending\",\n    \"errors\": []\n  },\n  \"report\": {\n    \"id\": null,\n    \"type\": \"voie\",\n    \"file_url\": null,\n    \"json_url\": null\n  },\n  \"employments\": [],\n  \"loan\": {\n    \"number\": \"1234\",\n    \"borrower_id\": \"ABC789\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"5\"\n  },\n  \"data_source\": \"payroll\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50e25c74-fc76-49f1-ba3a-46541e2d20cc",
+          "name": "List all verifications",
+          "request": {
+            "name": "List all verifications",
+            "description": {
+              "content": "Returns a paginated list of all verification objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "verifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "status_state",
+                  "value": "<string>",
+                  "description": "Filter by verification status `state`."
+                },
+                {
+                  "disabled": false,
+                  "key": "status_code",
+                  "value": "<string>",
+                  "description": "Filter by verification status `code`."
+                },
+                {
+                  "disabled": false,
+                  "key": "report_type",
+                  "value": "<string>",
+                  "description": "Filter by report `type`."
+                },
+                {
+                  "disabled": false,
+                  "key": "loan_number",
+                  "value": "<string>",
+                  "description": "Filter by loan `number`."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of verification objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b7cf60f6-5248-4b3c-9892-697897cd45f0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "status_state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "loan_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/verifications?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n      \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n      \"created_at\": \"2023-03-09T16:22:06.081Z\",\n      \"updated_at\": \"2023-03-09T16:22:06.081Z\",\n      \"channel\": \"api\",\n      \"status\": {\n        \"state\": \"PENDING\",\n        \"code\": \"pending\",\n        \"errors\": []\n      },\n      \"report\": {\n        \"id\": \"2a14ce6f-3aed-4c15-8ea2-92a17b6edb95\",\n        \"type\": \"voie\",\n        \"file_url\": null,\n        \"json_url\": null\n      },\n      \"employments\": [],\n      \"loan\": {\n        \"number\": \"1234\",\n        \"borrower_id\": \"ABC789\",\n        \"application_id\": \"2121313\",\n        \"officer_email\": \"john.doe@mortgage.com\"\n      },\n      \"billing\": {\n        \"cost_center\": \"5\"\n      },\n      \"data_source\": \"payroll\"\n    },\n    {\n      \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc3333\",\n      \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9345\",\n      \"created_at\": \"2023-03-10T05:14:06.081Z\",\n      \"updated_at\": \"2023-03-10T13:03:06.081Z\",\n      \"channel\": \"api\",\n      \"status\": {\n        \"state\": \"PROCESSING\",\n        \"code\": \"authenticated\",\n        \"errors\": []\n      },\n      \"report\": {\n        \"id\": null,\n        \"type\": \"voai\",\n        \"file_url\": null,\n        \"json_url\": null,\n        \"configuration\": {\n          \"from_date\": \"2024-01-01T00:00:00Z\",\n          \"income_stream_confidence_minimum\": 50,\n          \"report_custom_fields\": [\n            {\n              \"label\": \"loanID\",\n              \"value\": \"12345\",\n              \"shown\": true\n            }\n          ]\n        }\n      },\n      \"employments\": [],\n      \"loan\": {\n        \"number\": \"1234\",\n        \"borrower_id\": \"ABC789\",\n        \"application_id\": \"2121313\",\n        \"officer_email\": \"john.doe@mortgage.com\"\n      },\n      \"billing\": {\n        \"cost_center\": \"5\"\n      },\n      \"data_source\": \"banking\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30d57eab-9f61-48f9-8aa1-0ee21ce6cb02",
+          "name": "Refresh a verification",
+          "request": {
+            "name": "Refresh a verification",
+            "description": {
+              "content": "Creates a new payroll, banking, or Doc VOI verification without requiring the user to reconnect or upload additional documents.\n\nFor payroll and banking, a valid connection must already exist. For Doc VOI, the new report is generated from the user's existing uploaded documents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "verifications",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"<uuid>\",\n  \"report\": {\n    \"type\": \"<string>\",\n    \"configuration\": {\n      \"bank_accounts\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"from_date\": \"<dateTime>\",\n      \"income_from_date\": \"<dateTime>\",\n      \"income_stream_confidence_minimum\": \"<integer>\",\n      \"report_custom_fields\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"shown\": \"<boolean>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"shown\": \"<boolean>\"\n        }\n      ]\n    }\n  },\n  \"loan\": {\n    \"number\": \"<string>\",\n    \"borrower_id\": \"<string>\",\n    \"application_id\": \"<string>\",\n    \"officer_email\": \"<string>\"\n  },\n  \"billing\": {\n    \"cost_center\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "57826ab5-10ad-4c46-94de-5746582ac7fe",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verifications",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"report\": {\n    \"type\": \"voie\"\n  },\n  \"loan\": {\n    \"number\": \"1234\",\n    \"borrower_id\": \"ABC789\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"5\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"created_at\": \"2023-03-09T16:22:06.081Z\",\n  \"updated_at\": \"2023-03-09T16:22:06.081Z\",\n  \"channel\": \"api\",\n  \"status\": {\n    \"state\": \"PENDING\",\n    \"code\": \"pending\",\n    \"errors\": []\n  },\n  \"report\": {\n    \"id\": null,\n    \"type\": \"voie\",\n    \"file_url\": null,\n    \"json_url\": null\n  },\n  \"employments\": [],\n  \"loan\": {\n    \"number\": \"1234\",\n    \"borrower_id\": \"ABC789\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"5\"\n  },\n  \"data_source\": \"payroll\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2960f76a-118b-46d6-9149-b64c4df3a5ab",
+          "name": "Retrieve a verification",
+          "request": {
+            "name": "Retrieve a verification",
+            "description": {
+              "content": "Retrieves a verification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "verifications",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the verification to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f0d3e0d-0a3b-4dea-bfd1-4cd0ebb00703",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the verification to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"created_at\": \"2023-03-09T16:22:06.081Z\",\n  \"updated_at\": \"2023-03-09T16:22:06.081Z\",\n  \"channel\": \"api\",\n  \"status\": {\n    \"state\": \"PROCESSING\",\n    \"code\": \"authenticated\",\n    \"errors\": []\n  },\n  \"report\": {\n    \"id\": null,\n    \"type\": \"voai\",\n    \"file_url\": null,\n    \"json_url\": null,\n    \"configuration\": {\n      \"from_date\": \"2024-01-01T00:00:00Z\",\n      \"income_stream_confidence_minimum\": 50,\n      \"report_custom_fields\": [\n        {\n          \"label\": \"loanID\",\n          \"value\": \"12345\",\n          \"shown\": true\n        }\n      ]\n    }\n  },\n  \"employments\": [],\n  \"loan\": {\n    \"number\": \"1234\",\n    \"borrower_id\": \"ABC789\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"5\"\n  },\n  \"data_source\": \"banking\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4121d746-258c-4045-ac65-0b12175f7aed",
+          "name": "Update a verification",
+          "request": {
+            "name": "Update a verification",
+            "description": {
+              "content": "Updates verification metadata or employments.\n\n<Note>\nAfter a verification is updated, it will re-enter the `PROCESSING` state.\n</Note>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "verifications",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the verification to be updated."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loan\": {\n    \"number\": \"<string>\",\n    \"borrower_id\": \"<string>\",\n    \"application_id\": \"<string>\",\n    \"officer_email\": \"<string>\"\n  },\n  \"billing\": {\n    \"cost_center\": \"<string>\"\n  },\n  \"employments\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a862855b-f16e-4c24-9c5e-9a986a2b3ddb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the verification to be updated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loan\": {\n    \"number\": \"5678\",\n    \"borrower_id\": \"5678\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"new_cost_center\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"created_at\": \"2023-03-09T16:22:06.081Z\",\n  \"updated_at\": \"2023-03-09T16:22:06.081Z\",\n  \"channel\": \"api\",\n  \"status\": {\n    \"state\": \"PROCESSING\",\n    \"code\": \"authenticated\",\n    \"errors\": []\n  },\n  \"report\": {\n    \"id\": null,\n    \"type\": \"voie\",\n    \"file_url\": null,\n    \"json_url\": null\n  },\n  \"employments\": [],\n  \"loan\": {\n    \"number\": \"5678\",\n    \"borrower_id\": \"5678\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"new_cost_center\"\n  },\n  \"data_source\": \"payroll\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3734019-6bde-4ed1-8fd8-2a6cabfd011a",
+          "name": "Cancel a verification",
+          "request": {
+            "name": "Cancel a verification",
+            "description": {
+              "content": "Cancels a verification order.\n\n<Note>\nOnly verifications in the `PAUSED` state can be cancelled.\n</Note>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "verifications",
+                ":id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the verification to be cancelled."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6597198-7b39-45e0-8b94-16093e4edfec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verifications",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the verification to be cancelled."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b\",\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"created_at\": \"2023-03-09T16:22:06.081Z\",\n  \"updated_at\": \"2023-03-09T16:22:06.081Z\",\n  \"channel\": \"api\",\n  \"status\": {\n    \"state\": \"CANCELLED\",\n    \"code\": \"cancelled_by_client\",\n    \"errors\": []\n  },\n  \"report\": {\n    \"id\": null,\n    \"type\": \"doc-voi-mortgage\",\n    \"file_url\": null,\n    \"json_url\": null\n  },\n  \"employments\": [\n    {\n      \"employer\": \"Warehouse Services Inc\",\n      \"status\": \"active\",\n      \"hire_date\": \"2023-02-01\",\n      \"termination_date\": null\n    }\n  ],\n  \"loan\": {\n    \"number\": \"1234\",\n    \"borrower_id\": \"ABC789\",\n    \"application_id\": \"2121313\",\n    \"officer_email\": \"john.doe@mortgage.com\"\n  },\n  \"billing\": {\n    \"cost_center\": \"5\"\n  },\n  \"data_source\": \"documents\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "34e92151-2916-46db-b24e-ad62d8569d79",
+    "name": "Argyle Accounts Verifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

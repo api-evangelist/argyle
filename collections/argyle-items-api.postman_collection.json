@@ -1,0 +1,313 @@
+{
+  "item": [
+    {
+      "id": "3ae0eb5e-77ff-400a-8ad8-47bde96c7d9d",
+      "name": "Items",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed2cc7ec-db42-4b56-9a40-8b398d1457bf",
+          "name": "Retrieve an Item",
+          "request": {
+            "name": "Retrieve an Item",
+            "description": {
+              "content": "Retrieves an Item object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "items",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of the Item. ID format — `item_123456789`\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ec09b307-6473-4037-81a2-6148d3e19e48",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the Item. ID format — `item_123456789`\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"item_000000001\",\n  \"name\": \"Whole Goods\",\n  \"kind\": \"employer\",\n  \"known_limitations\": \"First 5 digits of SSN obfuscated.\",\n  \"status\": \"healthy\",\n  \"status_details\": null,\n  \"logo_url\": \"argyle.com/image-holdings\",\n  \"is_grouping\": false,\n  \"mapping_status\": \"verified\",\n  \"features\": {\n    \"data_retrieval\": {\n      \"refresh_frequency\": \"5h\"\n    },\n    \"field_coverage\": {\n      \"identities\": {\n        \"first_name\": {\n          \"supported\": true\n        },\n        \"last_name\": {\n          \"supported\": true\n        },\n        \"...\": {\n          \"supported\": true\n        }\n      },\n      \"paystubs\": {\n        \"hours_ytd\": {\n          \"supported\": false\n        },\n        \"paystub_period\": {\n          \"start_date\": {\n            \"supported\": true\n          },\n          \"end_date\": {\n            \"supported\": true\n          }\n        },\n        \"...\": {\n          \"supported\": true\n        }\n      },\n      \"payroll_documents\": {\n        \"...\": {\n          \"supported\": true\n        }\n      },\n      \"deposit_destinations\": {\n        \"...\": {\n          \"supported\": true\n        }\n      },\n      \"shifts\": {\n        \"...\": {\n          \"supported\": true\n        }\n      },\n      \"gigs\": {\n        \"...\": {\n          \"supported\": true\n        }\n      },\n      \"vehicles\": {\n        \"...\": {\n          \"supported\": true\n        }\n      },\n      \"ratings\": {\n        \"...\": {\n          \"supported\": true\n        }\n      }\n    },\n    \"direct_deposit_switch\": {\n      \"card\": {\n        \"supported\": true,\n        \"max_allocations\": \"3\"\n      },\n      \"deposit_account\": {\n        \"types\": [\n          \"ach_deposit_account\"\n        ],\n        \"supported\": true,\n        \"max_allocations\": \"2\",\n        \"amount_allocation\": false,\n        \"percent_allocation\": true,\n        \"amount_precision\": null,\n        \"percent_precision\": \"0.01\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d62c5c5-e25e-470a-9ec5-3c0b7d3a5d00",
+          "name": "List all Items",
+          "request": {
+            "name": "List all Items",
+            "description": {
+              "content": "Returns a paginated list of all Item objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text search filter. For best results, use the payroll platform or employer's full name.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Filter by Item ID.\nMultiple Item IDs can also be searched at once using either method:\n\n1. `/v2/items?id=item_000000001,item_000000002`\n2. `/v2/items?id=item_000000001&id=item_000000002`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "kind",
+                  "value": "<string>",
+                  "description": "Filter by `kind` value."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by `status` value.\n\nMultiple `status` values can also be searched at once using either method:\n\n1. `/v2/items?status=healthy,issues`\n2. `/v2/items?status=healthy&status=issues`\n\nFiltering by both `healthy` and `issues` will return all Items that currently support new payroll connections.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "mapping_status",
+                  "value": "<string>",
+                  "description": "Filter by `mapping_status` value.\n\nMultiple `mapping_status` values can also be searched at once using either method:\n\n1. `/v2/items?mapping_status=verified,mapped`\n2. `/v2/items?mapping_status=verified&mapping_status=mapped`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_matching_score",
+                  "value": "<number>",
+                  "description": "Only returns items with a [matching_score](/api-reference/items#object-matching_score) greater than or equal to this value.\n`min_matching_score` should be used together with the `q` \"free-text search\" query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter_set",
+                  "value": "<uuid>",
+                  "description": "Filter by Item filter ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of Item objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "07aeb1ef-fea0-4097-b94a-db9d05902b90",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "kind",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mapping_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "min_matching_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "filter_set",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/items?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"item_000000002\",\n      \"name\": \"Bullseye\",\n      \"kind\": \"employer\",\n      \"known_limitations\": null,\n      \"status\": \"unavailable\",\n      \"status_details\": \"The Item is down due to scheduled maintenance but should be back shortly.\",\n      \"mapping_status\": \"verified\",\n      \"logo_url\": \"argyle.com/image-holdings\",\n      \"is_grouping\": false,\n      \"matching_score\": \"1.00\"\n    },\n    {\n      \"id\": \"item_000000003\",\n      \"name\": \"Triple\",\n      \"kind\": \"platform\",\n      \"known_limitations\": null,\n      \"status\": \"healthy\",\n      \"status_details\": null,\n      \"mapping_status\": \"mapped\",\n      \"logo_url\": \"argyle.com/image-holdings\",\n      \"is_grouping\": false,\n      \"matching_score\": \"0.63\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "113144c1-ad19-4bb9-8894-e7d18c8fafe7",
+    "name": "Argyle Accounts Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

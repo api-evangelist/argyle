@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Employer Search API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Employer Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all employers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/employer-search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search filter."
+              },
+              {
+                "name": "kind",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `kind` value."
+              },
+              {
+                "name": "mapping_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `mapping_status` value.\n\nMultiple `mapping_status` values can also be searched at once using either method:\n\n1. `/v2/items?mapping_status=verified,mapped`\n2. `/v2/items?mapping_status=verified&mapping_status=mapped`\n"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by `status` value.\n\nMultiple `status` values can also be searched at once using either method:\n\n1. `/v2/items?status=healthy,issues`\n2. `/v2/items?status=healthy&status=issues`\n\nFiltering by both `healthy` and `issues` will return all Items that currently support new payroll connections.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of Item objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all Item objects, representing the most relevant search results."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

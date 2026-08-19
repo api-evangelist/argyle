@@ -1,0 +1,171 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Argyle Accounts Verifications API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all verifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/verifications",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID."
+              },
+              {
+                "name": "status_state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status `state`."
+              },
+              {
+                "name": "status_code",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status `code`."
+              },
+              {
+                "name": "report_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by report `type`."
+              },
+              {
+                "name": "loan_number",
+                "value": "",
+                "type": "query",
+                "description": "Filter by loan `number`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of verification objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all verification objects."
+        },
+        {
+          "info": {
+            "name": "Order a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/v2/verifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Orders a new verification.\n\n<Note>\n[Create a user](/api-reference/verifications-guide#create-a-user) or update an existing user with the required details before ordering payroll, banking, or document verifications.\n</Note>"
+        },
+        {
+          "info": {
+            "name": "Refresh a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/v2/verifications/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new payroll, banking, or Doc VOI verification without requiring the user to reconnect or upload additional documents.\n\nFor payroll and banking, a valid connection must already exist. For Doc VOI, the new report is generated from the user's existing uploaded documents."
+        },
+        {
+          "info": {
+            "name": "Retrieve a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.argyle.com/v2/verifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the verification to be retrieved."
+              }
+            ]
+          },
+          "docs": "Retrieves a verification."
+        },
+        {
+          "info": {
+            "name": "Update a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.argyle.com/v2/verifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the verification to be updated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates verification metadata or employments.\n\n<Note>\nAfter a verification is updated, it will re-enter the `PROCESSING` state.\n</Note>\n"
+        },
+        {
+          "info": {
+            "name": "Cancel a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.argyle.com/v2/verifications/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the verification to be cancelled."
+              }
+            ]
+          },
+          "docs": "Cancels a verification order.\n\n<Note>\nOnly verifications in the `PAUSED` state can be cancelled.\n</Note>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

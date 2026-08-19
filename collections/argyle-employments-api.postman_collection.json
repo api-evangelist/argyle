@@ -1,0 +1,167 @@
+{
+  "item": [
+    {
+      "id": "fb1643c9-1851-4877-810a-967c72f2e752",
+      "name": "Employments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c8e3a61b-e730-4670-b7db-e991ba6217e0",
+          "name": "List all employments",
+          "request": {
+            "name": "List all employments",
+            "description": {
+              "content": "Returns a paginated list of all employment objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "employments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of employment objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb57ba1a-d155-4534-ae74-69647a920051",
+              "name": "A list of employment objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "employments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/employments?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0186a27d-e5c6-735a-a359-6315b34d544c\",\n      \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"created_at\": \"2023-01-30T12:53:24.561Z\",\n      \"employer\": \"Whole Goods\",\n      \"employment_status\": \"active\",\n      \"origin\": \"retrieved\"\n    },\n    {\n      \"id\": \"0183d52a-d3b2-331d-c753-3662a20e352b\",\n      \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n      \"account\": \"0183d52b-a0c3-599a-e901-3676a20a533f\",\n      \"created_at\": \"2023-01-30T12:53:24.561Z\",\n      \"employer\": \"Double Double\",\n      \"employment_status\": \"inactive\",\n      \"origin\": \"acquired\"\n    },\n    {\n      \"id\": \"0183d52a-d3b2-331d-c753-3662a20e352b\",\n      \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n      \"account\": \"0175a40a-b3b4-622b-a339-8855c57b226e\",\n      \"created_at\": \"2023-01-30T12:53:24.561Z\",\n      \"employer\": \"Half Bads\",\n      \"employment_status\": \"inactive\",\n      \"origin\": \"retrieved\"\n    },\n    {\n      \"id\": \"0183d52a-d3b2-331d-c753-3662a20e352b\",\n      \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n      \"account\": \"0175a40a-b3b4-622b-a339-8855c57b226e\",\n      \"created_at\": \"2023-01-30T12:53:24.561Z\",\n      \"employer\": \"Stardollars LLC\",\n      \"employment_status\": \"inactive\",\n      \"origin\": \"retrieved\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "79f55ef0-ae8f-4985-8469-6875ffc40364",
+    "name": "Argyle Accounts Employments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

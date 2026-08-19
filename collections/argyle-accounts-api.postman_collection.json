@@ -1,0 +1,451 @@
+{
+  "item": [
+    {
+      "id": "9cc4eed9-e52c-44c7-a2a6-b5937d5c139b",
+      "name": "Accounts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58a0ee28-6b49-4d2b-8e2f-c8fac4aeffe4",
+          "name": "Retrieve an account",
+          "request": {
+            "name": "Retrieve an account",
+            "description": {
+              "content": "Retrieves an account object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the account object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e69764e-8d3b-4082-a839-582f63992750",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the account object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"user\": \"018051aa-f7a9-a0db-2f38-6cfa325e9d69\",\n  \"employers\": [\n    \"Whole Goods\"\n  ],\n  \"item\": \"item_123456789\",\n  \"source\": \"thepayrollcompany\",\n  \"created_at\": \"2023-01-30T12:53:22.561Z\",\n  \"updated_at\": \"2023-01-30T12:55:04.478Z\",\n  \"scanned_at\": \"2023-01-30T12:55:04.016Z\",\n  \"connection\": {\n    \"status\": \"connected\",\n    \"error_code\": null,\n    \"error_message\": null,\n    \"updated_at\": \"2023-01-30T12:53:25.561Z\"\n  },\n  \"direct_deposit_switch\": {\n    \"status\": \"success\",\n    \"error_code\": null,\n    \"error_message\": null,\n    \"updated_at\": \"2023-01-30T12:55:03.478Z\"\n  },\n  \"availability\": {\n    \"shifts\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:55:03Z\",\n      \"available_count\": 94,\n      \"available_from\": \"2020-04-11T12:53:27Z\",\n      \"available_to\": \"2023-01-25T00:00:00Z\"\n    },\n    \"gigs\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:55:03Z\",\n      \"available_count\": 217,\n      \"available_from\": \"2020-04-11T12:53:27Z\",\n      \"available_to\": \"2023-01-25T00:00:00Z\"\n    },\n    \"paystubs\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:55:03Z\",\n      \"available_count\": 68,\n      \"available_from\": \"2020-05-11T12:53:27Z\",\n      \"available_to\": \"2023-01-29T23:59:59Z\"\n    },\n    \"payroll_documents\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:53:44.308912Z\"\n    },\n    \"identities\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:53:44.028552Z\"\n    },\n    \"ratings\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:55:03.359356Z\"\n    },\n    \"vehicles\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:53:44.321951Z\"\n    },\n    \"deposit_destinations\": {\n      \"status\": \"synced\",\n      \"updated_at\": \"2023-01-30T12:53:42.586391Z\"\n    },\n    \"user_forms\": {\n      \"status\": \"in_progress\",\n      \"updated_at\": \"2023-01-30T12:53:42.586391Z\",\n      \"available_count\": 0,\n      \"files_count\": 1,\n      \"in_progress_count\": 1,\n      \"user_uploads\": {\n        \"status\": \"synced\",\n        \"updated_at\": \"2023-01-30T12:54:41.621Z\",\n        \"files_count\": 2,\n        \"in_progress_count\": 0\n      }\n    }\n  },\n  \"ongoing_refresh\": {\n    \"status\": \"enabled\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ebc963d-5d99-4f2c-869f-f52a0abbbc72",
+          "name": "Delete an account",
+          "request": {
+            "name": "Delete an account",
+            "description": {
+              "content": "Deletes an account object.\n\n<Warning>**Caution** - Deleting an account object will delete all resources associated with the account, such as paystubs or uploaded documents.</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the account object to be deleted."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ad0081c2-a811-4a0d-bcbe-c29c86604a3f",
+              "name": "204 status code: No content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the account object to be deleted."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7943877-48b1-4e88-8cc6-1577092535bd",
+          "name": "List all accounts",
+          "request": {
+            "name": "List all accounts",
+            "description": {
+              "content": "Returns a paginated list of all account objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "item",
+                  "value": "<uuid>",
+                  "description": "Filter by Item ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "ongoing_refresh_status",
+                  "value": "<string>",
+                  "description": "Filter by `status` of the `ongoing_refresh` object."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of account objects returned [per page](/api-guide/overview#pagination). Default: 10. Maximum: 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "015b1a73-5b7b-4adf-bb59-337827689971",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "item",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "ongoing_refresh_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/accounts?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0185a8b8-60eb-80ca-7482-5f24504573f7\",\n      \"user\": \"0186c5b8-8fa1-67b3-39af-14b3e18da8a7\",\n      \"employers\": [\n        \"Half Bads\"\n      ],\n      \"item\": \"item_000000001\",\n      \"source\": \"payrollcorp\",\n      \"created_at\": \"2023-01-30T18:25:13.491Z\",\n      \"updated_at\": \"2023-01-30T18:46:44.034Z\",\n      \"scanned_at\": \"2023-01-30T18:46:43.446Z\",\n      \"connection\": {\n        \"status\": \"connected\",\n        \"error_code\": null,\n        \"error_message\": null,\n        \"updated_at\": \"2023-01-30T18:25:30.334956Z\",\n        \"direct_deposit_switch\": {\n          \"status\": \"error\",\n          \"error_code\": \"confirmation_timeout\",\n          \"error_message\": \"This user did not finish confirming the direct deposit switch.\",\n          \"updated_at\": \"2023-01-30T18:35:31.961Z\"\n        }\n      },\n      \"availability\": {\n        \"shifts\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:46:43Z\",\n          \"available_count\": 132,\n          \"available_from\": \"2020-03-03T18:25:30Z\",\n          \"available_to\": \"2023-01-28T00:00:00Z\"\n        },\n        \"gigs\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:46:43Z\",\n          \"available_count\": 242,\n          \"available_from\": \"2020-03-03T18:25:30Z\",\n          \"available_to\": \"2023-01-28T00:00:00Z\"\n        },\n        \"paystubs\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:46:43Z\",\n          \"available_count\": 40,\n          \"available_from\": \"2020-03-03T18:25:30Z\",\n          \"available_to\": \"2023-01-02T00:00:00Z\"\n        },\n        \"payroll_documents\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:45:35.228Z\"\n        },\n        \"identities\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:45:34.960Z\"\n        },\n        \"ratings\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:45:35.235Z\"\n        },\n        \"vehicles\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:45:35.237Z\"\n        },\n        \"deposit_destinations\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T18:25:31.438Z\"\n        },\n        \"user_forms\": null,\n        \"user_uploads\": null\n      },\n      \"ongoing_refresh\": {\n        \"status\": \"enabled\"\n      }\n    },\n    {\n      \"id\": \"01856c65-43b6-8b5d-b32a-56b8fbda5c28\",\n      \"user\": \"0186c5b8-8fa1-67b3-39af-14b3e18da8a7\",\n      \"employers\": [],\n      \"item\": \"item_000012271\",\n      \"source\": \"doc_upload_item\",\n      \"created_at\": \"2023-01-30T15:15:53.176Z\",\n      \"updated_at\": \"2023-01-30T15:16:12.042Z\",\n      \"scanned_at\": null,\n      \"connection\": {\n        \"status\": \"connecting\",\n        \"error_code\": null,\n        \"error_message\": null,\n        \"updated_at\": \"2023-01-30T15:16:14.695Z\"\n      },\n      \"direct_deposit_switch\": {\n        \"status\": \"idle\",\n        \"error_code\": null,\n        \"error_message\": null,\n        \"updated_at\": \"2023-01-30T15:16:11.703Z\"\n      },\n      \"availability\": {\n        \"shifts\": null,\n        \"gigs\": null,\n        \"paystubs\": null,\n        \"payroll_documents\": null,\n        \"identities\": null,\n        \"ratings\": null,\n        \"vehicles\": null,\n        \"deposit_destinations\": null,\n        \"user_forms\": {\n          \"status\": \"synced\",\n          \"updated_at\": \"2023-01-30T15:16:12.012Z\",\n          \"available_count\": 1,\n          \"files_count\": 3,\n          \"in_progress_count\": 0\n        },\n        \"user_uploads\": null\n      },\n      \"ongoing_refresh\": {\n        \"status\": \"idle\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c4c622c-a895-4e4a-802c-373e91fcf53f",
+          "name": "Disable account updates",
+          "request": {
+            "name": "Disable account updates",
+            "description": {
+              "content": "Disables `ongoing_refresh` for an individual account.\n\nTo access this feature, reach out to our team for assistance.\n\n*   Link will display the [ongoing\\_refresh\\_disabled](/api-reference/account-connection-errors#ongoingrefreshdisabled) account connection error when users return to view this account.\n*   Changes the account's [`ongoing_refresh.status`](/api-reference/accounts#object-ongoing_refresh) value from `enabled` to `disabled` and causes the [`accounts.updated`](/api-reference/accounts-webhooks/updated) webhook to be sent.\n\n<br/>\n\nAfter `ongoing_refresh` is disabled:\n\n*   The specified account will no longer receive [data updates](/overview/ongoing-refresh).\n*   If the user returns to Link and [reconnects the account](/workflows/reconnecting-accounts#reconnecting-disconnected-accounts):\n    1.  The account will immediately be re-scanned and its data updated.\n    2.  The account will be billed as a new account connection.\n    3.  Ongoing refresh will be re-enabled for the account.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "accounts",
+                ":id",
+                "disable-ongoing-refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the account object."
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "302fc940-a1ad-4347-b603-e17112d3a33f",
+              "name": "200 status code: Request succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "accounts",
+                    ":id",
+                    "disable-ongoing-refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the account object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "24daf06e-376a-4c77-a3a7-dcb65b8ea4f1",
+    "name": "Argyle Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}

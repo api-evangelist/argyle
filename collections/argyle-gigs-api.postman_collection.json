@@ -1,0 +1,283 @@
+{
+  "item": [
+    {
+      "id": "7c8f2a78-14b0-4736-9909-b47573472bf4",
+      "name": "Gigs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5a60c93f-e752-40ae-906d-050b6488add3",
+          "name": "Retrieve a gig",
+          "request": {
+            "name": "Retrieve a gig",
+            "description": {
+              "content": "Retrieves a gig object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "gigs",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the gig object to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5e1e788-a0ec-4549-97b8-dc9d5e298019",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "gigs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the gig object to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0187dbfa-6f5e-a33a-af26-7e12ff408fea\",\n  \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n  \"employer\": \"GigAndGo\",\n  \"created_at\": \"2023-03-08T08:31:37.037Z\",\n  \"updated_at\": \"2023-03-08T08:31:37.037Z\",\n  \"status\": \"completed\",\n  \"type\": \"delivery\",\n  \"task_count\": 2,\n  \"start_datetime\": \"2023-03-08T08:08:57Z\",\n  \"end_datetime\": \"2023-03-08T08:31:36Z\",\n  \"all_datetimes\": {\n    \"request_at\": \"2023-03-08T08:08:57Z\",\n    \"accept_at\": \"2023-03-08T08:09:38Z\",\n    \"pickup_at\": \"2023-03-08T08:12:57Z\",\n    \"dropoff_at\": \"2023-03-08T08:31:36Z\",\n    \"cancel_at\": null,\n    \"shift_start\": null,\n    \"shift_end\": null,\n    \"breaks\": []\n  },\n  \"duration\": 2659,\n  \"timezone\": \"America/New_York\",\n  \"earning_type\": \"work\",\n  \"start_location\": {\n    \"lat\": \"40.65932120164202\",\n    \"lng\": \"-73.8526246331782\",\n    \"formatted_address\": \"201 North W St, New York, NY 10014, US\"\n  },\n  \"end_location\": {\n    \"lat\": \"40.689177462234504\",\n    \"lng\": \"-73.89453884284752\",\n    \"formatted_address\": \"102 South E St, New York, NY 10002, US\"\n  },\n  \"task_details\": {\n    \"events\": [\n      {\n        \"order_id\": null,\n        \"sequence\": \"1\",\n        \"type\": \"accept\",\n        \"name\": null,\n        \"formatted_address\": \"201 North W St, New York, NY 10014, US\",\n        \"lat\": \"40.65932120164202\",\n        \"lng\": \"-73.89453884284752\",\n        \"datetime\": \"2023-03-08T08:09:38Z\"\n      },\n      {\n        \"order_id\": \"1\",\n        \"sequence\": \"2\",\n        \"type\": \"pickup\",\n        \"name\": \"Healthy Snacks\",\n        \"formatted_address\": \"150 East N St, New York, NY 10014, US\",\n        \"lat\": \"40.673422892136178\",\n        \"lng\": \"-73.88931269893891\",\n        \"datetime\": \"2023-03-08T08:12:57Z\"\n      },\n      {\n        \"order_id\": \"2\",\n        \"sequence\": \"3\",\n        \"type\": \"pickup\",\n        \"name\": \"Gourmet Desserts\",\n        \"formatted_address\": \"182 East N St, New York, NY 10014, US\",\n        \"lat\": \"40.673523811763259\",\n        \"lng\": \"-73.86335212657626\",\n        \"datetime\": \"2023-03-08T08:12:57Z\"\n      },\n      {\n        \"order_id\": null,\n        \"sequence\": \"4\",\n        \"type\": \"dropoff\",\n        \"name\": null,\n        \"formatted_address\": \"102 South E St, New York, NY 10002, US\",\n        \"lat\": \"40.689177462234504\",\n        \"lng\": \"-73.89453884284752\",\n        \"datetime\": \"2023-03-08T08:31:36Z\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"order_id\": \"1\",\n        \"sequence\": \"1\",\n        \"income\": {\n          \"currency\": \"USD\",\n          \"total_charge\": \"34.75\",\n          \"customer_price\": \"26.38\",\n          \"fees\": \"8.37\",\n          \"total\": \"19.96\",\n          \"pay\": \"22.28\",\n          \"tips\": null,\n          \"bonus\": \"0.00\",\n          \"other\": \"-2.32\"\n        }\n      },\n      {\n        \"order_id\": \"2\",\n        \"sequence\": \"2\",\n        \"income\": {\n          \"currency\": \"USD\",\n          \"total_charge\": \"7.25\",\n          \"customer_price\": \"7.25\",\n          \"fees\": null,\n          \"total\": \"4.30\",\n          \"pay\": \"4.30\",\n          \"tips\": \"0.00\",\n          \"bonus\": \"0.00\",\n          \"other\": null\n        }\n      }\n    ]\n  },\n  \"distance\": \"1.80\",\n  \"distance_unit\": \"miles\",\n  \"metadata\": {\n    \"income.other\": {\n      \"name\": \"Taxes: Withholding tax\",\n      \"value\": \"-15.32\"\n    }\n  },\n  \"circumstances\": {\n    \"is_pool\": false,\n    \"is_rush\": false,\n    \"is_surge\": true,\n    \"service_type\": \"Comfort Ride\",\n    \"position\": null\n  },\n  \"income\": {\n    \"currency\": \"USD\",\n    \"total_charge\": \"42.00\",\n    \"customer_price\": \"33.68\",\n    \"fees\": \"8.37\",\n    \"total\": \"30.68\",\n    \"pay\": \"26.58\",\n    \"tips\": \"6.42\",\n    \"bonus\": \"0.00\",\n    \"other\": \"-2.32\"\n  },\n  \"income_rates\": {\n    \"hour\": \"92.70\",\n    \"mile\": \"20.20\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94eb5c5c-b536-42a3-8d38-c03a5f871534",
+          "name": "List all gigs",
+          "request": {
+            "name": "List all gigs",
+            "description": {
+              "content": "Returns a paginated list of all gig objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "gigs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<uuid>",
+                  "description": "Filter by account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<uuid>",
+                  "description": "Filter by user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_start_datetime",
+                  "value": "<dateTime>",
+                  "description": "Filter by gigs with a `start_datetime` on or after this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "to_start_datetime",
+                  "value": "<dateTime>",
+                  "description": "Filter by gigs with a `start_datetime` on or before this timestamp [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of gig objects returned <a href=\"/api-guide/overview#pagination\">per page</a>. Default: 10. Maximum: 200.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The URL returned in `next` or `previous` used to retrieve another [page](/api-guide/overview#pagination) of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "172828c7-4eed-451a-9c86-4f119b6dc166",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "gigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "from_start_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to_start_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next\": \"https://api-sandbox.argyle.com/v2/gigs?cursor=ZXhhbXBsZV9jdXJzb3I\",\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": \"0187b43a-35fa-56e2-1a95-f7e4232a4b3a\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"employer\": \"GigAntic\",\n      \"created_at\": \"2023-03-15T06:10:25.004Z\",\n      \"updated_at\": \"2023-03-15T06:10:25.004Z\",\n      \"status\": \"completed\",\n      \"type\": \"rideshare\",\n      \"task_count\": 1,\n      \"start_datetime\": \"2023-03-15T05:24:44Z\",\n      \"end_datetime\": \"2023-03-15T06:10:24Z\",\n      \"all_datetimes\": {\n        \"request_at\": \"2023-03-15T05:24:44Z\",\n        \"accept_at\": \"2023-03-15T05:26:51Z\",\n        \"pickup_at\": \"2023-03-15T05:30:46Z\",\n        \"dropoff_at\": \"2023-03-15T06:10:24Z\",\n        \"cancel_at\": null,\n        \"shift_start\": null,\n        \"shift_end\": null,\n        \"breaks\": []\n      },\n      \"duration\": 2740,\n      \"timezone\": \"America/New_York\",\n      \"earning_type\": \"work\",\n      \"start_location\": {\n        \"lat\": \"40.61236518213759\",\n        \"lng\": \"-73.58345445703922\",\n        \"formatted_address\": \"305 East Ave Apt. 980, New York, NY 10006, US\"\n      },\n      \"end_location\": {\n        \"lat\": \"40.693262037420084\",\n        \"lng\": \"-73.83205844061759\",\n        \"formatted_address\": \"503 Far West Ave Suite 970, New York, NY 10019, US\"\n      },\n      \"task_details\": {\n        \"events\": [],\n        \"orders\": []\n      },\n      \"distance\": \"24.93\",\n      \"distance_unit\": \"miles\",\n      \"metadata\": {},\n      \"circumstances\": {\n        \"is_pool\": false,\n        \"is_rush\": false,\n        \"is_surge\": true,\n        \"service_type\": \"GigAntic XL\",\n        \"position\": null\n      },\n      \"income\": {\n        \"currency\": \"USD\",\n        \"total_charge\": \"34.79\",\n        \"customer_price\": \"25.32\",\n        \"fees\": \"9.47\",\n        \"total\": \"25.32\",\n        \"pay\": \"25.32\",\n        \"tips\": \"0.00\",\n        \"bonus\": \"0.00\",\n        \"other\": null\n      },\n      \"income_rates\": {\n        \"hour\": \"13.62\",\n        \"mile\": \"0.60\"\n      }\n    },\n    {\n      \"id\": \"0187dbfa-6f5e-a33a-af26-7e12ff408fea\",\n      \"account\": \"0187c66e-e7e5-811c-b006-2232f00f426a\",\n      \"employer\": \"GigAndGo\",\n      \"created_at\": \"2023-03-08T08:31:37.037Z\",\n      \"updated_at\": \"2023-03-08T08:31:37.037Z\",\n      \"status\": \"completed\",\n      \"type\": \"delivery\",\n      \"task_count\": 2,\n      \"start_datetime\": \"2023-03-08T08:08:57Z\",\n      \"end_datetime\": \"2023-03-08T08:31:36Z\",\n      \"all_datetimes\": {\n        \"request_at\": \"2023-03-08T08:08:57Z\",\n        \"accept_at\": \"2023-03-08T08:09:38Z\",\n        \"pickup_at\": \"2023-03-08T08:12:57Z\",\n        \"dropoff_at\": \"2023-03-08T08:31:36Z\",\n        \"cancel_at\": null,\n        \"shift_start\": null,\n        \"shift_end\": null,\n        \"breaks\": []\n      },\n      \"duration\": 2659,\n      \"timezone\": \"America/New_York\",\n      \"earning_type\": \"work\",\n      \"start_location\": {\n        \"lat\": \"40.65932120164202\",\n        \"lng\": \"-73.8526246331782\",\n        \"formatted_address\": \"201 North W St, New York, NY 10014, US\"\n      },\n      \"end_location\": {\n        \"lat\": \"40.689177462234504\",\n        \"lng\": \"-73.89453884284752\",\n        \"formatted_address\": \"102 South E St, New York, NY 10002, US\"\n      },\n      \"task_details\": {\n        \"events\": [\n          {\n            \"order_id\": null,\n            \"sequence\": \"1\",\n            \"type\": \"accept\",\n            \"name\": null,\n            \"formatted_address\": \"201 North W St, New York, NY 10014, US\",\n            \"lat\": \"40.65932120164202\",\n            \"lng\": \"-73.89453884284752\",\n            \"datetime\": \"2023-03-08T08:09:38Z\"\n          },\n          {\n            \"order_id\": \"1\",\n            \"sequence\": \"2\",\n            \"type\": \"pickup\",\n            \"name\": \"Healthy Snacks\",\n            \"formatted_address\": \"150 East N St, New York, NY 10014, US\",\n            \"lat\": \"40.673422892136178\",\n            \"lng\": \"-73.88931269893891\",\n            \"datetime\": \"2023-03-08T08:12:57Z\"\n          },\n          {\n            \"order_id\": \"2\",\n            \"sequence\": \"3\",\n            \"type\": \"pickup\",\n            \"name\": \"Gourmet Desserts\",\n            \"formatted_address\": \"182 East N St, New York, NY 10014, US\",\n            \"lat\": \"40.673523811763259\",\n            \"lng\": \"-73.86335212657626\",\n            \"datetime\": \"2023-03-08T08:12:57Z\"\n          },\n          {\n            \"order_id\": null,\n            \"sequence\": \"4\",\n            \"type\": \"dropoff\",\n            \"name\": null,\n            \"formatted_address\": \"102 South E St, New York, NY 10002, US\",\n            \"lat\": \"40.689177462234504\",\n            \"lng\": \"-73.89453884284752\",\n            \"datetime\": \"2023-03-08T08:31:36Z\"\n          }\n        ],\n        \"orders\": [\n          {\n            \"order_id\": \"1\",\n            \"sequence\": \"1\",\n            \"income\": {\n              \"currency\": \"USD\",\n              \"total_charge\": \"34.75\",\n              \"customer_price\": \"26.38\",\n              \"fees\": \"8.37\",\n              \"total\": \"19.96\",\n              \"pay\": \"22.28\",\n              \"tips\": null,\n              \"bonus\": \"0.00\",\n              \"other\": \"-2.32\"\n            }\n          },\n          {\n            \"order_id\": \"2\",\n            \"sequence\": \"2\",\n            \"income\": {\n              \"currency\": \"USD\",\n              \"total_charge\": \"7.25\",\n              \"customer_price\": \"7.25\",\n              \"fees\": null,\n              \"total\": \"4.30\",\n              \"pay\": \"4.30\",\n              \"tips\": \"0.00\",\n              \"bonus\": \"0.00\",\n              \"other\": null\n            }\n          }\n        ]\n      },\n      \"distance\": \"1.80\",\n      \"distance_unit\": \"miles\",\n      \"metadata\": {\n        \"income.other\": {\n          \"name\": \"Taxes: Withholding tax\",\n          \"value\": \"-15.32\"\n        }\n      },\n      \"circumstances\": {\n        \"is_pool\": false,\n        \"is_rush\": false,\n        \"is_surge\": true,\n        \"service_type\": \"Comfort Ride\",\n        \"position\": null\n      },\n      \"income\": {\n        \"currency\": \"USD\",\n        \"total_charge\": \"42.00\",\n        \"customer_price\": \"33.68\",\n        \"fees\": \"8.37\",\n        \"total\": \"30.68\",\n        \"pay\": \"26.58\",\n        \"tips\": \"6.42\",\n        \"bonus\": \"0.00\",\n        \"other\": \"-2.32\"\n      },\n      \"income_rates\": {\n        \"hour\": \"92.70\",\n        \"mile\": \"20.20\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.argyle.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "63676a57-179f-4dea-9f6f-035188d013fb",
+    "name": "Argyle Accounts Gigs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.\n\nContact Support:\n Name: Argyle Support",
+      "type": "text/plain"
+    }
+  }
+}
