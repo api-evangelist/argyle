@@ -7,6 +7,18 @@ description: Argyle is an employment data connectivity platform offering a REST 
   platforms, and government payroll systems, with webhook alerts for employment and
   income changes.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
