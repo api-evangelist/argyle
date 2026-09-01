@@ -779,7 +779,7 @@ apis:
   humanURL: https://docs.argyle.com/api-guide/overview
   baseURL: https://api.argyle.com/v2
   tags:
-  - Verifications
+  - Verification
   tags_raw:
   - Verifications
   properties:
