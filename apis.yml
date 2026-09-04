@@ -1,11 +1,9 @@
 aid: argyle
 name: Argyle
-description: Argyle is an employment data connectivity platform offering a REST API
-  for accessing payroll records, employment history, income verification, and gig
-  platform earnings via user-consented direct-source connections. The API provides
-  real-time access to standardized payroll data across traditional employers, gig
-  platforms, and government payroll systems, with webhook alerts for employment and
-  income changes.
+description: Argyle is an employment data connectivity platform offering a REST API for accessing payroll records,
+  employment history, income verification, and gig platform earnings via user-consented direct-source connections.
+  The API provides real-time access to standardized payroll data across traditional employers, gig platforms, and
+  government payroll systems, with webhook alerts for employment and income changes.
 type: Index
 deliveryModel:
   model: saas
@@ -838,6 +836,9 @@ apis:
   - type: GraphQL
     url: graphql/argyle-graphql.md
 common:
+- type: CapabilityMap
+  url: capabilities/argyle-capability-edges.yml
+  name: Argyle Business Capability Map
 - type: AgenticAccess
   url: agentic-access/argyle-agentic-access.yml
 - type: VulnerabilityDisclosure
@@ -870,6 +871,10 @@ common:
   url: rate-limits/argyle-rate-limits.yml
 - type: FinOps
   url: finops/argyle-finops.yml
+- url: https://github.com/argyle-systems
+  type: GitHubOrganization
+- url: https://docs.argyle.com/api-guide/overview
+  type: Documentation
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
