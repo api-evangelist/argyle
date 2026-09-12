@@ -1,9 +1,6 @@
 aid: argyle
 name: Argyle
-description: Argyle is an employment data connectivity platform offering a REST API for accessing payroll records,
-  employment history, income verification, and gig platform earnings via user-consented direct-source connections.
-  The API provides real-time access to standardized payroll data across traditional employers, gig platforms, and
-  government payroll systems, with webhook alerts for employment and income changes.
+description: Argyle is an employment data connectivity platform offering a REST API for accessing payroll records, employment history, income verification, and gig platform earnings via user-consented direct-source connections. The API provides real-time access to standardized payroll data across traditional employers, gig platforms, and government payroll systems, with webhook alerts for employment and income changes.
 type: Index
 deliveryModel:
   model: saas
@@ -835,6 +832,31 @@ apis:
     url: json-ld/argyle-context.jsonld
   - type: GraphQL
     url: graphql/argyle-graphql.md
+- aid: argyle:argyle-banking-api
+  name: Argyle Banking API
+  description: Open-finance surface that pulls direct-from-bank account, balance, transaction, and institution metadata for verification of assets (VOA) and verification of assets and income (VOAI). Includes Connect URL generation, banking report generation, bank account retrieval, and financial-institution catalog endpoints. Documented in the Argyle docs under api-reference/banking-overview.
+  humanURL: https://docs.argyle.com/api-reference/banking-overview
+  baseURL: https://api.argyle.com/v2
+  tags:
+  - Banking
+  - Open Finance
+  - VOA
+  - VOAI
+  - Bank Accounts
+  - Institutions
+  tags_raw:
+  - Banking
+  - Open Finance
+  - VOA
+  - VOAI
+  - Bank Accounts
+  - Institutions
+  properties:
+  - type: Documentation
+    url: https://docs.argyle.com/api-reference/banking-overview
+  contact:
+  - FN: Argyle Support
+    url: https://argyle.com/support
 common:
 - type: CapabilityMap
   url: capabilities/argyle-capability-edges.yml
