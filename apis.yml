@@ -32,6 +32,9 @@ url: https://raw.githubusercontent.com/api-evangelist/argyle/refs/heads/main/api
 created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.23'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-19
 tags:
 - Employment Data
 - Payroll
