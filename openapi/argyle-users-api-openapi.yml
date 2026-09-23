@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Users API
+  title: Argyle Users API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -21,7 +21,7 @@ paths:
   /v2/users:
     post:
       summary: Create a user
-      description: Creates a new user object. Includes a new [user token](/link/user-tokens) in the response.
+      description: Creates a new user object. Includes a new user token in the response.
       requestBody:
         content:
           application/json:
@@ -136,6 +136,8 @@ paths:
                     description: Unique ID of the user.
       tags:
       - Users
+      operationId: postV2Users
+      x-operation-id-source: derived
     get:
       summary: List all users
       description: Returns a paginated list of all user objects.
@@ -166,14 +168,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -241,6 +245,8 @@ paths:
                     day: null
       tags:
       - Users
+      operationId: getV2Users
+      x-operation-id-source: derived
   /v2/users/{id}:
     get:
       summary: Retrieve a user
@@ -262,6 +268,8 @@ paths:
                 $ref: '#/components/schemas/User'
       tags:
       - Users
+      operationId: getV2UsersById
+      x-operation-id-source: derived
     patch:
       summary: Update a user
       description: Updates a user object.
@@ -399,14 +407,14 @@ paths:
                 $ref: '#/components/schemas/User'
       tags:
       - Users
+      operationId: patchV2UsersById
+      x-operation-id-source: derived
     delete:
       summary: Delete a user
       description: 'Deletes a user object.
 
 
-        <Warning>Deleting a user object will also delete all accounts and resources associated with the user.</Warning>
-
-        '
+        Deleting a user object will also delete all accounts and resources associated with the user.'
       parameters:
       - in: path
         name: id
@@ -420,6 +428,8 @@ paths:
           description: '204 status code: No content.'
       tags:
       - Users
+      operationId: deleteV2UsersById
+      x-operation-id-source: derived
 components:
   schemas:
     User:

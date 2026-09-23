@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Invites API
+  title: Argyle Invites API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -23,9 +23,7 @@ paths:
       summary: Send an invite
       description: 'Immediately sends an invite via email, SMS, or both.
 
-        Returns an invite object in the response.
-
-        '
+        Returns an invite object in the response.'
       requestBody:
         required: true
         content:
@@ -82,6 +80,8 @@ paths:
                 invite_template_id: null
       tags:
       - Invites
+      operationId: postV2Invites
+      x-operation-id-source: derived
     get:
       summary: List all invites
       description: Returns an object containing all invite objects.
@@ -125,14 +125,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -198,6 +200,8 @@ paths:
                   invite_template_id: null
       tags:
       - Invites
+      operationId: getV2Invites
+      x-operation-id-source: derived
   /v2/invites/{id}:
     get:
       summary: Retrieve an invite
@@ -249,11 +253,11 @@ paths:
                 invite_template_id: null
       tags:
       - Invites
+      operationId: getV2InvitesById
+      x-operation-id-source: derived
     post:
       summary: Re-send an invite
-      description: 'Re-sends a previously sent invite. Updates the `updated_at` and `invited_at` time.
-
-        '
+      description: Re-sends a previously sent invite. Updates the `updated_at` and `invited_at` time.
       parameters:
       - in: path
         name: id
@@ -306,15 +310,15 @@ paths:
                 invite_template_id: null
       tags:
       - Invites
+      operationId: postV2InvitesById
+      x-operation-id-source: derived
   /v2/invites/{id}/revoke:
     post:
       summary: Revoke an invite
       description: 'Invalidates a previously sent invite.
 
 
-        If a user clicks a revoked invite URL, the landing page will notify the user the invite has expired.
-
-        '
+        If a user clicks a revoked invite URL, the landing page will notify the user the invite has expired.'
       parameters:
       - in: path
         name: id
@@ -362,8 +366,39 @@ paths:
                 invite_template_id: null
       tags:
       - Invites
+      operationId: postV2InvitesByIdRevoke
+      x-operation-id-source: derived
 components:
   schemas:
+    InviteDelivery:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the invite delivery.
+        method:
+          type: string
+          enum:
+          - email
+          - sms
+          description: Invite delivery method.
+        status:
+          type: string
+          enum:
+          - sent
+          - delivered
+          - undelivered
+          - opened
+          description: Status of the invite delivery.
+        sent_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was sent.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the delivery status was last updated.
     SendInviteRequest:
       type: object
       required:
@@ -614,9 +649,10 @@ components:
           description: Last name of the invite recipient.
           example: Longfield
         revoked_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was revoked.
           example: null
         status:
@@ -642,9 +678,10 @@ components:
 
             '
         group_id:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: ID of the [group](/console/management/groups) associated with the invite.
           example: d8a07e5b-13a3-11ef-af7e-c7eb00762562
         url:
@@ -680,24 +717,27 @@ components:
             '
           example: '2023-03-09T23:57:05.756Z'
         flow_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: ID of the Flow specified via the `flow_id` parameter when sending the invite.
           example: 8DRRA4XC
         flow_items:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          nullable: true
           description: Any Items specified via the `flow_items` parameter when sending the invite.
           example:
           - item_000000001
           - item_000000002
         reply_to:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          nullable: true
           description: 'Emails of your team members that will be notified when the user has connected their payroll account(s).
 
 
@@ -721,43 +761,15 @@ components:
           items:
             $ref: '#/components/schemas/InviteDelivery'
         invite_template_id:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           deprecated: true
           description: '(Deprecated) Customization ID.
 
             - Deprecated in favor of [`override_invite_template`](/api-reference/invites#send-override_invite_template).'
           example: null
-    InviteDelivery:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique ID of the invite delivery.
-        method:
-          type: string
-          enum:
-          - email
-          - sms
-          description: Invite delivery method.
-        status:
-          type: string
-          enum:
-          - sent
-          - delivered
-          - undelivered
-          - opened
-          description: Status of the invite delivery.
-        sent_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was sent.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the delivery status was last updated.
   securitySchemes:
     basicAuth:
       type: http

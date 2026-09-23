@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Receipts API
+  title: Argyle Receipts API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -77,6 +77,8 @@ paths:
                     '
       tags:
       - Receipts
+      operationId: postV2Receipts
+      x-operation-id-source: derived
 components:
   securitySchemes:
     basicAuth:

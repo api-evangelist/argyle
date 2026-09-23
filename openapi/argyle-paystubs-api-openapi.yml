@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Paystubs API
+  title: Argyle Paystubs API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -41,6 +41,8 @@ paths:
                 $ref: '#/components/schemas/Paystub'
       tags:
       - Paystubs
+      operationId: getV2PaystubsById
+      x-operation-id-source: derived
   /v2/paystubs:
     get:
       summary: List all paystubs
@@ -101,14 +103,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -116,88 +120,107 @@ paths:
                       $ref: '#/components/schemas/Paystub'
       tags:
       - Paystubs
+      operationId: getV2Paystubs
+      x-operation-id-source: derived
 components:
   schemas:
-    Destination:
+    GrossPay:
       type: object
       properties:
-        reference:
-          type: string
-          description: Describes where the payment was sent, such as a checking account or bank name.
-        amount:
-          type: string
-          description: Pay amount sent to the destination.
-        method:
-          type: string
-          description: Payment method, such as direct deposit.
-        ach_deposit_account:
-          type: object
-          properties:
-            bank_name:
-              type: string
-              description: Name of the bank account.
-            routing_number:
-              type: string
-              description: Routing number of the bank account.
-            account_number:
-              type: string
-              description: Account number of the bank account.
-          description: Details for bank account destinations.
-        card:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Name of the card where the payout was sent.
-            number:
-              type: string
-              description: Card number.
-          description: Details for payout card destinations.
-    GrossPayTotal:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Gross pay earned from line items of this type.
-        amount_ytd:
-          type: string
-          description: Total gross pay earned year-to-date from line items of this type, including this paystub.
-        hours:
-          type: string
-          description: Hours worked from line items of this type.
-        hours_ytd:
-          type: string
-          description: Hours worked year-to-date from line items of this type, including this paystub.
-        rate_implied:
-          type: string
-          description: Calculated ratio of `amount` to `hours` of gross pay list totals.
-        rate_implied_ytd:
-          type: string
-          description: Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals.
-    Deduction:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Amount of the deduction.
         name:
           type: string
-          description: Name or description of the deduction.
-        tax_classification:
+          description: Name or description of the gross pay line item.
+        type:
           type: string
           enum:
-          - pre_tax
-          - post_tax
-          description: 'Tax classification.
+          - base
+          - pto
+          - overtime
+          - commission
+          - bonus
+          - disability
+          - benefits
+          - tips
+          - stock
+          - other
+          description: 'Categorized type of gross pay, based on `name`. Used in `gross_pay_list_totals`.
 
-            - `pre_tax`
+            - `base`
 
-            - `post_tax`
+            - `pto`
+
+            - `overtime`
+
+            - `commission`
+
+            - `bonus`
+
+            - `disability`
+
+            - `benefits`
+
+            - `tips`
+
+            - `stock`
+
+            - `other`
 
             '
+        start_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
+        end_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
+        rate:
+          type: string
+          description: Hourly rate of gross pay earnings for this line item.
+        hours:
+          type: string
+          description: Hours worked for this line item.
+        amount:
+          type: string
+          description: Gross pay earned from this line item.
+        hours_ytd:
+          type: string
+          description: Total hours worked year-to-date related to this gross pay line item, including this paystub's work period.
         amount_ytd:
           type: string
-          description: Total amount deducted year-to-date, including the amounts from this paystub.
+          description: Total gross pay earned year-to-date related to this gross pay line item, including this paystub.
+    FilingStatus:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - federal
+          - state
+          - local
+          description: 'Tax authority.
+
+            - `federal`
+
+            - `state`
+
+            - `local`
+
+            '
+        location:
+          type: string
+          description: 'Local jurisdiction. Values depend on `type`.
+
+            - if type is `federal` — `null`
+
+            - if type is `state` — state abbreviation code
+
+            - if type is `local` — city name or area code
+
+            '
+        status:
+          type: string
+          description: Marital status.
     Tax:
       type: object
       properties:
@@ -526,103 +549,86 @@ components:
         metadata:
           type: object
           description: Additional, non-categorized information.
-    GrossPay:
+    Deduction:
       type: object
       properties:
-        name:
-          type: string
-          description: Name or description of the gross pay line item.
-        type:
-          type: string
-          enum:
-          - base
-          - pto
-          - overtime
-          - commission
-          - bonus
-          - disability
-          - benefits
-          - tips
-          - stock
-          - other
-          description: 'Categorized type of gross pay, based on `name`. Used in `gross_pay_list_totals`.
-
-            - `base`
-
-            - `pto`
-
-            - `overtime`
-
-            - `commission`
-
-            - `bonus`
-
-            - `disability`
-
-            - `benefits`
-
-            - `tips`
-
-            - `stock`
-
-            - `other`
-
-            '
-        start_date:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
-        end_date:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
-        rate:
-          type: string
-          description: Hourly rate of gross pay earnings for this line item.
-        hours:
-          type: string
-          description: Hours worked for this line item.
         amount:
           type: string
-          description: Gross pay earned from this line item.
-        hours_ytd:
+          description: Amount of the deduction.
+        name:
           type: string
-          description: Total hours worked year-to-date related to this gross pay line item, including this paystub's work period.
-        amount_ytd:
-          type: string
-          description: Total gross pay earned year-to-date related to this gross pay line item, including this paystub.
-    FilingStatus:
-      type: object
-      properties:
-        type:
+          description: Name or description of the deduction.
+        tax_classification:
           type: string
           enum:
-          - federal
-          - state
-          - local
-          description: 'Tax authority.
+          - pre_tax
+          - post_tax
+          description: 'Tax classification.
 
-            - `federal`
+            - `pre_tax`
 
-            - `state`
-
-            - `local`
+            - `post_tax`
 
             '
-        location:
+        amount_ytd:
           type: string
-          description: 'Local jurisdiction. Values depend on `type`.
-
-            - if type is `federal` — `null`
-
-            - if type is `state` — state abbreviation code
-
-            - if type is `local` — city name or area code
-
-            '
-        status:
+          description: Total amount deducted year-to-date, including the amounts from this paystub.
+    Destination:
+      type: object
+      properties:
+        reference:
           type: string
-          description: Marital status.
+          description: Describes where the payment was sent, such as a checking account or bank name.
+        amount:
+          type: string
+          description: Pay amount sent to the destination.
+        method:
+          type: string
+          description: Payment method, such as direct deposit.
+        ach_deposit_account:
+          type: object
+          properties:
+            bank_name:
+              type: string
+              description: Name of the bank account.
+            routing_number:
+              type: string
+              description: Routing number of the bank account.
+            account_number:
+              type: string
+              description: Account number of the bank account.
+          description: Details for bank account destinations.
+        card:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the card where the payout was sent.
+            number:
+              type: string
+              description: Card number.
+          description: Details for payout card destinations.
+    GrossPayTotal:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Gross pay earned from line items of this type.
+        amount_ytd:
+          type: string
+          description: Total gross pay earned year-to-date from line items of this type, including this paystub.
+        hours:
+          type: string
+          description: Hours worked from line items of this type.
+        hours_ytd:
+          type: string
+          description: Hours worked year-to-date from line items of this type, including this paystub.
+        rate_implied:
+          type: string
+          description: Calculated ratio of `amount` to `hours` of gross pay list totals.
+        rate_implied_ytd:
+          type: string
+          description: Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals.
   securitySchemes:
     basicAuth:
       type: http

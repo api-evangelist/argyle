@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts User Forms API
+  title: Argyle User Forms API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -47,6 +47,8 @@ paths:
                 updated_at: '2023-03-17T10:50:31.621908Z'
       tags:
       - User Forms
+      operationId: getV2UserFormsById
+      x-operation-id-source: derived
   /v2/user-forms:
     get:
       summary: List all user forms
@@ -88,14 +90,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -121,6 +125,8 @@ paths:
                   updated_at: '2023-03-17T10:45:20.035736Z'
       tags:
       - User Forms
+      operationId: getV2UserForms
+      x-operation-id-source: derived
 components:
   schemas:
     UserForm:

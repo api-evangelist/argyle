@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Sessions API
+  title: Argyle Sessions API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -27,7 +27,7 @@ paths:
         Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
 
 
-        <Note>This endpoint is for payroll and banking verifications only.</Note>'
+        This endpoint is for payroll and banking verifications only.'
       requestBody:
         required: true
         content:
@@ -91,6 +91,8 @@ paths:
                     data_source: banking
       tags:
       - Sessions
+      operationId: postV2Sessions
+      x-operation-id-source: derived
 components:
   schemas:
     ClientSessionCreateConfiguration:
@@ -105,8 +107,9 @@ components:
           type: boolean
           description: Banking only. If `true`, the session link expires after one successful connection.
         redirect_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Payroll and banking. Optional redirect URL after session completion. Hosted/direct-launch flows should always set this. On desktop browsers, use a regular `https://` URL. For mobile app flows, use a custom scheme such as `your-custom-scheme://return-to-app`, or a Universal Link on iOS / App Link on Android. Universal Links and App Links are the more modern approach. You can include an application-owned state or nonce value to match the returning browser session to an internal user, session, or verification. Argyle appends `user_submission_complete` and `user_attempted_employer_selection`, which mirror the [`onClose`](/link/reference/callbacks#onclose) fields.
         flow_id:
           type: string
@@ -130,20 +133,6 @@ components:
         mobile_app:
           type: boolean
           description: Payroll only. Set to `true` when the session is used in a mobile app, including Hosted Link opened in a secure browser context.
-    ClientSessionConfiguration:
-      allOf:
-      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
-    ClientSessionCreateRequest:
-      type: object
-      properties:
-        verification:
-          type: string
-          format: uuid
-          description: ID of the verification used to initialize the session.
-        configuration:
-          $ref: '#/components/schemas/ClientSessionCreateConfiguration'
-      required:
-      - verification
     ClientSession:
       type: object
       description: Client connection session object.
@@ -163,6 +152,20 @@ components:
           - payroll
           - banking
           description: Source of connection data.
+    ClientSessionCreateRequest:
+      type: object
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: ID of the verification used to initialize the session.
+        configuration:
+          $ref: '#/components/schemas/ClientSessionCreateConfiguration'
+      required:
+      - verification
+    ClientSessionConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
   securitySchemes:
     basicAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Webhooks API
+  title: Argyle Webhooks API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -110,8 +110,69 @@ paths:
                           officer_email: john.doe@mortgage.com
                         billing:
                           cost_center: '5'
+      operationId: postPartnersV2Webhooks
+      x-operation-id-source: derived
 components:
   schemas:
+    PartnerVerificationWebhookMessage:
+      type: object
+      properties:
+        event:
+          type: string
+          description: '`verifications.updated`'
+          example: verifications.updated
+        name:
+          type: string
+          description: Name used for the webhook subscription.
+        data:
+          type: object
+          properties:
+            user:
+              type: string
+              format: uuid
+              description: ID of the user.
+              example: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+            verification:
+              type: string
+              format: uuid
+              description: ID of the verification.
+              example: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
+            client:
+              type: string
+              format: uuid
+              description: ID of the client.
+              example: 39096494-45c8-4fd8-9454-3d1cb2d62db7
+            resource:
+              $ref: '#/components/schemas/PartnerVerification'
+    PartnerVerificationCreationFailedContext:
+      type: object
+      properties:
+        user:
+          type: string
+          format: uuid
+          description: ID of the user.
+          example: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        attempted_at:
+          type: string
+          format: date-time
+          description: Time when Argyle attempted to create the verification.
+          example: '2023-03-09T16:22:06.081Z'
+        channel:
+          type: string
+          description: Channel where verification creation was attempted.
+          example: encompass
+        data_source:
+          type: string
+          description: Data source requested for the verification.
+          example: banking
+        report_type:
+          type: string
+          description: Report type requested for the verification.
+          example: voa
+        loan:
+          $ref: '#/components/schemas/PartnerVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/PartnerVerificationBilling'
     PartnerVerificationReportConfiguration:
       type: object
       description: Optional banking report configurations.
@@ -161,145 +222,6 @@ components:
           description: Include up to `5` custom objects in the report metadata. Often used for identifying information.
           items:
             $ref: '#/components/schemas/PartnerReportCustomField'
-    PartnerReportCustomField:
-      type: object
-      description: Custom field returned in report JSON as a pass-through value.
-      properties:
-        label:
-          type: string
-          description: Custom field name.
-        value:
-          type: string
-          description: Custom field value.
-        shown:
-          type: boolean
-          description: Show custom field on report PDF.
-    PartnerWebhookSubscriptionRequest:
-      type: object
-      properties:
-        events:
-          type: array
-          description: '`verifications.updated` or `verifications.creation_failed`'
-          items:
-            type: string
-            enum:
-            - verifications.updated
-            - verifications.creation_failed
-            example: verifications.updated
-        name:
-          type: string
-          example: name-for-the-webhook-subscription
-          description: Your name for the webhook subscription.
-        url:
-          type: string
-          example: https://your-webhook-backend.com
-          description: Where you want to receive webhook delivery. Argyle handles URL encoding for webhook URLs. Send the URL in its normal, unencoded form.
-        secret:
-          type: string
-          example: optional-secret
-          description: Optional secret used to verify webhooks.
-        config:
-          type: object
-          description: Optional webhook delivery configuration.
-          example:
-            include_resource: true
-      required:
-      - events
-      - name
-      - url
-    PartnerVerificationError:
-      type: object
-      description: Verification error details.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        title:
-          type: string
-          description: Error title.
-        message:
-          type: string
-          description: Error message.
-        resources:
-          type: array
-          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
-          items:
-            $ref: '#/components/schemas/PartnerVerificationErrorResource'
-      example:
-        code: self-employed_income
-        title: Self-employed income
-        message: Self-employed income cannot be assessed using Paystub and W2 Data.
-        resources:
-        - id: null
-          type: employments
-          name: Freelance Consulting LLC
-    PartnerVerificationEmployment:
-      type: object
-      description: Employment details for the user.
-      properties:
-        employer:
-          type: string
-          description: Name of the employer.
-        status:
-          type: string
-          enum:
-          - active
-          - previous
-          description: User's current employment status at this employer.
-        hire_date:
-          type: string
-          format: date
-          description: Employment start date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-        termination_date:
-          type: string
-          format: date
-          nullable: true
-          description: Employment end date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. `null` when employment `status` is `active`.
-    PartnerVerificationCreationFailedContext:
-      type: object
-      properties:
-        user:
-          type: string
-          format: uuid
-          description: ID of the user.
-          example: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
-        attempted_at:
-          type: string
-          format: date-time
-          description: Time when Argyle attempted to create the verification.
-          example: '2023-03-09T16:22:06.081Z'
-        channel:
-          type: string
-          description: Channel where verification creation was attempted.
-          example: encompass
-        data_source:
-          type: string
-          description: Data source requested for the verification.
-          example: banking
-        report_type:
-          type: string
-          description: Report type requested for the verification.
-          example: voa
-        loan:
-          $ref: '#/components/schemas/PartnerVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/PartnerVerificationBilling'
-    PartnerVerificationLoan:
-      type: object
-      description: Optional loan details.
-      properties:
-        number:
-          type: string
-          description: Loan number or identifier.
-        borrower_id:
-          type: string
-          description: Borrower identifier.
-        application_id:
-          type: string
-          description: Application identifier.
-        officer_email:
-          type: string
-          description: Email of the loan officer requesting the verification.
     PartnerVerificationStatus:
       type: object
       description: Verification status information.
@@ -386,43 +308,21 @@ components:
             '
           items:
             $ref: '#/components/schemas/PartnerVerificationError'
-    PartnerVerificationWebhookMessage:
+    PartnerVerificationBilling:
       type: object
+      description: Optional billing details.
       properties:
-        event:
+        cost_center:
           type: string
-          description: '`verifications.updated`'
-          example: verifications.updated
-        name:
-          type: string
-          description: Name used for the webhook subscription.
-        data:
-          type: object
-          properties:
-            user:
-              type: string
-              format: uuid
-              description: ID of the user.
-              example: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
-            verification:
-              type: string
-              format: uuid
-              description: ID of the verification.
-              example: 43a2c6c3-1e63-91e5-88e3-f9ab2dcc489b
-            client:
-              type: string
-              format: uuid
-              description: ID of the client.
-              example: 39096494-45c8-4fd8-9454-3d1cb2d62db7
-            resource:
-              $ref: '#/components/schemas/PartnerVerification'
+          description: Cost center identifier.
     PartnerVerificationErrorResource:
       type: object
       description: Verification error resource details.
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: ID of the associated resource, if available.
         type:
           type: string
@@ -430,6 +330,29 @@ components:
         name:
           type: string
           description: Resource name.
+    PartnerVerificationEmployment:
+      type: object
+      description: Employment details for the user.
+      properties:
+        employer:
+          type: string
+          description: Name of the employer.
+        status:
+          type: string
+          enum:
+          - active
+          - previous
+          description: User's current employment status at this employer.
+        hire_date:
+          type: string
+          format: date
+          description: Employment start date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+        termination_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Employment end date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. `null` when employment `status` is `active`.
     PartnerVerificationCreationFailedWebhookMessage:
       type: object
       properties:
@@ -474,6 +397,108 @@ components:
               officer_email: john.doe@mortgage.com
             billing:
               cost_center: '5'
+    PartnerVerificationLoan:
+      type: object
+      description: Optional loan details.
+      properties:
+        number:
+          type: string
+          description: Loan number or identifier.
+        borrower_id:
+          type: string
+          description: Borrower identifier.
+        application_id:
+          type: string
+          description: Application identifier.
+        officer_email:
+          type: string
+          description: Email of the loan officer requesting the verification.
+    PartnerVerificationReport:
+      type: object
+      description: Report information.
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: 'Unique ID of the report.
+
+
+            Only available when verification state is `COMPLETED`.
+
+            '
+        type:
+          type: string
+          enum:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'The type of report.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        file_url:
+          type:
+          - string
+          - 'null'
+          example: www.argyle.com/storagename/pdf
+          description: 'Download link to the report PDF.
+
+
+            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
+
+            '
+        json_url:
+          type:
+          - string
+          - 'null'
+          example: www.argyle.com/storagename/json
+          description: 'Download link to the report in JSON.
+
+
+            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
+
+            '
+        configuration:
+          $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
+    PartnerReportCustomField:
+      type: object
+      description: Custom field returned in report JSON as a pass-through value.
+      properties:
+        label:
+          type: string
+          description: Custom field name.
+        value:
+          type: string
+          description: Custom field value.
+        shown:
+          type: boolean
+          description: Show custom field on report PDF.
     PartnerVerification:
       type: object
       properties:
@@ -524,83 +549,65 @@ components:
           - banking
           - documents
           description: Source of verification data.
-    PartnerVerificationReport:
+    PartnerVerificationError:
       type: object
-      description: Report information.
+      description: Verification error details.
       properties:
-        id:
+        code:
           type: string
-          format: uuid
-          nullable: true
-          description: 'Unique ID of the report.
-
-
-            Only available when verification state is `COMPLETED`.
-
-            '
-        type:
+          description: Error code.
+        title:
           type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'The type of report.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        file_url:
+          description: Error title.
+        message:
           type: string
-          nullable: true
-          example: www.argyle.com/storagename/pdf
-          description: 'Download link to the report PDF.
-
-
-            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
-
-            '
-        json_url:
-          type: string
-          nullable: true
-          example: www.argyle.com/storagename/json
-          description: 'Download link to the report in JSON.
-
-
-            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
-
-            '
-        configuration:
-          $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
-    PartnerVerificationBilling:
+          description: Error message.
+        resources:
+          type: array
+          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
+          items:
+            $ref: '#/components/schemas/PartnerVerificationErrorResource'
+      example:
+        code: self-employed_income
+        title: Self-employed income
+        message: Self-employed income cannot be assessed using Paystub and W2 Data.
+        resources:
+        - id: null
+          type: employments
+          name: Freelance Consulting LLC
+    PartnerWebhookSubscriptionRequest:
       type: object
-      description: Optional billing details.
       properties:
-        cost_center:
+        events:
+          type: array
+          description: '`verifications.updated` or `verifications.creation_failed`'
+          items:
+            type: string
+            enum:
+            - verifications.updated
+            - verifications.creation_failed
+            example: verifications.updated
+        name:
           type: string
-          description: Cost center identifier.
+          example: name-for-the-webhook-subscription
+          description: Your name for the webhook subscription.
+        url:
+          type: string
+          example: https://your-webhook-backend.com
+          description: Where you want to receive webhook delivery. Argyle handles URL encoding for webhook URLs. Send the URL in its normal, unencoded form.
+        secret:
+          type: string
+          example: optional-secret
+          description: Optional secret used to verify webhooks.
+        config:
+          type: object
+          description: Optional webhook delivery configuration.
+          example:
+            include_resource: true
+      required:
+      - events
+      - name
+      - url
   securitySchemes:
     basicAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Payroll Documents API
+  title: Argyle Payroll Documents API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -54,6 +54,8 @@ paths:
                 metadata: {}
       tags:
       - Payroll Documents
+      operationId: getV2PayrollDocumentsById
+      x-operation-id-source: derived
   /v2/payroll-documents:
     get:
       summary: List all payroll documents
@@ -114,14 +116,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -161,6 +165,8 @@ paths:
                   metadata: {}
       tags:
       - Payroll Documents
+      operationId: getV2PayrollDocuments
+      x-operation-id-source: derived
 components:
   schemas:
     PayrollDocument:
@@ -473,7 +479,9 @@ components:
               type: integer
               description: Number of pages scanned.
             error:
-              type: string
+              type:
+              - string
+              - 'null'
               description: "An error was encountered during document retrieval.\n\n- **`invalid_document`**: The document was empty, cropped, missing required fields, or otherwise incomplete.  \n- **`type_mismatch`**: The document does not match the classified type.  \n- **`unrecognized_document_type`**: The document could not be classified.  \n- **`unsupported_document_type`**: The document type is not supported.  \n- **`unsupported_document_subtype`**: The document sub-type (e.g., 1099-C) is not supported.  \n- **`unknown`**: An unknown issue occurred. The Argyle team will automatically be notified and will investigate.  \n"
               enum:
               - invalid_document
@@ -482,7 +490,6 @@ components:
               - unsupported_document_type
               - unsupported_document_subtype
               - unknown
-              nullable: true
         metadata:
           type: object
           description: Additional, non-categorized information.

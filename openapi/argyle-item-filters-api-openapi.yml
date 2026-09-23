@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Item Filters API
+  title: Argyle Item Filters API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -21,7 +21,24 @@ paths:
   /v2/item-filters:
     post:
       summary: Create an Item filter
-      description: "Filters are applied to properties of the `field_coverage` object of [Items](/api-reference/items#object) using the comparison operators below. You can also filter Items by their `status` property using the `eq` operator.\n\nThe name and ID of the new Item filter are returned in the response, which can be used as a query parameter when [listing Items](/api-reference/items#list).\n\n## Comparison operators\n\n`eq` — equals  \n`gt` — greater than  \n`gte` — greater than or equal to  \n`lt` — less than  \n`lte` — less than or equal to\n"
+      description: 'Filters are applied to properties of the `field_coverage` object of Items using the comparison operators below. You can also filter Items by their `status` property using the `eq` operator.
+
+
+        The name and ID of the new Item filter are returned in the response, which can be used as a query parameter when listing Items.
+
+
+        ## Comparison operators
+
+
+        `eq` — equals
+
+        `gt` — greater than
+
+        `gte` — greater than or equal to
+
+        `lt` — less than
+
+        `lte` — less than or equal to'
       requestBody:
         required: true
         content:
@@ -68,6 +85,8 @@ paths:
                     example: Key paystub fields supported
       tags:
       - Item Filters
+      operationId: postV2ItemFilters
+      x-operation-id-source: derived
     get:
       summary: List all Item filters
       description: Returns a paginated list of all Item filters.
@@ -93,14 +112,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -138,6 +159,8 @@ paths:
                                 eq: true
       tags:
       - Item Filters
+      operationId: getV2ItemFilters
+      x-operation-id-source: derived
   /v2/item-filters/{id}:
     get:
       summary: Retrieve an Item filter
@@ -182,6 +205,8 @@ paths:
                               eq: true
       tags:
       - Item Filters
+      operationId: getV2ItemFiltersById
+      x-operation-id-source: derived
     put:
       summary: Replace an Item filter
       description: Replaces the filters of an Item filter with a new set of filters.
@@ -244,6 +269,8 @@ paths:
                     example: Key paystub fields supported
       tags:
       - Item Filters
+      operationId: putV2ItemFiltersById
+      x-operation-id-source: derived
     delete:
       summary: Delete an Item filter
       description: Deletes an Item filter.
@@ -260,6 +287,8 @@ paths:
           description: '204 status code: No content.'
       tags:
       - Item Filters
+      operationId: deleteV2ItemFiltersById
+      x-operation-id-source: derived
 components:
   securitySchemes:
     basicAuth:

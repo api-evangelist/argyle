@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Argyle Accounts API
   version: '2.0'
@@ -106,14 +106,14 @@ paths:
                   status: enabled
       tags:
       - Accounts
+      operationId: getV2AccountsById
+      x-operation-id-source: derived
     delete:
       summary: Delete an account
       description: 'Deletes an account object.
 
 
-        <Warning>**Caution** - Deleting an account object will delete all resources associated with the account, such as paystubs or uploaded documents.</Warning>
-
-        '
+        **Caution** - Deleting an account object will delete all resources associated with the account, such as paystubs or uploaded documents.'
       parameters:
       - in: path
         name: id
@@ -127,6 +127,8 @@ paths:
           description: '204 status code: No content.'
       tags:
       - Accounts
+      operationId: deleteV2AccountsById
+      x-operation-id-source: derived
   /v2/accounts:
     get:
       summary: List all accounts
@@ -172,14 +174,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -284,10 +288,34 @@ paths:
                     status: idle
       tags:
       - Accounts
+      operationId: getV2Accounts
+      x-operation-id-source: derived
   /v2/accounts/{id}/disable-ongoing-refresh:
     post:
       summary: Disable account updates
-      description: "Disables `ongoing_refresh` for an individual account.\n\nTo access this feature, reach out to our team for assistance.\n\n*   Link will display the [ongoing\\_refresh\\_disabled](/api-reference/account-connection-errors#ongoingrefreshdisabled) account connection error when users return to view this account.\n*   Changes the account's [`ongoing_refresh.status`](/api-reference/accounts#object-ongoing_refresh) value from `enabled` to `disabled` and causes the [`accounts.updated`](/api-reference/accounts-webhooks/updated) webhook to be sent.\n\n<br/>\n\nAfter `ongoing_refresh` is disabled:\n\n*   The specified account will no longer receive [data updates](/overview/ongoing-refresh).\n*   If the user returns to Link and [reconnects the account](/workflows/reconnecting-accounts#reconnecting-disconnected-accounts):\n    1.  The account will immediately be re-scanned and its data updated.\n    2.  The account will be billed as a new account connection.\n    3.  Ongoing refresh will be re-enabled for the account.\n"
+      description: 'Disables `ongoing_refresh` for an individual account.
+
+
+        To access this feature, reach out to our team for assistance.
+
+
+        * Link will display the ongoing\_refresh\_disabled account connection error when users return to view this account.
+
+        * Changes the account''s `ongoing_refresh.status` value from `enabled` to `disabled` and causes the `accounts.updated` webhook to be sent.
+
+
+        After `ongoing_refresh` is disabled:
+
+
+        * The specified account will no longer receive data updates.
+
+        * If the user returns to Link and reconnects the account:
+
+        1. The account will immediately be re-scanned and its data updated.
+
+        2. The account will be billed as a new account connection.
+
+        3. Ongoing refresh will be re-enabled for the account.'
       parameters:
       - in: path
         name: id
@@ -301,6 +329,8 @@ paths:
           description: '200 status code: Request succeeded.'
       tags:
       - Accounts
+      operationId: postV2AccountsByIdDisableOngoingRefresh
+      x-operation-id-source: derived
 components:
   schemas:
     AvailabilityItem:
@@ -612,43 +642,33 @@ components:
             shifts:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             gigs:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             paystubs:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             payroll_documents:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             identities:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             ratings:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             vehicles:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             deposit_destinations:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             user_forms:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
             user_uploads:
               allOf:
               - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
         ongoing_refresh:
           type: object
           description: Object containing the account's `ongoing_refresh` status (whether the account will be updated with new data after each [data refresh](/overview/ongoing-refresh#refresh-frequency)).

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Partners API
+  title: Argyle Partners API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -61,6 +61,8 @@ paths:
                 id: 7a614711-066f-4b6b-b319-4c6236b5acc1
       tags:
       - Partners
+      operationId: postPartnersV2Users
+      x-operation-id-source: derived
   /partners/v2/users/{id}:
     patch:
       summary: Update a user
@@ -124,6 +126,8 @@ paths:
                 external_id: ABC
       tags:
       - Partners
+      operationId: patchPartnersV2UsersById
+      x-operation-id-source: derived
   /partners/v2/sessions:
     post:
       summary: Create a session
@@ -133,7 +137,7 @@ paths:
         Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
 
 
-        <Note>This endpoint is for payroll and banking verifications only.</Note>'
+        This endpoint is for payroll and banking verifications only.'
       requestBody:
         required: true
         content:
@@ -197,17 +201,15 @@ paths:
                     data_source: banking
       tags:
       - Partners
+      operationId: postPartnersV2Sessions
+      x-operation-id-source: derived
   /partners/v2/verifications:
     post:
       summary: Order a verification
       description: 'Orders a new verification.
 
 
-        <Note>
-
-        [Create a user](/api-reference/partners-verifications-guide#create-a-user) or update an existing user with the required details before ordering payroll, banking, or document verifications.
-
-        </Note>'
+        Create a user or update an existing user with the required details before ordering payroll, banking, or document verifications.'
       requestBody:
         required: true
         content:
@@ -221,12 +223,12 @@ paths:
                   user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
                   report:
                     type: voie
-                  loan: &id001
+                  loan:
                     number: '1234'
                     borrower_id: ABC789
                     application_id: '2121313'
                     officer_email: john.doe@mortgage.com
-                  billing: &id002
+                  billing:
                     cost_center: '5'
               banking:
                 summary: Example Request (Banking)
@@ -241,8 +243,13 @@ paths:
                       - label: loanID
                         value: '12345'
                         shown: true
-                  loan: *id001
-                  billing: *id002
+                  loan:
+                    number: '1234'
+                    borrower_id: ABC789
+                    application_id: '2121313'
+                    officer_email: john.doe@mortgage.com
+                  billing:
+                    cost_center: '5'
               documents:
                 summary: Example Request (Documents)
                 value:
@@ -254,8 +261,13 @@ paths:
                     termination_date: null
                   report:
                     type: doc-voi-mortgage
-                  loan: *id001
-                  billing: *id002
+                  loan:
+                    number: '1234'
+                    borrower_id: ABC789
+                    application_id: '2121313'
+                    officer_email: john.doe@mortgage.com
+                  billing:
+                    cost_center: '5'
       responses:
         '200':
           description: ''
@@ -283,8 +295,13 @@ paths:
                       file_url: null
                       json_url: null
                     employments: []
-                    loan: *id001
-                    billing: *id002
+                    loan:
+                      number: '1234'
+                      borrower_id: ABC789
+                      application_id: '2121313'
+                      officer_email: john.doe@mortgage.com
+                    billing:
+                      cost_center: '5'
                     data_source: payroll
                 banking:
                   summary: Example Response (Banking)
@@ -312,8 +329,13 @@ paths:
                           value: '12345'
                           shown: true
                     employments: []
-                    loan: *id001
-                    billing: *id002
+                    loan:
+                      number: '1234'
+                      borrower_id: ABC789
+                      application_id: '2121313'
+                      officer_email: john.doe@mortgage.com
+                    billing:
+                      cost_center: '5'
                     data_source: banking
                 documents:
                   summary: Example Response (Documents)
@@ -338,11 +360,18 @@ paths:
                       status: active
                       hire_date: '2023-02-01'
                       termination_date: null
-                    loan: *id001
-                    billing: *id002
+                    loan:
+                      number: '1234'
+                      borrower_id: ABC789
+                      application_id: '2121313'
+                      officer_email: john.doe@mortgage.com
+                    billing:
+                      cost_center: '5'
                     data_source: documents
       tags:
       - Partners
+      operationId: postPartnersV2Verifications
+      x-operation-id-source: derived
     get:
       summary: List all verifications
       description: Returns a paginated list of all verification objects.
@@ -428,12 +457,14 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -501,6 +532,8 @@ paths:
                   data_source: banking
       tags:
       - Partners
+      operationId: getPartnersV2Verifications
+      x-operation-id-source: derived
   /partners/v2/verifications/refresh:
     post:
       summary: Refresh a verification
@@ -521,12 +554,12 @@ paths:
                   user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
                   report:
                     type: voie
-                  loan: &id003
+                  loan:
                     number: '1234'
                     borrower_id: ABC789
                     application_id: '2121313'
                     officer_email: john.doe@mortgage.com
-                  billing: &id004
+                  billing:
                     cost_center: '5'
               banking:
                 summary: Example Request (Banking)
@@ -536,16 +569,26 @@ paths:
                     type: voa
                     configuration:
                       from_date: '2025-01-01T00:00:00Z'
-                  loan: *id003
-                  billing: *id004
+                  loan:
+                    number: '1234'
+                    borrower_id: ABC789
+                    application_id: '2121313'
+                    officer_email: john.doe@mortgage.com
+                  billing:
+                    cost_center: '5'
               documents:
                 summary: Example Request (Documents)
                 value:
                   user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
                   report:
                     type: doc-voi-mortgage
-                  loan: *id003
-                  billing: *id004
+                  loan:
+                    number: '1234'
+                    borrower_id: ABC789
+                    application_id: '2121313'
+                    officer_email: john.doe@mortgage.com
+                  billing:
+                    cost_center: '5'
       responses:
         '200':
           description: ''
@@ -573,8 +616,13 @@ paths:
                       file_url: null
                       json_url: null
                     employments: []
-                    loan: *id003
-                    billing: *id004
+                    loan:
+                      number: '1234'
+                      borrower_id: ABC789
+                      application_id: '2121313'
+                      officer_email: john.doe@mortgage.com
+                    billing:
+                      cost_center: '5'
                     data_source: payroll
                 banking:
                   summary: Example Response (Banking)
@@ -597,8 +645,13 @@ paths:
                       configuration:
                         from_date: '2025-01-01T00:00:00Z'
                     employments: []
-                    loan: *id003
-                    billing: *id004
+                    loan:
+                      number: '1234'
+                      borrower_id: ABC789
+                      application_id: '2121313'
+                      officer_email: john.doe@mortgage.com
+                    billing:
+                      cost_center: '5'
                     data_source: banking
                 documents:
                   summary: Example Response (Documents)
@@ -619,11 +672,18 @@ paths:
                       file_url: null
                       json_url: null
                     employments: []
-                    loan: *id003
-                    billing: *id004
+                    loan:
+                      number: '1234'
+                      borrower_id: ABC789
+                      application_id: '2121313'
+                      officer_email: john.doe@mortgage.com
+                    billing:
+                      cost_center: '5'
                     data_source: documents
       tags:
       - Partners
+      operationId: postPartnersV2VerificationsRefresh
+      x-operation-id-source: derived
   /partners/v2/verifications/{id}:
     get:
       summary: Retrieve a verification
@@ -677,18 +737,14 @@ paths:
                 data_source: banking
       tags:
       - Partners
+      operationId: getPartnersV2VerificationsById
+      x-operation-id-source: derived
     patch:
       summary: Update a verification
       description: 'Updates verification metadata or employments.
 
 
-        <Note>
-
-        After a verification is updated, it will re-enter the `PROCESSING` state.
-
-        </Note>
-
-        '
+        After a verification is updated, it will re-enter the `PROCESSING` state.'
       parameters:
       - name: id
         in: path
@@ -844,19 +900,15 @@ paths:
                     data_source: documents
       tags:
       - Partners
+      operationId: patchPartnersV2VerificationsById
+      x-operation-id-source: derived
   /partners/v2/verifications/{id}/cancel:
     post:
       summary: Cancel a verification
       description: 'Cancels a verification order.
 
 
-        <Note>
-
-        Only verifications in the `PAUSED` state can be cancelled.
-
-        </Note>
-
-        '
+        Only verifications in the `PAUSED` state can be cancelled.'
       parameters:
       - name: id
         in: path
@@ -903,6 +955,8 @@ paths:
                 data_source: documents
       tags:
       - Partners
+      operationId: postPartnersV2VerificationsByIdCancel
+      x-operation-id-source: derived
   /partners/v2/user-uploads:
     post:
       summary: Upload a document
@@ -946,6 +1000,8 @@ paths:
           $ref: '#/components/responses/PartnerUserUploadResponse'
       tags:
       - Partners
+      operationId: postPartnersV2UserUploads
+      x-operation-id-source: derived
   /partners/v2/accounts/{id}:
     get:
       summary: Retrieve an account
@@ -1034,6 +1090,8 @@ paths:
                   status: enabled
       tags:
       - Partners
+      operationId: getPartnersV2AccountsById
+      x-operation-id-source: derived
   /partners/v2/accounts:
     get:
       summary: List all accounts
@@ -1080,14 +1138,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -1192,6 +1252,8 @@ paths:
                     status: idle
       tags:
       - Partners
+      operationId: getPartnersV2Accounts
+      x-operation-id-source: derived
   /partners/v2/payroll-documents/{id}:
     get:
       summary: Retrieve a payroll document
@@ -1228,6 +1290,8 @@ paths:
                 metadata: {}
       tags:
       - Partners
+      operationId: getPartnersV2PayrollDocumentsById
+      x-operation-id-source: derived
   /partners/v2/payroll-documents:
     get:
       summary: List all payroll documents
@@ -1295,14 +1359,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -1342,6 +1408,8 @@ paths:
                   metadata: {}
       tags:
       - Partners
+      operationId: getPartnersV2PayrollDocuments
+      x-operation-id-source: derived
   /partners/v2/paystubs/{id}:
     get:
       summary: Retrieve a paystub
@@ -1365,6 +1433,8 @@ paths:
                 $ref: '#/components/schemas/PartnerPaystub'
       tags:
       - Partners
+      operationId: getPartnersV2PaystubsById
+      x-operation-id-source: derived
   /partners/v2/paystubs:
     get:
       summary: List all paystubs
@@ -1432,14 +1502,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -1447,6 +1519,8 @@ paths:
                       $ref: '#/components/schemas/PartnerPaystub'
       tags:
       - Partners
+      operationId: getPartnersV2Paystubs
+      x-operation-id-source: derived
   /partners/v2/receipts:
     post:
       summary: Generate a receipt
@@ -1506,8 +1580,110 @@ paths:
                     '
       tags:
       - Partners
+      operationId: postPartnersV2Receipts
+      x-operation-id-source: derived
 components:
   schemas:
+    GrossPay:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name or description of the gross pay line item.
+        type:
+          type: string
+          enum:
+          - base
+          - pto
+          - overtime
+          - commission
+          - bonus
+          - disability
+          - benefits
+          - tips
+          - stock
+          - other
+          description: 'Categorized type of gross pay, based on `name`. Used in `gross_pay_list_totals`.
+
+            - `base`
+
+            - `pto`
+
+            - `overtime`
+
+            - `commission`
+
+            - `bonus`
+
+            - `disability`
+
+            - `benefits`
+
+            - `tips`
+
+            - `stock`
+
+            - `other`
+
+            '
+        start_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
+        end_date:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
+        rate:
+          type: string
+          description: Hourly rate of gross pay earnings for this line item.
+        hours:
+          type: string
+          description: Hours worked for this line item.
+        amount:
+          type: string
+          description: Gross pay earned from this line item.
+        hours_ytd:
+          type: string
+          description: Total hours worked year-to-date related to this gross pay line item, including this paystub's work period.
+        amount_ytd:
+          type: string
+          description: Total gross pay earned year-to-date related to this gross pay line item, including this paystub.
+    Tax:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount of the tax withholding.
+        name:
+          type: string
+          description: Name or description of the tax withholding.
+        type:
+          type: string
+          enum:
+          - federal
+          - state
+          - local
+          - fica
+          - other
+          description: 'Payroll tax type.
+
+            - `federal`
+
+            - `state`
+
+            - `local`
+
+            - `fica`
+
+            - `other`
+
+            '
+        amount_ytd:
+          type: string
+          description: 'Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.
+
+            '
     PartnerVerificationReportConfiguration:
       type: object
       description: Optional banking report configurations.
@@ -1557,6 +1733,30 @@ components:
           description: Include up to `5` custom objects in the report metadata. Often used for identifying information.
           items:
             $ref: '#/components/schemas/PartnerReportCustomField'
+    Deduction:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount of the deduction.
+        name:
+          type: string
+          description: Name or description of the deduction.
+        tax_classification:
+          type: string
+          enum:
+          - pre_tax
+          - post_tax
+          description: 'Tax classification.
+
+            - `pre_tax`
+
+            - `post_tax`
+
+            '
+        amount_ytd:
+          type: string
+          description: Total amount deducted year-to-date, including the amounts from this paystub.
     Destination:
       type: object
       properties:
@@ -1592,914 +1792,6 @@ components:
               type: string
               description: Card number.
           description: Details for payout card destinations.
-    PartnerAddress:
-      type: object
-      description: Address of the user.
-      properties:
-        city:
-          type: string
-          description: Name of the city, town, district, or similar regional entity.
-        line1:
-          type: string
-          description: Address-Line 1, usually street address or P.O. Box information.
-        line2:
-          type: string
-          nullable: true
-          description: Address-Line 2, usually the apartment or unit number.
-        state:
-          type: string
-          description: State, county, province, region, or equivalent.
-        country:
-          type: string
-          description: Two-letter country code (ISO 3166-1 alpha-2 format).
-        postal_code:
-          type: string
-          nullable: true
-          description: Zip code, or equivalent.
-    PartnerVerificationEmployment:
-      type: object
-      description: Employment details for the user.
-      properties:
-        employer:
-          type: string
-          description: Name of the employer.
-        status:
-          type: string
-          enum:
-          - active
-          - previous
-          description: User's current employment status at this employer.
-        hire_date:
-          type: string
-          format: date
-          description: Employment start date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-        termination_date:
-          type: string
-          format: date
-          nullable: true
-          description: Employment end date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. `null` when employment `status` is `active`.
-    PartnerOpenBankingEndUser:
-      type: object
-      description: Contains details about the person or entity making the lending decision.
-      properties:
-        name:
-          type: string
-          description: Name of the lender or entity.
-        address:
-          type: string
-          description: Street address or P.O. Box information (include apartment or unit numbers).
-        city:
-          type: string
-          description: Name of the city, town, district, or similar regional entity.
-        state:
-          type: string
-          description: State, county, province, region, or equivalent.
-        zip:
-          type: string
-          description: Zip code, or equivalent.
-        phone:
-          type: string
-          description: Phone number of the lender or entity.
-    PartnerOpenBanking:
-      type: object
-      description: Banking-specific user metadata.
-      properties:
-        end_user:
-          $ref: '#/components/schemas/PartnerOpenBankingEndUser'
-    PartnerVerificationCreateReportRequest:
-      type: object
-      description: Report request configuration.
-      properties:
-        type:
-          type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'The type of report to generate.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        configuration:
-          allOf:
-          - $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
-          - description: Optional banking report configurations.
-      required:
-      - type
-    PartnerBirthDate:
-      type: object
-      description: Date of birth in year-month-day format.
-      properties:
-        year:
-          type: integer
-          description: Birth year (1900 or later).
-        month:
-          type: integer
-          description: Birth month (between 1 and 12).
-        day:
-          type: integer
-          description: Birth day (between 1 and 31).
-    PartnerVerificationRefreshReportRequest:
-      type: object
-      description: Report request configuration for refresh requests.
-      properties:
-        type:
-          type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'Payroll, banking, or Doc VOI report type to generate.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        configuration:
-          allOf:
-          - $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
-          - description: Optional banking report configurations.
-      required:
-      - type
-    PartnerVerificationEmploymentRequest:
-      allOf:
-      - $ref: '#/components/schemas/PartnerVerificationEmployment'
-      - type: object
-        required:
-        - employer
-        - status
-        - hire_date
-    PartnerCreateUserResponse:
-      type: object
-      description: Response returned after creating a partner user.
-      properties:
-        user_token:
-          type: string
-          description: Token associated with the created user.
-        id:
-          type: string
-          format: uuid
-          description: Unique ID of the user.
-    PartnerUser:
-      type: object
-      description: Partner user object.
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique ID of the user.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user was created.
-        items_connected:
-          type: array
-          items:
-            type: string
-          description: Items the user has connected through Link.
-        employers_connected:
-          type: array
-          items:
-            type: string
-          description: Employers associated with the connected items.
-        first_name:
-          type: string
-          description: User first name.
-        last_name:
-          type: string
-          description: User last name.
-        email:
-          type: string
-          description: User email address.
-        phone_number:
-          type: string
-          description: User phone number.
-        ssn:
-          type: string
-          description: User Social Security number.
-        address:
-          $ref: '#/components/schemas/PartnerAddress'
-        birth_date:
-          $ref: '#/components/schemas/PartnerBirthDate'
-        external_metadata:
-          type: object
-          description: Additional metadata for internal partner workflows.
-          additionalProperties: true
-        external_id:
-          type: string
-          nullable: true
-          description: External identifier for your internal mapping.
-    PartnerVerificationRefreshRequest:
-      type: object
-      properties:
-        user:
-          type: string
-          format: uuid
-          description: User ID for the verification refresh.
-        report:
-          $ref: '#/components/schemas/PartnerVerificationRefreshReportRequest'
-        loan:
-          $ref: '#/components/schemas/PartnerVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/PartnerVerificationBilling'
-      required:
-      - user
-      - report
-    PartnerSessionCreateRequest:
-      type: object
-      properties:
-        verification:
-          type: string
-          format: uuid
-          description: ID of the verification used to initialize the session.
-        configuration:
-          $ref: '#/components/schemas/PartnerSessionCreateConfiguration'
-      required:
-      - verification
-    PartnerUserUpdateRequest:
-      type: object
-      properties:
-        first_name:
-          type: string
-          description: User first name.
-        last_name:
-          type: string
-          description: User last name.
-        email:
-          type: string
-          description: User email address.
-        phone_number:
-          type: string
-          description: User phone number.
-        ssn:
-          type: string
-          description: User Social Security number.
-        address:
-          $ref: '#/components/schemas/PartnerAddress'
-        birth_date:
-          $ref: '#/components/schemas/PartnerBirthDate'
-        external_metadata:
-          type: object
-          description: Additional metadata for internal partner workflows.
-          additionalProperties: true
-          properties:
-            suppress_verification:
-              type: boolean
-              description: Set to `true` for banking and document verification workflows.
-        open_banking:
-          $ref: '#/components/schemas/PartnerOpenBanking'
-        external_id:
-          type: string
-          nullable: true
-          description: External identifier for your internal mapping.
-    PartnerVerificationErrorResource:
-      type: object
-      description: Verification error resource details.
-      properties:
-        id:
-          type: string
-          nullable: true
-          description: ID of the associated resource, if available.
-        type:
-          type: string
-          description: Resource type.
-        name:
-          type: string
-          description: Resource name.
-    PartnerSession:
-      type: object
-      description: Partner connection session object.
-      properties:
-        verification:
-          type: string
-          format: uuid
-          description: Verification ID associated with the session.
-        configuration:
-          $ref: '#/components/schemas/PartnerSessionConfiguration'
-        link:
-          type: string
-          description: URL used to launch the payroll or banking frontend experience. For payroll, use it as `connectUrl` when initializing the [Web SDK](/link/initialization/web#initialize-with-connecturl); the returned session URL already determines whether the session runs in Sandbox or Production. Alternatively, open it directly for [Hosted Link](/link/initialization/hosted-link). For banking, use it to launch either an Embedded banking session or a Hosted banking session. Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
-        data_source:
-          type: string
-          enum:
-          - payroll
-          - banking
-          description: Source of connection data.
-    PartnerVerificationReport:
-      type: object
-      description: Report information.
-      properties:
-        id:
-          type: string
-          format: uuid
-          nullable: true
-          description: 'Unique ID of the report.
-
-
-            Only available when verification state is `COMPLETED`.
-
-            '
-        type:
-          type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'The type of report.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        file_url:
-          type: string
-          nullable: true
-          example: www.argyle.com/storagename/pdf
-          description: 'Download link to the report PDF.
-
-
-            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
-
-            '
-        json_url:
-          type: string
-          nullable: true
-          example: www.argyle.com/storagename/json
-          description: 'Download link to the report in JSON.
-
-
-            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
-
-            '
-        configuration:
-          $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
-    FilingStatus:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - federal
-          - state
-          - local
-          description: 'Tax authority.
-
-            - `federal`
-
-            - `state`
-
-            - `local`
-
-            '
-        location:
-          type: string
-          description: 'Local jurisdiction. Values depend on `type`.
-
-            - if type is `federal` — `null`
-
-            - if type is `state` — state abbreviation code
-
-            - if type is `local` — city name or area code
-
-            '
-        status:
-          type: string
-          description: Marital status.
-    PartnerVerificationBilling:
-      type: object
-      description: Optional billing details.
-      properties:
-        cost_center:
-          type: string
-          description: Cost center identifier.
-    PartnerVerificationCreateRequest:
-      type: object
-      description: 'Request body for ordering a verification.
-
-
-        - `user` and `report` are required for all requests.
-
-        - `employments` is required for document verifications only.
-
-        - `report.configuration` is used for banking verifications only.'
-      properties:
-        user:
-          type: string
-          format: uuid
-          description: User ID for the verification.
-        employments:
-          type: array
-          description: 'List of employments for the user.
-
-
-            Required for document verifications only. Not used for payroll or banking verifications.'
-          items:
-            $ref: '#/components/schemas/PartnerVerificationEmploymentRequest'
-        report:
-          $ref: '#/components/schemas/PartnerVerificationCreateReportRequest'
-        loan:
-          $ref: '#/components/schemas/PartnerVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/PartnerVerificationBilling'
-      required:
-      - user
-      - report
-    PartnerReportCustomField:
-      type: object
-      description: Custom field returned in report JSON as a pass-through value.
-      properties:
-        label:
-          type: string
-          description: Custom field name.
-        value:
-          type: string
-          description: Custom field value.
-        shown:
-          type: boolean
-          description: Show custom field on report PDF.
-    Account:
-      type: object
-      example:
-        id: 0187c66e-e7e5-811c-b006-2232f00f426a
-        user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
-        employers:
-        - Whole Goods
-        item: item_123456789
-        source: thepayrollcompany
-        created_at: '2023-01-30T12:53:22.561Z'
-        updated_at: '2023-01-30T12:55:04.478Z'
-        scanned_at: '2023-01-30T12:55:04.016Z'
-        connection:
-          status: connected
-          error_code: null
-          error_message: null
-          updated_at: '2023-01-30T12:53:25.561Z'
-        direct_deposit_switch:
-          status: success
-          error_code: null
-          error_message: null
-          updated_at: '2023-01-30T12:55:03.478Z'
-        availability:
-          shifts:
-            status: synced
-            updated_at: '2023-01-30T12:55:03Z'
-            available_count: 94
-            available_from: '2020-04-11T12:53:27Z'
-            available_to: '2023-01-25T00:00:00Z'
-          gigs:
-            status: synced
-            updated_at: '2023-01-30T12:55:03Z'
-            available_count: 217
-            available_from: '2020-04-11T12:53:27Z'
-            available_to: '2023-01-25T00:00:00Z'
-          paystubs:
-            status: synced
-            updated_at: '2023-01-30T12:55:03Z'
-            available_count: 68
-            available_from: '2020-05-11T12:53:27Z'
-            available_to: '2023-01-29T23:59:59Z'
-          payroll_documents:
-            status: synced
-            updated_at: '2023-01-30T12:53:44.308Z'
-          identities:
-            status: synced
-            updated_at: '2023-01-30T12:53:44.028Z'
-          ratings:
-            status: synced
-            updated_at: '2023-01-30T12:55:03.359Z'
-          vehicles:
-            status: synced
-            updated_at: '2023-01-30T12:53:44.321Z'
-          deposit_destinations:
-            status: synced
-            updated_at: '2023-01-30T12:53:42.586Z'
-          user_forms:
-            status: in_progress
-            updated_at: '2023-01-30T12:53:42.586Z'
-            available_count: 0
-            files_count: 1
-            in_progress_count: 1
-          user_uploads:
-            status: synced
-            updated_at: '2023-01-30T12:54:41.621Z'
-            files_count: 2
-            in_progress_count: 0
-        ongoing_refresh:
-          status: enabled
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique ID of the connected payroll account.
-        user:
-          type: string
-          format: uuid
-          description: ID of the user that connected the account.
-        employers:
-          type: array
-          items:
-            type: string
-          description: 'Employers associated with the account.
-
-
-            A single employer is usually returned per account. Exceptions can occur when an LLC and Co. version of the same employer is returned.
-
-            '
-        item:
-          type: string
-          description: ID of the Item in Link through which the account was connected.
-        source:
-          type: string
-          description: Payroll data source. Typically a third-party payroll system unless the employer uses an in-house system.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user connected the account.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last updated. An update occurs every time an account is scanned for new data, and when any values of the account object change (such as an updated connection status).
-        scanned_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last scanned for new data. A `null` value indicates the account was never connected.
-        connection:
-          type: object
-          description: Object containing information about the account's connection status.
-          properties:
-            status:
-              type: string
-              enum:
-              - connecting
-              - connected
-              - error
-              description: 'Status of Argyle''s connection with the user''s payroll system.
-
-
-                - `connecting` — The user submitted new or revised login credentials through Link and Argyle is establishing the connection.
-
-                - `connected` — An account connection was successfully made. See the `availability` object for updates on initial data retrieval.
-
-                - `error` — An [account connection error](/api-reference/account-connection-errors) has occurred. Data refreshes have been paused.
-
-                '
-            error_code:
-              type: string
-              enum:
-              - account_disabled
-              - account_inaccessible
-              - account_incomplete
-              - account_nonunique
-              - account_not_found
-              - all_employers_connected
-              - auth_method_temporarily_unavailable
-              - auth_required
-              - connection_unavailable
-              - credentials_managed_by_organization
-              - existing_account_found
-              - expired_credentials
-              - full_auth_required
-              - insufficient_account_data
-              - invalid_account_type
-              - invalid_auth
-              - invalid_credentials
-              - invalid_employer_identifier
-              - invalid_login_method
-              - invalid_login_url
-              - invalid_mfa
-              - invalid_store_identifier
-              - known_employer_redirect
-              - login_attempts_exceeded
-              - login_cancelled_by_the_user
-              - login_gov_not_linked
-              - mfa_attempts_exceeded
-              - mfa_cancelled_by_the_user
-              - mfa_exhausted
-              - mfa_not_configured
-              - mfa_timeout
-              - multi_driver_account
-              - ongoing_refresh_disabled
-              - passkey_limit_reached
-              - personal_data_access_not_granted
-              - physical_mfa_unsupported
-              - platform_temporarily_unavailable
-              - platform_unavailable
-              - service_unavailable
-              - session_limit_reached
-              - system_error
-              - temporary_credentials
-              - tos_required
-              - trial_connections_exhausted
-              - trial_period_expired
-              - unrecognized_employer_email
-              - unsupported_auth_type
-              - unsupported_business_account
-              - unsupported_language
-              - unsupported_mfa_method
-              - user_action_timeout
-              description: The [account connection error](/api-reference/account-connection-errors) that occurred.
-            error_message:
-              type: string
-              description: Description of the error. Common causes and troubleshooting steps can be found in account connection errors.
-            updated_at:
-              type: string
-              format: date-time
-              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the connection status last changed.
-        direct_deposit_switch:
-          type: object
-          description: Object containing deposit switch status information.
-          properties:
-            status:
-              type: string
-              enum:
-              - idle
-              - awaiting_confirmation
-              - awaiting_user_action
-              - awaiting_connection
-              - scanning
-              - updating
-              - success
-              - error
-              description: 'Status of a deposit switch.
-
-
-                - `idle` — The deposit switch process has not started.
-
-                - `awaiting_confirmation` — The user started the deposit switch flow in Link but has not clicked "Confirm".
-
-                - `awaiting_user_action` — The user has confirmed the deposit switch but needs to complete a multi-factor authentication (MFA) step.
-
-                - `awaiting_connection` — Argyle is connecting to the user''s payroll system.
-
-                - `scanning` — Argyle is scanning the user''s existing direct deposits before initiating the deposit switch.
-
-                - `updating` — The deposit switch is in progress.
-
-                - `success` — The deposit switch was successful.
-
-                - `error` — A deposit switch error occurred, and the deposit switch could not be completed.
-
-                '
-            error_code:
-              type: string
-              enum:
-              - account_invalid
-              - account_closed
-              - account_blocked
-              - confirmation_expired
-              - confirmation_invalid
-              - confirmation_timeout
-              - deposit_account_mismatch
-              - deposit_destination_unsupported
-              - employer_unsupported
-              - employer_account_invalid
-              - employer_account_closed
-              - employer_account_blocked
-              - employer_confirmation_invalid
-              - internal_server_error
-              - invalid_request
-              - item_invalid
-              - name_mismatch
-              - payroll_account_mismatch
-              - temporarily_unavailable
-              - terminate_flow
-              - unauthorized
-              - unexpected
-              - user_input_required
-              description: The deposit switch error that occurred.
-            error_message:
-              type: string
-              description: Description of the error. Common causes and troubleshooting steps can be found in deposit switch errors.
-            updated_at:
-              type: string
-              format: date-time
-              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the deposit switch status last changed.
-        availability:
-          type: object
-          description: Object containing information on data availability for each of Argyle's data sets, and any user-uploaded documents or "can't find my income" response forms.
-          properties:
-            shifts:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            gigs:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            paystubs:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            payroll_documents:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            identities:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            ratings:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            vehicles:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            deposit_destinations:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            user_forms:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-            user_uploads:
-              allOf:
-              - $ref: '#/components/schemas/AvailabilityItem'
-              nullable: true
-        ongoing_refresh:
-          type: object
-          description: Object containing the account's `ongoing_refresh` status (whether the account will be updated with new data after each [data refresh](/overview/ongoing-refresh#refresh-frequency)).
-          properties:
-            status:
-              type: string
-              enum:
-              - enabled
-              - disabled
-              - idle
-              description: 'The account''s `ongoing_refresh` status.
-
-
-                - `idle` — This account never experienced a successful payroll connection — only uploading documents or only completing a "can''t find my income source" response form is not considered a successful payroll connection.
-
-                - `enabled` — Ongoing refresh is currently enabled for this connected payroll account.
-
-                - `disabled` — Ongoing refresh is currently disabled for this connected payroll account.
-
-
-                Ongoing refresh can be [disabled manually](/api-reference/accounts#disable) via the API for individual accounts.
-
-                '
-    PartnerVerificationUpdateRequest:
-      type: object
-      description: 'Request body for updating a verification.
-
-
-        - `loan` and `billing` can be updated for either data source.
-
-        - `employments` can only be updated when a document verification is in the `PAUSED` state.
-
-        - Updating `employments` replaces the full employments array.
-
-        '
-      properties:
-        loan:
-          $ref: '#/components/schemas/PartnerVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/PartnerVerificationBilling'
-        employments:
-          type: array
-          description: Updated list of employments for the user.
-          items:
-            $ref: '#/components/schemas/PartnerVerificationEmploymentRequest'
-    PartnerSessionConfiguration:
-      allOf:
-      - $ref: '#/components/schemas/PartnerSessionCreateConfiguration'
-    PartnerVerificationError:
-      type: object
-      description: Verification error details.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        title:
-          type: string
-          description: Error title.
-        message:
-          type: string
-          description: Error message.
-        resources:
-          type: array
-          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
-          items:
-            $ref: '#/components/schemas/PartnerVerificationErrorResource'
-      example:
-        code: self-employed_income
-        title: Self-employed income
-        message: Self-employed income cannot be assessed using Paystub and W2 Data.
-        resources:
-        - id: null
-          type: employments
-          name: Freelance Consulting LLC
-    Deduction:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Amount of the deduction.
-        name:
-          type: string
-          description: Name or description of the deduction.
-        tax_classification:
-          type: string
-          enum:
-          - pre_tax
-          - post_tax
-          description: 'Tax classification.
-
-            - `pre_tax`
-
-            - `post_tax`
-
-            '
-        amount_ytd:
-          type: string
-          description: Total amount deducted year-to-date, including the amounts from this paystub.
-    PartnerVerificationLoan:
-      type: object
-      description: Optional loan details.
-      properties:
-        number:
-          type: string
-          description: Loan number or identifier.
-        borrower_id:
-          type: string
-          description: Borrower identifier.
-        application_id:
-          type: string
-          description: Application identifier.
-        officer_email:
-          type: string
-          description: Email of the loan officer requesting the verification.
     PartnerVerificationStatus:
       type: object
       description: Verification status information.
@@ -2586,516 +1878,138 @@ components:
             '
           items:
             $ref: '#/components/schemas/PartnerVerificationError'
-    Tax:
+    PartnerVerificationErrorResource:
       type: object
+      description: Verification error resource details.
       properties:
-        amount:
-          type: string
-          description: Amount of the tax withholding.
-        name:
-          type: string
-          description: Name or description of the tax withholding.
+        id:
+          type:
+          - string
+          - 'null'
+          description: ID of the associated resource, if available.
         type:
           type: string
-          enum:
-          - federal
-          - state
-          - local
-          - fica
-          - other
-          description: 'Payroll tax type.
-
-            - `federal`
-
-            - `state`
-
-            - `local`
-
-            - `fica`
-
-            - `other`
-
-            '
-        amount_ytd:
-          type: string
-          description: 'Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.
-
-            '
-    GrossPay:
-      type: object
-      properties:
+          description: Resource type.
         name:
           type: string
-          description: Name or description of the gross pay line item.
-        type:
-          type: string
-          enum:
-          - base
-          - pto
-          - overtime
-          - commission
-          - bonus
-          - disability
-          - benefits
-          - tips
-          - stock
-          - other
-          description: 'Categorized type of gross pay, based on `name`. Used in `gross_pay_list_totals`.
-
-            - `base`
-
-            - `pto`
-
-            - `overtime`
-
-            - `commission`
-
-            - `bonus`
-
-            - `disability`
-
-            - `benefits`
-
-            - `tips`
-
-            - `stock`
-
-            - `other`
-
-            '
-        start_date:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
-        end_date:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
-        rate:
-          type: string
-          description: Hourly rate of gross pay earnings for this line item.
-        hours:
-          type: string
-          description: Hours worked for this line item.
-        amount:
-          type: string
-          description: Gross pay earned from this line item.
-        hours_ytd:
-          type: string
-          description: Total hours worked year-to-date related to this gross pay line item, including this paystub's work period.
-        amount_ytd:
-          type: string
-          description: Total gross pay earned year-to-date related to this gross pay line item, including this paystub.
-    GrossPayTotal:
+          description: Resource name.
+    PartnerVerificationEmployment:
       type: object
+      description: Employment details for the user.
       properties:
-        amount:
+        employer:
           type: string
-          description: Gross pay earned from line items of this type.
-        amount_ytd:
-          type: string
-          description: Total gross pay earned year-to-date from line items of this type, including this paystub.
-        hours:
-          type: string
-          description: Hours worked from line items of this type.
-        hours_ytd:
-          type: string
-          description: Hours worked year-to-date from line items of this type, including this paystub.
-        rate_implied:
-          type: string
-          description: Calculated ratio of `amount` to `hours` of gross pay list totals.
-        rate_implied_ytd:
-          type: string
-          description: Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals.
-    PartnerUserCreateRequest:
-      type: object
-      properties:
-        client:
-          type: string
-          format: uuid
-          description: 'ID of the client on whose behalf the user is created.
-
-
-            <Info>
-
-            Provided to you by your Argyle Customer Success manager.
-
-            </Info>
-
-            '
-        first_name:
-          type: string
-          description: User first name.
-        last_name:
-          type: string
-          description: User last name.
-        email:
-          type: string
-          description: User email address.
-        phone_number:
-          type: string
-          description: User phone number. E.164 international format recommended.
-        ssn:
-          type: string
-          description: User Social Security number.
-        address:
-          $ref: '#/components/schemas/PartnerAddress'
-        birth_date:
-          $ref: '#/components/schemas/PartnerBirthDate'
-        external_metadata:
-          type: object
-          description: Additional metadata for internal partner workflows.
-          additionalProperties: true
-          properties:
-            suppress_verification:
-              type: boolean
-              description: Set to `true` for banking and document verification workflows.
-        open_banking:
-          $ref: '#/components/schemas/PartnerOpenBanking'
-        external_id:
-          type: string
-          nullable: true
-          description: External identifier for your internal mapping.
-      required:
-      - client
-    AvailabilityItem:
-      type: object
-      description: 'Status of the account''s most recent data scan (initial data retrieval included) or [document upload](/api-reference/user-uploads) submission.
-
-
-        - `in_progress` — A data scan is in progress, or a document was uploaded but not submitted.
-
-        - `synced` — The most recent data scan of the account was successful, or an uploaded document was submitted.
-
-        - `sync_failed` — Data retrieval during the most recent data scan failed, resulting in an [account connection error](/api-reference/account-connection-errors).
-
-        '
-      properties:
+          description: Name of the employer.
         status:
           type: string
           enum:
-          - in_progress
-          - synced
-          - sync_failed
-        updated_at:
+          - active
+          - previous
+          description: User's current employment status at this employer.
+        hire_date:
           type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the most recent change to available data.
-        available_count:
-          type: integer
-          description: 'Number of gig events, paystubs available, or response form submissions.
-
-
-            During initial data retrieval, the `available_count` will increase until all data has been retrieved and `availability.status` becomes `synced`.
-
-            '
-        files_count:
-          type: integer
-          description: Total number of uploaded documents.
-        in_progress_count:
-          type: integer
-          description: Total number of documents uploaded or response forms in progress but not submitted.
-        available_from:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the earliest gig or paystub available.
-        available_to:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest gig or paystub available.
-    PartnerPaystub:
+          format: date
+          description: Employment start date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+        termination_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Employment end date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. `null` when employment `status` is `active`.
+    PartnerVerificationRefreshReportRequest:
       type: object
-      example:
-        id: 0187dc99-63be-bc96-51bf-af6b51d43687
-        account: 0187c66e-e7e5-811c-b006-2232f00f426a
-        payroll_document: 0186eb89-2e52-b3c5-ac6d-05e7debb2aff
-        deduction_list:
-        - amount: '38.10'
-          name: 401K
-          tax_classification: pre_tax
-          amount_ytd: '139.70'
-        - amount: '25.40'
-          name: Garnishment
-          tax_classification: post_tax
-          amount_ytd: '76.20'
-        - amount: '25.40'
-          name: Garnishment
-          tax_classification: post_tax
-          amount_ytd: '101.60'
-        filing_status:
-        - type: federal
-          location: null
-          status: married filing separately
-        - type: state
-          location: NY
-          status: married filing separately
-        tax_list:
-        - amount: '88.91'
-          name: Federal Withholding
-          type: federal
-          amount_ytd: '850.99'
-        - amount: '139.72'
-          name: Social Security Tax
-          type: fica
-          amount_ytd: '381.04'
-        status: completed
-        paystub_date: '2023-03-12T00:00:00Z'
-        paystub_period:
-          start_date: '2023-02-28T00:00:00Z'
-          end_date: '2023-03-07T00:00:00Z'
-        currency: USD
-        gross_pay: '1607.63'
-        deductions: '88.90'
-        taxes: '228.63'
-        net_pay: '1290.10'
-        reimbursements: '0.00'
-        hours: '49.60'
-        fees: null
-        net_pay_ytd: '12714.18'
-        gross_pay_ytd: '15730.10'
-        employer: Whole Goods
-        employment: 0186a27d-e5c6-735a-a359-6315b34d544c
-        employer_address:
-          city: New York
-          line1: 852 North W St
-          line2: Apt 221
-          state: NY
-          country: US
-          postal_code: '10014'
-        created_at: '2023-03-13T19:53:57.122Z'
-        updated_at: '2023-03-13T19:53:57.122Z'
-        destinations:
-        - reference: CHECKING *********2201
-          amount: '1290.10'
-          method: direct deposit
-          ach_deposit_account:
-            bank_name: NW Regional
-            routing_number: null
-            account_number: '*********2201'
-          card: null
-        hours_ytd: '422.00'
-        deductions_ytd: '533.40'
-        taxes_ytd: '2502.17'
-        gross_pay_list:
-        - name: Regular
-          type: base
-          start_date: '2023-02-28'
-          end_date: '2023-03-07'
-          rate: '25.6088'
-          hours: '49.5977'
-          amount: '1270.14'
-          hours_ytd: '422.0000'
-          amount_ytd: '13971.54'
-        - name: Commission
-          type: commission
-          start_date: '2023-03-04'
-          end_date: '2023-03-04'
-          rate: null
-          hours: null
-          amount: '337.49'
-          hours_ytd: null
-          amount_ytd: '1758.56'
-        gross_pay_list_totals:
-          base:
-            amount: '1270.14'
-            amount_ytd: '13971.54'
-            hours: '49.5977'
-            hours_ytd: '422.0000'
-            rate_implied: '25.6100'
-            rate_implied_ytd: '33.1100'
-          overtime: null
-          commission:
-            amount: '337.49'
-            amount_ytd: '1758.56'
-            hours: null
-            hours_ytd: null
-            rate_implied: null
-            rate_implied_ytd: null
-          bonus: null
-          other: null
-        metadata: null
+      description: Report request configuration for refresh requests.
+      properties:
+        type:
+          type: string
+          enum:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'Payroll, banking, or Doc VOI report type to generate.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        configuration:
+          allOf:
+          - $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
+          - description: Optional banking report configurations.
+      required:
+      - type
+    PartnerVerification:
+      type: object
       properties:
         id:
           type: string
           format: uuid
-          description: Unique ID of the paystub object.
-        account:
+          description: Unique ID of the verification.
+        user:
           type: string
           format: uuid
-          description: ID of the account associated with the paystub.
-        payroll_document:
+          description: ID of the user associated with the verification.
+        client:
           type: string
           format: uuid
-          description: 'ID of the [payroll document object](/api-reference/payroll-documents#object) associated with this paystub.
-
-            '
-        deduction_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deduction'
-          description: An itemized list of deductions listed on the paystub. Each object corresponds to one line item.
-        filing_status:
-          type: array
-          items:
-            $ref: '#/components/schemas/FilingStatus'
-          description: Information on the user's filing status.
-        tax_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tax'
-          description: An itemized list of tax withholdings listed on the paystub. Each object corresponds to one line item.
-        status:
-          type: string
-          enum:
-          - completed
-          - scheduled
-          - cancelled
-          - excluded
-          description: 'Payment status of the paystub.
-
-            - `completed` — Payment has been made to the user.
-
-            - `scheduled` — Payment is scheduled to be made to the user.
-
-            - `cancelled` — Payment was cancelled, and was not nor will be paid to the user.
-
-            - `excluded` — Tag used for dummy/sample/watermarked/test paystubs present in the account. These paystubs are excluded when generating reports and other calculations and should not be considered proof of income.
-
-            '
-        paystub_date:
-          type: string
-          format: date-time
-          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the payment date, sourced from the paystub.
-
-            '
-        paystub_period:
-          type: object
-          properties:
-            start_date:
-              type: string
-              format: date-time
-              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
-            end_date:
-              type: string
-              format: date-time
-              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
-          description: Start date and end date of the work period.
-        currency:
-          type: string
-          description: Currency code ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)).
-        gross_pay:
-          type: string
-          description: Total gross pay from the paystub period before taxes or deductions.
-        deductions:
-          type: string
-          description: Total amount of deductions from the paystub period.
-        taxes:
-          type: string
-          description: Total tax amount from the paystub period.
-        net_pay:
-          type: string
-          description: Net pay (gross pay minus taxes and deductions) from the paystub period.
-        reimbursements:
-          type: string
-          description: Total reimbursement amount from the paystub period.
-        hours:
-          type: string
-          description: Total hours worked during the paystub period.
-        fees:
-          type: string
-          description: Total fees incurred during the paystub period.
-        net_pay_ytd:
-          type: string
-          description: Net pay year-to-date, including this paystub.
-        gross_pay_ytd:
-          type: string
-          description: Gross pay year-to-date, including this paystub.
-        employer:
-          type: string
-          description: Employer name.
-        employment:
-          type: string
-          description: '[Employment](/api-reference/employments) ID. Can be used as a filter when [listing paystubs](/api-reference/paystubs/list-all-paystubs).
-
-            '
-        employer_address:
-          type: object
-          properties:
-            city:
-              type: string
-              description: Name of the city, town, district, or similar regional entity.
-            line1:
-              type: string
-              description: Address-Line 1, usually street address or P.O. Box information.
-            line2:
-              type: string
-              description: Address-Line 2, usually the apartment or unit number.
-            state:
-              type: string
-              description: State, county, province, region, or equivalent.
-            country:
-              type: string
-              description: Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
-            postal_code:
-              type: string
-              description: Zip code, or equivalent.
-          description: Object containing employer address information, sourced from the paystub.
+          description: ID of the client on whose behalf the verification was requested.
         created_at:
           type: string
           format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the paystub object was created.
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification was requested.
         updated_at:
           type: string
           format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the paystub object most recently changed.
-        destinations:
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification object was last updated.
+        channel:
+          type: string
+          enum:
+          - api
+          - encompass
+          example: api
+          description: Origin of the verification order.
+        status:
+          $ref: '#/components/schemas/PartnerVerificationStatus'
+        report:
+          $ref: '#/components/schemas/PartnerVerificationReport'
+        employments:
           type: array
+          description: List of employments for the user. Documents only.
           items:
-            $ref: '#/components/schemas/Destination'
-          description: Contains information on where and how pay was delivered to the user.
-        hours_ytd:
+            $ref: '#/components/schemas/PartnerVerificationEmployment'
+        loan:
+          $ref: '#/components/schemas/PartnerVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/PartnerVerificationBilling'
+        data_source:
           type: string
-          description: Total hours worked year-to-date, including this paystub's work period.
-        deductions_ytd:
-          type: string
-          description: Total deductions year-to-date, including amounts from this paystub.
-        taxes_ytd:
-          type: string
-          description: Total taxes year-to-date, including amounts from this paystub.
-        gross_pay_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/GrossPay'
-          description: An itemized list of gross pay listed on the paystub. Each object corresponds to one line item.
-        gross_pay_list_totals:
-          type: object
-          properties:
-            base:
-              $ref: '#/components/schemas/GrossPayTotal'
-            overtime:
-              $ref: '#/components/schemas/GrossPayTotal'
-            commission:
-              $ref: '#/components/schemas/GrossPayTotal'
-            bonus:
-              $ref: '#/components/schemas/GrossPayTotal'
-            other:
-              $ref: '#/components/schemas/GrossPayTotal'
-          description: 'Sums the values of `gross_pay_list` objects based on their `type`:
-
-            * **base** = base + pto
-
-            * **overtime** = overtime
-
-            * **commission** = commission
-
-            * **bonus** = bonus
-
-            * **other** = disability + benefits + tips + stock + other
-
-            '
-        metadata:
-          type: object
-          description: Additional, non-categorized information.
+          enum:
+          - payroll
+          - banking
+          - documents
+          description: Source of verification data.
     PayrollDocument:
       type: object
       example:
@@ -3406,7 +2320,9 @@ components:
               type: integer
               description: Number of pages scanned.
             error:
-              type: string
+              type:
+              - string
+              - 'null'
               description: "An error was encountered during document retrieval.\n\n- **`invalid_document`**: The document was empty, cropped, missing required fields, or otherwise incomplete.  \n- **`type_mismatch`**: The document does not match the classified type.  \n- **`unrecognized_document_type`**: The document could not be classified.  \n- **`unsupported_document_type`**: The document type is not supported.  \n- **`unsupported_document_subtype`**: The document sub-type (e.g., 1099-C) is not supported.  \n- **`unknown`**: An unknown issue occurred. The Argyle team will automatically be notified and will investigate.  \n"
               enum:
               - invalid_document
@@ -3415,60 +2331,330 @@ components:
               - unsupported_document_type
               - unsupported_document_subtype
               - unknown
-              nullable: true
         metadata:
           type: object
           description: Additional, non-categorized information.
-    PartnerVerification:
+    PartnerVerificationRefreshRequest:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique ID of the verification.
         user:
           type: string
           format: uuid
-          description: ID of the user associated with the verification.
-        client:
-          type: string
-          format: uuid
-          description: ID of the client on whose behalf the verification was requested.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification was requested.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification object was last updated.
-        channel:
-          type: string
-          enum:
-          - api
-          - encompass
-          example: api
-          description: Origin of the verification order.
-        status:
-          $ref: '#/components/schemas/PartnerVerificationStatus'
+          description: User ID for the verification refresh.
         report:
-          $ref: '#/components/schemas/PartnerVerificationReport'
-        employments:
-          type: array
-          description: List of employments for the user. Documents only.
-          items:
-            $ref: '#/components/schemas/PartnerVerificationEmployment'
+          $ref: '#/components/schemas/PartnerVerificationRefreshReportRequest'
         loan:
           $ref: '#/components/schemas/PartnerVerificationLoan'
         billing:
           $ref: '#/components/schemas/PartnerVerificationBilling'
-        data_source:
+      required:
+      - user
+      - report
+    PartnerCreateUserResponse:
+      type: object
+      description: Response returned after creating a partner user.
+      properties:
+        user_token:
+          type: string
+          description: Token associated with the created user.
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the user.
+    AvailabilityItem:
+      type: object
+      description: 'Status of the account''s most recent data scan (initial data retrieval included) or [document upload](/api-reference/user-uploads) submission.
+
+
+        - `in_progress` — A data scan is in progress, or a document was uploaded but not submitted.
+
+        - `synced` — The most recent data scan of the account was successful, or an uploaded document was submitted.
+
+        - `sync_failed` — Data retrieval during the most recent data scan failed, resulting in an [account connection error](/api-reference/account-connection-errors).
+
+        '
+      properties:
+        status:
           type: string
           enum:
-          - payroll
-          - banking
-          - documents
-          description: Source of verification data.
+          - in_progress
+          - synced
+          - sync_failed
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the most recent change to available data.
+        available_count:
+          type: integer
+          description: 'Number of gig events, paystubs available, or response form submissions.
+
+
+            During initial data retrieval, the `available_count` will increase until all data has been retrieved and `availability.status` becomes `synced`.
+
+            '
+        files_count:
+          type: integer
+          description: Total number of uploaded documents.
+        in_progress_count:
+          type: integer
+          description: Total number of documents uploaded or response forms in progress but not submitted.
+        available_from:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the earliest gig or paystub available.
+        available_to:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest gig or paystub available.
+    GrossPayTotal:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Gross pay earned from line items of this type.
+        amount_ytd:
+          type: string
+          description: Total gross pay earned year-to-date from line items of this type, including this paystub.
+        hours:
+          type: string
+          description: Hours worked from line items of this type.
+        hours_ytd:
+          type: string
+          description: Hours worked year-to-date from line items of this type, including this paystub.
+        rate_implied:
+          type: string
+          description: Calculated ratio of `amount` to `hours` of gross pay list totals.
+        rate_implied_ytd:
+          type: string
+          description: Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals.
+    PartnerVerificationError:
+      type: object
+      description: Verification error details.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        title:
+          type: string
+          description: Error title.
+        message:
+          type: string
+          description: Error message.
+        resources:
+          type: array
+          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
+          items:
+            $ref: '#/components/schemas/PartnerVerificationErrorResource'
+      example:
+        code: self-employed_income
+        title: Self-employed income
+        message: Self-employed income cannot be assessed using Paystub and W2 Data.
+        resources:
+        - id: null
+          type: employments
+          name: Freelance Consulting LLC
+    PartnerUser:
+      type: object
+      description: Partner user object.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the user.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user was created.
+        items_connected:
+          type: array
+          items:
+            type: string
+          description: Items the user has connected through Link.
+        employers_connected:
+          type: array
+          items:
+            type: string
+          description: Employers associated with the connected items.
+        first_name:
+          type: string
+          description: User first name.
+        last_name:
+          type: string
+          description: User last name.
+        email:
+          type: string
+          description: User email address.
+        phone_number:
+          type: string
+          description: User phone number.
+        ssn:
+          type: string
+          description: User Social Security number.
+        address:
+          $ref: '#/components/schemas/PartnerAddress'
+        birth_date:
+          $ref: '#/components/schemas/PartnerBirthDate'
+        external_metadata:
+          type: object
+          description: Additional metadata for internal partner workflows.
+          additionalProperties: true
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: External identifier for your internal mapping.
+    FilingStatus:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - federal
+          - state
+          - local
+          description: 'Tax authority.
+
+            - `federal`
+
+            - `state`
+
+            - `local`
+
+            '
+        location:
+          type: string
+          description: 'Local jurisdiction. Values depend on `type`.
+
+            - if type is `federal` — `null`
+
+            - if type is `state` — state abbreviation code
+
+            - if type is `local` — city name or area code
+
+            '
+        status:
+          type: string
+          description: Marital status.
+    PartnerUserCreateRequest:
+      type: object
+      properties:
+        client:
+          type: string
+          format: uuid
+          description: 'ID of the client on whose behalf the user is created.
+
+
+            <Info>
+
+            Provided to you by your Argyle Customer Success manager.
+
+            </Info>
+
+            '
+        first_name:
+          type: string
+          description: User first name.
+        last_name:
+          type: string
+          description: User last name.
+        email:
+          type: string
+          description: User email address.
+        phone_number:
+          type: string
+          description: User phone number. E.164 international format recommended.
+        ssn:
+          type: string
+          description: User Social Security number.
+        address:
+          $ref: '#/components/schemas/PartnerAddress'
+        birth_date:
+          $ref: '#/components/schemas/PartnerBirthDate'
+        external_metadata:
+          type: object
+          description: Additional metadata for internal partner workflows.
+          additionalProperties: true
+          properties:
+            suppress_verification:
+              type: boolean
+              description: Set to `true` for banking and document verification workflows.
+        open_banking:
+          $ref: '#/components/schemas/PartnerOpenBanking'
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: External identifier for your internal mapping.
+      required:
+      - client
+    PartnerBirthDate:
+      type: object
+      description: Date of birth in year-month-day format.
+      properties:
+        year:
+          type: integer
+          description: Birth year (1900 or later).
+        month:
+          type: integer
+          description: Birth month (between 1 and 12).
+        day:
+          type: integer
+          description: Birth day (between 1 and 31).
+    PartnerVerificationEmploymentRequest:
+      allOf:
+      - $ref: '#/components/schemas/PartnerVerificationEmployment'
+      - type: object
+        required:
+        - employer
+        - status
+        - hire_date
+    PartnerSessionConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/PartnerSessionCreateConfiguration'
+    PartnerVerificationBilling:
+      type: object
+      description: Optional billing details.
+      properties:
+        cost_center:
+          type: string
+          description: Cost center identifier.
+    PartnerUserUpdateRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: User first name.
+        last_name:
+          type: string
+          description: User last name.
+        email:
+          type: string
+          description: User email address.
+        phone_number:
+          type: string
+          description: User phone number.
+        ssn:
+          type: string
+          description: User Social Security number.
+        address:
+          $ref: '#/components/schemas/PartnerAddress'
+        birth_date:
+          $ref: '#/components/schemas/PartnerBirthDate'
+        external_metadata:
+          type: object
+          description: Additional metadata for internal partner workflows.
+          additionalProperties: true
+          properties:
+            suppress_verification:
+              type: boolean
+              description: Set to `true` for banking and document verification workflows.
+        open_banking:
+          $ref: '#/components/schemas/PartnerOpenBanking'
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: External identifier for your internal mapping.
     PartnerSessionCreateConfiguration:
       type: object
       description: Connection session configuration for payroll and banking verifications.
@@ -3481,8 +2667,9 @@ components:
           type: boolean
           description: Banking only. If `true`, the session link expires after one successful connection.
         redirect_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Payroll and banking. Optional redirect URL after session completion. Hosted/direct-launch flows should always set this. On desktop browsers, use a regular `https://` URL. For mobile app flows, use a custom scheme such as `your-custom-scheme://return-to-app`, or a Universal Link on iOS / App Link on Android. Universal Links and App Links are the more modern approach. You can include an application-owned state or nonce value to match the returning browser session to an internal user, session, or verification. Argyle appends `user_submission_complete` and `user_attempted_employer_selection`, which mirror the [`onClose`](/link/reference/callbacks#onclose) fields.
         flow_id:
           type: string
@@ -3506,6 +2693,897 @@ components:
         mobile_app:
           type: boolean
           description: Payroll only. Set to `true` when the session is used in a mobile app, including Hosted Link opened in a secure browser context.
+    PartnerPaystub:
+      type: object
+      example:
+        id: 0187dc99-63be-bc96-51bf-af6b51d43687
+        account: 0187c66e-e7e5-811c-b006-2232f00f426a
+        payroll_document: 0186eb89-2e52-b3c5-ac6d-05e7debb2aff
+        deduction_list:
+        - amount: '38.10'
+          name: 401K
+          tax_classification: pre_tax
+          amount_ytd: '139.70'
+        - amount: '25.40'
+          name: Garnishment
+          tax_classification: post_tax
+          amount_ytd: '76.20'
+        - amount: '25.40'
+          name: Garnishment
+          tax_classification: post_tax
+          amount_ytd: '101.60'
+        filing_status:
+        - type: federal
+          location: null
+          status: married filing separately
+        - type: state
+          location: NY
+          status: married filing separately
+        tax_list:
+        - amount: '88.91'
+          name: Federal Withholding
+          type: federal
+          amount_ytd: '850.99'
+        - amount: '139.72'
+          name: Social Security Tax
+          type: fica
+          amount_ytd: '381.04'
+        status: completed
+        paystub_date: '2023-03-12T00:00:00Z'
+        paystub_period:
+          start_date: '2023-02-28T00:00:00Z'
+          end_date: '2023-03-07T00:00:00Z'
+        currency: USD
+        gross_pay: '1607.63'
+        deductions: '88.90'
+        taxes: '228.63'
+        net_pay: '1290.10'
+        reimbursements: '0.00'
+        hours: '49.60'
+        fees: null
+        net_pay_ytd: '12714.18'
+        gross_pay_ytd: '15730.10'
+        employer: Whole Goods
+        employment: 0186a27d-e5c6-735a-a359-6315b34d544c
+        employer_address:
+          city: New York
+          line1: 852 North W St
+          line2: Apt 221
+          state: NY
+          country: US
+          postal_code: '10014'
+        created_at: '2023-03-13T19:53:57.122Z'
+        updated_at: '2023-03-13T19:53:57.122Z'
+        destinations:
+        - reference: CHECKING *********2201
+          amount: '1290.10'
+          method: direct deposit
+          ach_deposit_account:
+            bank_name: NW Regional
+            routing_number: null
+            account_number: '*********2201'
+          card: null
+        hours_ytd: '422.00'
+        deductions_ytd: '533.40'
+        taxes_ytd: '2502.17'
+        gross_pay_list:
+        - name: Regular
+          type: base
+          start_date: '2023-02-28'
+          end_date: '2023-03-07'
+          rate: '25.6088'
+          hours: '49.5977'
+          amount: '1270.14'
+          hours_ytd: '422.0000'
+          amount_ytd: '13971.54'
+        - name: Commission
+          type: commission
+          start_date: '2023-03-04'
+          end_date: '2023-03-04'
+          rate: null
+          hours: null
+          amount: '337.49'
+          hours_ytd: null
+          amount_ytd: '1758.56'
+        gross_pay_list_totals:
+          base:
+            amount: '1270.14'
+            amount_ytd: '13971.54'
+            hours: '49.5977'
+            hours_ytd: '422.0000'
+            rate_implied: '25.6100'
+            rate_implied_ytd: '33.1100'
+          overtime: null
+          commission:
+            amount: '337.49'
+            amount_ytd: '1758.56'
+            hours: null
+            hours_ytd: null
+            rate_implied: null
+            rate_implied_ytd: null
+          bonus: null
+          other: null
+        metadata: null
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the paystub object.
+        account:
+          type: string
+          format: uuid
+          description: ID of the account associated with the paystub.
+        payroll_document:
+          type: string
+          format: uuid
+          description: 'ID of the [payroll document object](/api-reference/payroll-documents#object) associated with this paystub.
+
+            '
+        deduction_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deduction'
+          description: An itemized list of deductions listed on the paystub. Each object corresponds to one line item.
+        filing_status:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilingStatus'
+          description: Information on the user's filing status.
+        tax_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax'
+          description: An itemized list of tax withholdings listed on the paystub. Each object corresponds to one line item.
+        status:
+          type: string
+          enum:
+          - completed
+          - scheduled
+          - cancelled
+          - excluded
+          description: 'Payment status of the paystub.
+
+            - `completed` — Payment has been made to the user.
+
+            - `scheduled` — Payment is scheduled to be made to the user.
+
+            - `cancelled` — Payment was cancelled, and was not nor will be paid to the user.
+
+            - `excluded` — Tag used for dummy/sample/watermarked/test paystubs present in the account. These paystubs are excluded when generating reports and other calculations and should not be considered proof of income.
+
+            '
+        paystub_date:
+          type: string
+          format: date-time
+          description: 'Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the payment date, sourced from the paystub.
+
+            '
+        paystub_period:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the start of the work period.
+            end_date:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the end of the work period.
+          description: Start date and end date of the work period.
+        currency:
+          type: string
+          description: Currency code ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)).
+        gross_pay:
+          type: string
+          description: Total gross pay from the paystub period before taxes or deductions.
+        deductions:
+          type: string
+          description: Total amount of deductions from the paystub period.
+        taxes:
+          type: string
+          description: Total tax amount from the paystub period.
+        net_pay:
+          type: string
+          description: Net pay (gross pay minus taxes and deductions) from the paystub period.
+        reimbursements:
+          type: string
+          description: Total reimbursement amount from the paystub period.
+        hours:
+          type: string
+          description: Total hours worked during the paystub period.
+        fees:
+          type: string
+          description: Total fees incurred during the paystub period.
+        net_pay_ytd:
+          type: string
+          description: Net pay year-to-date, including this paystub.
+        gross_pay_ytd:
+          type: string
+          description: Gross pay year-to-date, including this paystub.
+        employer:
+          type: string
+          description: Employer name.
+        employment:
+          type: string
+          description: '[Employment](/api-reference/employments) ID. Can be used as a filter when [listing paystubs](/api-reference/paystubs/list-all-paystubs).
+
+            '
+        employer_address:
+          type: object
+          properties:
+            city:
+              type: string
+              description: Name of the city, town, district, or similar regional entity.
+            line1:
+              type: string
+              description: Address-Line 1, usually street address or P.O. Box information.
+            line2:
+              type: string
+              description: Address-Line 2, usually the apartment or unit number.
+            state:
+              type: string
+              description: State, county, province, region, or equivalent.
+            country:
+              type: string
+              description: Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
+            postal_code:
+              type: string
+              description: Zip code, or equivalent.
+          description: Object containing employer address information, sourced from the paystub.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the paystub object was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when a property value of the paystub object most recently changed.
+        destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination'
+          description: Contains information on where and how pay was delivered to the user.
+        hours_ytd:
+          type: string
+          description: Total hours worked year-to-date, including this paystub's work period.
+        deductions_ytd:
+          type: string
+          description: Total deductions year-to-date, including amounts from this paystub.
+        taxes_ytd:
+          type: string
+          description: Total taxes year-to-date, including amounts from this paystub.
+        gross_pay_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrossPay'
+          description: An itemized list of gross pay listed on the paystub. Each object corresponds to one line item.
+        gross_pay_list_totals:
+          type: object
+          properties:
+            base:
+              $ref: '#/components/schemas/GrossPayTotal'
+            overtime:
+              $ref: '#/components/schemas/GrossPayTotal'
+            commission:
+              $ref: '#/components/schemas/GrossPayTotal'
+            bonus:
+              $ref: '#/components/schemas/GrossPayTotal'
+            other:
+              $ref: '#/components/schemas/GrossPayTotal'
+          description: 'Sums the values of `gross_pay_list` objects based on their `type`:
+
+            * **base** = base + pto
+
+            * **overtime** = overtime
+
+            * **commission** = commission
+
+            * **bonus** = bonus
+
+            * **other** = disability + benefits + tips + stock + other
+
+            '
+        metadata:
+          type: object
+          description: Additional, non-categorized information.
+    PartnerOpenBankingEndUser:
+      type: object
+      description: Contains details about the person or entity making the lending decision.
+      properties:
+        name:
+          type: string
+          description: Name of the lender or entity.
+        address:
+          type: string
+          description: Street address or P.O. Box information (include apartment or unit numbers).
+        city:
+          type: string
+          description: Name of the city, town, district, or similar regional entity.
+        state:
+          type: string
+          description: State, county, province, region, or equivalent.
+        zip:
+          type: string
+          description: Zip code, or equivalent.
+        phone:
+          type: string
+          description: Phone number of the lender or entity.
+    PartnerVerificationUpdateRequest:
+      type: object
+      description: 'Request body for updating a verification.
+
+
+        - `loan` and `billing` can be updated for either data source.
+
+        - `employments` can only be updated when a document verification is in the `PAUSED` state.
+
+        - Updating `employments` replaces the full employments array.
+
+        '
+      properties:
+        loan:
+          $ref: '#/components/schemas/PartnerVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/PartnerVerificationBilling'
+        employments:
+          type: array
+          description: Updated list of employments for the user.
+          items:
+            $ref: '#/components/schemas/PartnerVerificationEmploymentRequest'
+    Account:
+      type: object
+      example:
+        id: 0187c66e-e7e5-811c-b006-2232f00f426a
+        user: 018051aa-f7a9-a0db-2f38-6cfa325e9d69
+        employers:
+        - Whole Goods
+        item: item_123456789
+        source: thepayrollcompany
+        created_at: '2023-01-30T12:53:22.561Z'
+        updated_at: '2023-01-30T12:55:04.478Z'
+        scanned_at: '2023-01-30T12:55:04.016Z'
+        connection:
+          status: connected
+          error_code: null
+          error_message: null
+          updated_at: '2023-01-30T12:53:25.561Z'
+        direct_deposit_switch:
+          status: success
+          error_code: null
+          error_message: null
+          updated_at: '2023-01-30T12:55:03.478Z'
+        availability:
+          shifts:
+            status: synced
+            updated_at: '2023-01-30T12:55:03Z'
+            available_count: 94
+            available_from: '2020-04-11T12:53:27Z'
+            available_to: '2023-01-25T00:00:00Z'
+          gigs:
+            status: synced
+            updated_at: '2023-01-30T12:55:03Z'
+            available_count: 217
+            available_from: '2020-04-11T12:53:27Z'
+            available_to: '2023-01-25T00:00:00Z'
+          paystubs:
+            status: synced
+            updated_at: '2023-01-30T12:55:03Z'
+            available_count: 68
+            available_from: '2020-05-11T12:53:27Z'
+            available_to: '2023-01-29T23:59:59Z'
+          payroll_documents:
+            status: synced
+            updated_at: '2023-01-30T12:53:44.308Z'
+          identities:
+            status: synced
+            updated_at: '2023-01-30T12:53:44.028Z'
+          ratings:
+            status: synced
+            updated_at: '2023-01-30T12:55:03.359Z'
+          vehicles:
+            status: synced
+            updated_at: '2023-01-30T12:53:44.321Z'
+          deposit_destinations:
+            status: synced
+            updated_at: '2023-01-30T12:53:42.586Z'
+          user_forms:
+            status: in_progress
+            updated_at: '2023-01-30T12:53:42.586Z'
+            available_count: 0
+            files_count: 1
+            in_progress_count: 1
+          user_uploads:
+            status: synced
+            updated_at: '2023-01-30T12:54:41.621Z'
+            files_count: 2
+            in_progress_count: 0
+        ongoing_refresh:
+          status: enabled
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the connected payroll account.
+        user:
+          type: string
+          format: uuid
+          description: ID of the user that connected the account.
+        employers:
+          type: array
+          items:
+            type: string
+          description: 'Employers associated with the account.
+
+
+            A single employer is usually returned per account. Exceptions can occur when an LLC and Co. version of the same employer is returned.
+
+            '
+        item:
+          type: string
+          description: ID of the Item in Link through which the account was connected.
+        source:
+          type: string
+          description: Payroll data source. Typically a third-party payroll system unless the employer uses an in-house system.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the user connected the account.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last updated. An update occurs every time an account is scanned for new data, and when any values of the account object change (such as an updated connection status).
+        scanned_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the account was last scanned for new data. A `null` value indicates the account was never connected.
+        connection:
+          type: object
+          description: Object containing information about the account's connection status.
+          properties:
+            status:
+              type: string
+              enum:
+              - connecting
+              - connected
+              - error
+              description: 'Status of Argyle''s connection with the user''s payroll system.
+
+
+                - `connecting` — The user submitted new or revised login credentials through Link and Argyle is establishing the connection.
+
+                - `connected` — An account connection was successfully made. See the `availability` object for updates on initial data retrieval.
+
+                - `error` — An [account connection error](/api-reference/account-connection-errors) has occurred. Data refreshes have been paused.
+
+                '
+            error_code:
+              type: string
+              enum:
+              - account_disabled
+              - account_inaccessible
+              - account_incomplete
+              - account_nonunique
+              - account_not_found
+              - all_employers_connected
+              - auth_method_temporarily_unavailable
+              - auth_required
+              - connection_unavailable
+              - credentials_managed_by_organization
+              - existing_account_found
+              - expired_credentials
+              - full_auth_required
+              - insufficient_account_data
+              - invalid_account_type
+              - invalid_auth
+              - invalid_credentials
+              - invalid_employer_identifier
+              - invalid_login_method
+              - invalid_login_url
+              - invalid_mfa
+              - invalid_store_identifier
+              - known_employer_redirect
+              - login_attempts_exceeded
+              - login_cancelled_by_the_user
+              - login_gov_not_linked
+              - mfa_attempts_exceeded
+              - mfa_cancelled_by_the_user
+              - mfa_exhausted
+              - mfa_not_configured
+              - mfa_timeout
+              - multi_driver_account
+              - ongoing_refresh_disabled
+              - passkey_limit_reached
+              - personal_data_access_not_granted
+              - physical_mfa_unsupported
+              - platform_temporarily_unavailable
+              - platform_unavailable
+              - service_unavailable
+              - session_limit_reached
+              - system_error
+              - temporary_credentials
+              - tos_required
+              - trial_connections_exhausted
+              - trial_period_expired
+              - unrecognized_employer_email
+              - unsupported_auth_type
+              - unsupported_business_account
+              - unsupported_language
+              - unsupported_mfa_method
+              - user_action_timeout
+              description: The [account connection error](/api-reference/account-connection-errors) that occurred.
+            error_message:
+              type: string
+              description: Description of the error. Common causes and troubleshooting steps can be found in account connection errors.
+            updated_at:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the connection status last changed.
+        direct_deposit_switch:
+          type: object
+          description: Object containing deposit switch status information.
+          properties:
+            status:
+              type: string
+              enum:
+              - idle
+              - awaiting_confirmation
+              - awaiting_user_action
+              - awaiting_connection
+              - scanning
+              - updating
+              - success
+              - error
+              description: 'Status of a deposit switch.
+
+
+                - `idle` — The deposit switch process has not started.
+
+                - `awaiting_confirmation` — The user started the deposit switch flow in Link but has not clicked "Confirm".
+
+                - `awaiting_user_action` — The user has confirmed the deposit switch but needs to complete a multi-factor authentication (MFA) step.
+
+                - `awaiting_connection` — Argyle is connecting to the user''s payroll system.
+
+                - `scanning` — Argyle is scanning the user''s existing direct deposits before initiating the deposit switch.
+
+                - `updating` — The deposit switch is in progress.
+
+                - `success` — The deposit switch was successful.
+
+                - `error` — A deposit switch error occurred, and the deposit switch could not be completed.
+
+                '
+            error_code:
+              type: string
+              enum:
+              - account_invalid
+              - account_closed
+              - account_blocked
+              - confirmation_expired
+              - confirmation_invalid
+              - confirmation_timeout
+              - deposit_account_mismatch
+              - deposit_destination_unsupported
+              - employer_unsupported
+              - employer_account_invalid
+              - employer_account_closed
+              - employer_account_blocked
+              - employer_confirmation_invalid
+              - internal_server_error
+              - invalid_request
+              - item_invalid
+              - name_mismatch
+              - payroll_account_mismatch
+              - temporarily_unavailable
+              - terminate_flow
+              - unauthorized
+              - unexpected
+              - user_input_required
+              description: The deposit switch error that occurred.
+            error_message:
+              type: string
+              description: Description of the error. Common causes and troubleshooting steps can be found in deposit switch errors.
+            updated_at:
+              type: string
+              format: date-time
+              description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the deposit switch status last changed.
+        availability:
+          type: object
+          description: Object containing information on data availability for each of Argyle's data sets, and any user-uploaded documents or "can't find my income" response forms.
+          properties:
+            shifts:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            gigs:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            paystubs:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            payroll_documents:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            identities:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            ratings:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            vehicles:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            deposit_destinations:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            user_forms:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+            user_uploads:
+              allOf:
+              - $ref: '#/components/schemas/AvailabilityItem'
+        ongoing_refresh:
+          type: object
+          description: Object containing the account's `ongoing_refresh` status (whether the account will be updated with new data after each [data refresh](/overview/ongoing-refresh#refresh-frequency)).
+          properties:
+            status:
+              type: string
+              enum:
+              - enabled
+              - disabled
+              - idle
+              description: 'The account''s `ongoing_refresh` status.
+
+
+                - `idle` — This account never experienced a successful payroll connection — only uploading documents or only completing a "can''t find my income source" response form is not considered a successful payroll connection.
+
+                - `enabled` — Ongoing refresh is currently enabled for this connected payroll account.
+
+                - `disabled` — Ongoing refresh is currently disabled for this connected payroll account.
+
+
+                Ongoing refresh can be [disabled manually](/api-reference/accounts#disable) via the API for individual accounts.
+
+                '
+    PartnerSessionCreateRequest:
+      type: object
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: ID of the verification used to initialize the session.
+        configuration:
+          $ref: '#/components/schemas/PartnerSessionCreateConfiguration'
+      required:
+      - verification
+    PartnerOpenBanking:
+      type: object
+      description: Banking-specific user metadata.
+      properties:
+        end_user:
+          $ref: '#/components/schemas/PartnerOpenBankingEndUser'
+    PartnerVerificationCreateRequest:
+      type: object
+      description: 'Request body for ordering a verification.
+
+
+        - `user` and `report` are required for all requests.
+
+        - `employments` is required for document verifications only.
+
+        - `report.configuration` is used for banking verifications only.'
+      properties:
+        user:
+          type: string
+          format: uuid
+          description: User ID for the verification.
+        employments:
+          type: array
+          description: 'List of employments for the user.
+
+
+            Required for document verifications only. Not used for payroll or banking verifications.'
+          items:
+            $ref: '#/components/schemas/PartnerVerificationEmploymentRequest'
+        report:
+          $ref: '#/components/schemas/PartnerVerificationCreateReportRequest'
+        loan:
+          $ref: '#/components/schemas/PartnerVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/PartnerVerificationBilling'
+      required:
+      - user
+      - report
+    PartnerVerificationCreateReportRequest:
+      type: object
+      description: Report request configuration.
+      properties:
+        type:
+          type: string
+          enum:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'The type of report to generate.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        configuration:
+          allOf:
+          - $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
+          - description: Optional banking report configurations.
+      required:
+      - type
+    PartnerReportCustomField:
+      type: object
+      description: Custom field returned in report JSON as a pass-through value.
+      properties:
+        label:
+          type: string
+          description: Custom field name.
+        value:
+          type: string
+          description: Custom field value.
+        shown:
+          type: boolean
+          description: Show custom field on report PDF.
+    PartnerVerificationLoan:
+      type: object
+      description: Optional loan details.
+      properties:
+        number:
+          type: string
+          description: Loan number or identifier.
+        borrower_id:
+          type: string
+          description: Borrower identifier.
+        application_id:
+          type: string
+          description: Application identifier.
+        officer_email:
+          type: string
+          description: Email of the loan officer requesting the verification.
+    PartnerVerificationReport:
+      type: object
+      description: Report information.
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: 'Unique ID of the report.
+
+
+            Only available when verification state is `COMPLETED`.
+
+            '
+        type:
+          type: string
+          enum:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'The type of report.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        file_url:
+          type:
+          - string
+          - 'null'
+          example: www.argyle.com/storagename/pdf
+          description: 'Download link to the report PDF.
+
+
+            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
+
+            '
+        json_url:
+          type:
+          - string
+          - 'null'
+          example: www.argyle.com/storagename/json
+          description: 'Download link to the report in JSON.
+
+
+            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
+
+            '
+        configuration:
+          $ref: '#/components/schemas/PartnerVerificationReportConfiguration'
+    PartnerSession:
+      type: object
+      description: Partner connection session object.
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: Verification ID associated with the session.
+        configuration:
+          $ref: '#/components/schemas/PartnerSessionConfiguration'
+        link:
+          type: string
+          description: URL used to launch the payroll or banking frontend experience. For payroll, use it as `connectUrl` when initializing the [Web SDK](/link/initialization/web#initialize-with-connecturl); the returned session URL already determines whether the session runs in Sandbox or Production. Alternatively, open it directly for [Hosted Link](/link/initialization/hosted-link). For banking, use it to launch either an Embedded banking session or a Hosted banking session. Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
+        data_source:
+          type: string
+          enum:
+          - payroll
+          - banking
+          description: Source of connection data.
+    PartnerAddress:
+      type: object
+      description: Address of the user.
+      properties:
+        city:
+          type: string
+          description: Name of the city, town, district, or similar regional entity.
+        line1:
+          type: string
+          description: Address-Line 1, usually street address or P.O. Box information.
+        line2:
+          type:
+          - string
+          - 'null'
+          description: Address-Line 2, usually the apartment or unit number.
+        state:
+          type: string
+          description: State, county, province, region, or equivalent.
+        country:
+          type: string
+          description: Two-letter country code (ISO 3166-1 alpha-2 format).
+        postal_code:
+          type:
+          - string
+          - 'null'
+          description: Zip code, or equivalent.
   securitySchemes:
     basicAuth:
       type: http

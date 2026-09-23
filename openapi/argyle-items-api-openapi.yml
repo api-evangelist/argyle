@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Items API
+  title: Argyle Items API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -102,6 +102,8 @@ paths:
                       percent_precision: '0.01'
       tags:
       - Items
+      operationId: getV2ItemsById
+      x-operation-id-source: derived
   /v2/items:
     get:
       summary: List all Items
@@ -202,14 +204,16 @@ paths:
                 type: object
                 properties:
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the next page of results, if available.
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                     description: URL for the previous page of results, if available.
                   results:
                     type: array
@@ -241,6 +245,8 @@ paths:
                   matching_score: '0.63'
       tags:
       - Items
+      operationId: getV2Items
+      x-operation-id-source: derived
 components:
   schemas:
     Item:
@@ -325,8 +331,9 @@ components:
           - benefits
           description: Type of Item.
         known_limitations:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: 'Known limitations of the Item, such as historical data limits, unique behavior, or degree of value obfuscation. Otherwise `null`.
 
             '
@@ -347,8 +354,9 @@ components:
 
             '
         status_details:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: 'Additional details on the Item''s health status, such as degraded account connection ability or paused [ongoing refresh](/overview/ongoing-refresh). Otherwise `null`.
 
             '
@@ -489,8 +497,9 @@ components:
                       type: boolean
                       description: '`true` if the Item''s direct deposit settings support using exact percentages of total pay to define how pay is allocated to different bank accounts.'
                     amount_precision:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       description: 'What level of precision is allowed when setting amount allocations.
 
 
@@ -511,8 +520,9 @@ components:
 
                         '
                     percent_precision:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       description: 'What level of precision is allowed when setting percentage allocations.
 
 

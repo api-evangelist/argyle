@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts User Uploads API
+  title: Argyle User Uploads API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -56,6 +56,8 @@ paths:
                 updated_at: '2024-07-08T13:43:51.868Z'
       tags:
       - User Uploads
+      operationId: getV2UserUploadsById
+      x-operation-id-source: derived
   /v2/user-uploads:
     post:
       summary: Upload a document
@@ -99,6 +101,8 @@ paths:
           $ref: '#/components/responses/UserUploadResponse'
       tags:
       - User Uploads
+      operationId: postV2UserUploads
+      x-operation-id-source: derived
     get:
       summary: List all user uploads
       description: Returns a paginated list of all user upload objects.
@@ -117,6 +121,8 @@ paths:
           $ref: '#/components/responses/UserUploadListResponse'
       tags:
       - User Uploads
+      operationId: getV2UserUploads
+      x-operation-id-source: derived
 components:
   schemas:
     UserUpload:

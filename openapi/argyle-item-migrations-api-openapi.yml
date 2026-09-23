@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Argyle Accounts Item Migrations API
+  title: Argyle Item Migrations API
   version: '2.0'
   description: RESTful API providing user-consented access to payroll and employment data including identities, paystubs, gigs, shifts, vehicles, ratings, payroll documents, and deposit destinations across thousands of employers and gig platforms.
   contact:
@@ -26,12 +26,10 @@ paths:
 
         - Link item ID''s were used in Link 4 initializations.
 
-        - Item ID''s are used in [Link 5 initializations](/link/initialization).
+        - Item ID''s are used in Link 5 initializations.
 
 
-        Item ID''s use the convention: "item_[9 digits]" - `"item_123456789"` for example.
-
-        '
+        Item ID''s use the convention: "item_[9 digits]" - `"item_123456789"` for example.'
       requestBody:
         required: true
         content:
@@ -72,6 +70,8 @@ paths:
                   id: item_000000819
       tags:
       - Item Migrations
+      operationId: postV2ItemMigrations
+      x-operation-id-source: derived
 components:
   securitySchemes:
     basicAuth:
