@@ -75,8 +75,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-deposit-destinations-api
   name: Argyle Deposit Destinations API
   description: The Deposit Destinations API from Argyle — 2 operation(s) for deposit destinations.
@@ -105,8 +103,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-employer-search-api
   name: Argyle Employer Search API
   description: The Employer Search API from Argyle — 1 operation(s) for employer search.
@@ -135,8 +131,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-employments-api
   name: Argyle Employments API
   description: The Employments API from Argyle — 1 operation(s) for employments.
@@ -165,8 +159,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-gigs-api
   name: Argyle Gigs API
   description: The Gigs API from Argyle — 2 operation(s) for gigs.
@@ -195,8 +187,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-identities-api
   name: Argyle Identities API
   description: The Identities API from Argyle — 2 operation(s) for identities.
@@ -225,8 +215,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-invites-api
   name: Argyle Invites API
   description: The Invites API from Argyle — 3 operation(s) for invites.
@@ -255,8 +243,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-item-filters-api
   name: Argyle Item Filters API
   description: The Item Filters API from Argyle — 2 operation(s) for item filters.
@@ -285,8 +271,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-item-migrations-api
   name: Argyle Item Migrations API
   description: The Item Migrations API from Argyle — 1 operation(s) for item migrations.
@@ -315,8 +299,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-items-api
   name: Argyle Items API
   description: The Items API from Argyle — 2 operation(s) for items.
@@ -347,8 +329,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-open-banking-api
   name: Argyle Open Banking API
   description: The Open Banking API from Argyle — 6 operation(s) for open banking.
@@ -377,8 +357,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-partners-api
   name: Argyle Partners API
   description: The Partners API from Argyle — 15 operation(s) for partners.
@@ -407,8 +385,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-payroll-documents-api
   name: Argyle Payroll Documents API
   description: The Payroll Documents API from Argyle — 2 operation(s) for payroll documents.
@@ -437,8 +413,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-paystubs-api
   name: Argyle Paystubs API
   description: The Paystubs API from Argyle — 2 operation(s) for paystubs.
@@ -467,8 +441,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-ratings-api
   name: Argyle Ratings API
   description: The Ratings API from Argyle — 2 operation(s) for ratings.
@@ -497,8 +469,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-receipts-api
   name: Argyle Receipts API
   description: The Receipts API from Argyle — 1 operation(s) for receipts.
@@ -527,8 +497,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-reports-api
   name: Argyle Reports API
   description: The Reports API from Argyle — 3 operation(s) for reports.
@@ -557,8 +525,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-sessions-api
   name: Argyle Sessions API
   description: The Sessions API from Argyle — 1 operation(s) for sessions.
@@ -587,8 +553,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-shifts-api
   name: Argyle Shifts API
   description: The Shifts API from Argyle — 2 operation(s) for shifts.
@@ -617,8 +581,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-user-forms-api
   name: Argyle User Forms API
   description: The User Forms API from Argyle — 2 operation(s) for user forms.
@@ -647,8 +609,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-user-tokens-api
   name: Argyle User Tokens API
   description: The User Tokens API from Argyle — 1 operation(s) for user tokens.
@@ -677,8 +637,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-user-uploads-api
   name: Argyle User Uploads API
   description: The User Uploads API from Argyle — 2 operation(s) for user uploads.
@@ -707,8 +665,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-users-api
   name: Argyle Users API
   description: The Users API from Argyle — 2 operation(s) for users.
@@ -739,8 +695,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-vehicles-api
   name: Argyle Vehicles API
   description: The Vehicles API from Argyle — 2 operation(s) for vehicles.
@@ -769,8 +723,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-verifications-api
   name: Argyle Verifications API
   description: The Verifications API from Argyle — 4 operation(s) for verifications.
@@ -801,8 +753,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-webhooks-api
   name: Argyle Webhooks API
   description: The Webhooks API from Argyle — 1 operation(s) for webhooks.
@@ -833,8 +783,6 @@ apis:
     url: vocabulary/argyle-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/argyle-context.jsonld
-  - type: GraphQL
-    url: graphql/argyle-graphql.md
 - aid: argyle:argyle-banking-api
   name: Argyle Banking API
   description: Open-finance surface that pulls direct-from-bank account, balance, transaction, and institution metadata for verification of assets (VOA) and verification of assets and income (VOAI). Includes Connect URL generation, banking report generation, bank account retrieval, and financial-institution catalog endpoints. Documented in the Argyle docs under api-reference/banking-overview.
