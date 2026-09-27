@@ -761,136 +761,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ClientVerificationCreateReportRequest:
-      type: object
-      description: Report request configuration.
-      properties:
-        type:
-          type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'The type of report to generate.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        configuration:
-          allOf:
-          - $ref: '#/components/schemas/ClientVerificationReportConfiguration'
-          - description: Optional banking report configurations.
-      required:
-      - type
-    ClientVerificationReport:
-      type: object
-      description: Report information.
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: 'Unique ID of the report.
-
-
-            Only available when verification state is `COMPLETED`.
-
-            '
-        type:
-          type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'The type of report.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        file_url:
-          type:
-          - string
-          - 'null'
-          example: www.argyle.com/storagename/pdf
-          description: 'Download link to the report PDF.
-
-
-            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
-
-            '
-        json_url:
-          type:
-          - string
-          - 'null'
-          example: www.argyle.com/storagename/json
-          description: 'Download link to the report in JSON.
-
-
-            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
-
-            '
-        configuration:
-          $ref: '#/components/schemas/ClientVerificationReportConfiguration'
-    ClientReportCustomField:
-      type: object
-      description: Custom field returned in report JSON as a pass-through value.
-      properties:
-        label:
-          type: string
-          description: Custom field name.
-        value:
-          type: string
-          description: Custom field value.
-        shown:
-          type: boolean
-          description: Show custom field on report PDF.
     ClientVerificationStatus:
       type: object
       description: Verification status information.
@@ -977,6 +847,108 @@ components:
             '
           items:
             $ref: '#/components/schemas/ClientVerificationError'
+    ClientVerificationCreateRequest:
+      type: object
+      description: 'Request body for ordering a verification.
+
+
+        - `user` and `report` are required for all requests.
+
+        - `employments` is required for document verifications only.
+
+        - `report.configuration` is used for banking verifications only.'
+      properties:
+        user:
+          type: string
+          format: uuid
+          description: User ID for the verification.
+        employments:
+          type: array
+          description: 'List of employments for the user.
+
+
+            Required for document verifications only. Not used for payroll or banking verifications.'
+          items:
+            $ref: '#/components/schemas/ClientVerificationEmploymentRequest'
+        report:
+          $ref: '#/components/schemas/ClientVerificationCreateReportRequest'
+        loan:
+          $ref: '#/components/schemas/ClientVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/ClientVerificationBilling'
+      required:
+      - user
+      - report
+    ClientVerificationCreateReportRequest:
+      type: object
+      description: Report request configuration.
+      properties:
+        type:
+          type: string
+          enum:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'The type of report to generate.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        configuration:
+          allOf:
+          - $ref: '#/components/schemas/ClientVerificationReportConfiguration'
+          - description: Optional banking report configurations.
+      required:
+      - type
+    ClientVerificationError:
+      type: object
+      description: Verification error details.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        title:
+          type: string
+          description: Error title.
+        message:
+          type: string
+          description: Error message.
+        resources:
+          type: array
+          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
+          items:
+            $ref: '#/components/schemas/ClientVerificationErrorResource'
+      example:
+        code: self-employed_income
+        title: Self-employed income
+        message: Self-employed income cannot be assessed using Paystub and W2 Data.
+        resources:
+        - id: null
+          type: employments
+          name: Freelance Consulting LLC
     ClientVerificationRefreshReportRequest:
       type: object
       description: Report request configuration for refresh requests.
@@ -1021,38 +993,6 @@ components:
           - description: Optional banking report configurations.
       required:
       - type
-    ClientVerificationLoan:
-      type: object
-      description: Optional loan details.
-      properties:
-        number:
-          type: string
-          description: Loan number or identifier.
-        borrower_id:
-          type: string
-          description: Borrower identifier.
-        application_id:
-          type: string
-          description: Application identifier.
-        officer_email:
-          type: string
-          description: Email of the loan officer requesting the verification.
-    ClientVerificationRefreshRequest:
-      type: object
-      properties:
-        user:
-          type: string
-          format: uuid
-          description: User ID for the verification refresh.
-        report:
-          $ref: '#/components/schemas/ClientVerificationRefreshReportRequest'
-        loan:
-          $ref: '#/components/schemas/ClientVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/ClientVerificationBilling'
-      required:
-      - user
-      - report
     ClientVerification:
       type: object
       properties:
@@ -1099,124 +1039,88 @@ components:
           - banking
           - documents
           description: Source of verification data.
-    ClientVerificationErrorResource:
+    ClientVerificationReport:
       type: object
-      description: Verification error resource details.
+      description: Report information.
       properties:
         id:
           type:
           - string
           - 'null'
-          description: ID of the associated resource, if available.
+          format: uuid
+          description: 'Unique ID of the report.
+
+
+            Only available when verification state is `COMPLETED`.
+
+            '
         type:
           type: string
-          description: Resource type.
-        name:
-          type: string
-          description: Resource name.
-    ClientVerificationError:
-      type: object
-      description: Verification error details.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        title:
-          type: string
-          description: Error title.
-        message:
-          type: string
-          description: Error message.
-        resources:
-          type: array
-          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
-          items:
-            $ref: '#/components/schemas/ClientVerificationErrorResource'
-      example:
-        code: self-employed_income
-        title: Self-employed income
-        message: Self-employed income cannot be assessed using Paystub and W2 Data.
-        resources:
-        - id: null
-          type: employments
-          name: Freelance Consulting LLC
-    ClientVerificationBilling:
-      type: object
-      description: Optional billing details.
-      properties:
-        cost_center:
-          type: string
-          description: Cost center identifier.
-    ClientVerificationUpdateRequest:
-      type: object
-      description: 'Request body for updating a verification.
-
-
-        - `loan` and `billing` can be updated for either data source.
-
-        - `employments` can only be updated when a document verification is in the `PAUSED` state.
-
-        - Updating `employments` replaces the full employments array.
-
-        '
-      properties:
-        loan:
-          $ref: '#/components/schemas/ClientVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/ClientVerificationBilling'
-        employments:
-          type: array
-          description: Updated list of employments for the user.
-          items:
-            $ref: '#/components/schemas/ClientVerificationEmploymentRequest'
-    ClientVerificationEmployment:
-      type: object
-      description: Employment details for the user.
-      properties:
-        employer:
-          type: string
-          description: Name of the employer.
-        status:
-          type: string
           enum:
-          - active
-          - previous
-          description: User's current employment status at this employer.
-        hire_date:
-          type: string
-          format: date
-          description: Employment start date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-        termination_date:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'The type of report.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        file_url:
           type:
           - string
           - 'null'
-          format: date
-          description: Employment end date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. `null` when employment `status` is `active`.
-    ClientVerificationCreateRequest:
+          example: www.argyle.com/storagename/pdf
+          description: 'Download link to the report PDF.
+
+
+            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
+
+            '
+        json_url:
+          type:
+          - string
+          - 'null'
+          example: www.argyle.com/storagename/json
+          description: 'Download link to the report in JSON.
+
+
+            Requires [Argyle authentication headers](/api-guide/overview#authentication). Only available when verification state is `COMPLETED`.
+
+            '
+        configuration:
+          $ref: '#/components/schemas/ClientVerificationReportConfiguration'
+    ClientVerificationRefreshRequest:
       type: object
-      description: 'Request body for ordering a verification.
-
-
-        - `user` and `report` are required for all requests.
-
-        - `employments` is required for document verifications only.
-
-        - `report.configuration` is used for banking verifications only.'
       properties:
         user:
           type: string
           format: uuid
-          description: User ID for the verification.
-        employments:
-          type: array
-          description: 'List of employments for the user.
-
-
-            Required for document verifications only. Not used for payroll or banking verifications.'
-          items:
-            $ref: '#/components/schemas/ClientVerificationEmploymentRequest'
+          description: User ID for the verification refresh.
         report:
-          $ref: '#/components/schemas/ClientVerificationCreateReportRequest'
+          $ref: '#/components/schemas/ClientVerificationRefreshReportRequest'
         loan:
           $ref: '#/components/schemas/ClientVerificationLoan'
         billing:
@@ -1224,6 +1128,22 @@ components:
       required:
       - user
       - report
+    ClientVerificationLoan:
+      type: object
+      description: Optional loan details.
+      properties:
+        number:
+          type: string
+          description: Loan number or identifier.
+        borrower_id:
+          type: string
+          description: Borrower identifier.
+        application_id:
+          type: string
+          description: Application identifier.
+        officer_email:
+          type: string
+          description: Email of the loan officer requesting the verification.
     ClientVerificationReportConfiguration:
       type: object
       description: Optional banking report configurations.
@@ -1281,6 +1201,86 @@ components:
         - employer
         - status
         - hire_date
+    ClientVerificationUpdateRequest:
+      type: object
+      description: 'Request body for updating a verification.
+
+
+        - `loan` and `billing` can be updated for either data source.
+
+        - `employments` can only be updated when a document verification is in the `PAUSED` state.
+
+        - Updating `employments` replaces the full employments array.
+
+        '
+      properties:
+        loan:
+          $ref: '#/components/schemas/ClientVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/ClientVerificationBilling'
+        employments:
+          type: array
+          description: Updated list of employments for the user.
+          items:
+            $ref: '#/components/schemas/ClientVerificationEmploymentRequest'
+    ClientVerificationEmployment:
+      type: object
+      description: Employment details for the user.
+      properties:
+        employer:
+          type: string
+          description: Name of the employer.
+        status:
+          type: string
+          enum:
+          - active
+          - previous
+          description: User's current employment status at this employer.
+        hire_date:
+          type: string
+          format: date
+          description: Employment start date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+        termination_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Employment end date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. `null` when employment `status` is `active`.
+    ClientVerificationErrorResource:
+      type: object
+      description: Verification error resource details.
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: ID of the associated resource, if available.
+        type:
+          type: string
+          description: Resource type.
+        name:
+          type: string
+          description: Resource name.
+    ClientReportCustomField:
+      type: object
+      description: Custom field returned in report JSON as a pass-through value.
+      properties:
+        label:
+          type: string
+          description: Custom field name.
+        value:
+          type: string
+          description: Custom field value.
+        shown:
+          type: boolean
+          description: Show custom field on report PDF.
+    ClientVerificationBilling:
+      type: object
+      description: Optional billing details.
+      properties:
+        cost_center:
+          type: string
+          description: Cost center identifier.
   securitySchemes:
     basicAuth:
       type: http

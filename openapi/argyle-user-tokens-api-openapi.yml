@@ -46,6 +46,12 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    CreateUserTokenResponse:
+      type: object
+      properties:
+        user_token:
+          type: string
+          description: The generated user token.
     CreateUserTokenRequest:
       type: object
       properties:
@@ -55,12 +61,6 @@ components:
           description: ID of the user object.
       required:
       - user
-    CreateUserTokenResponse:
-      type: object
-      properties:
-        user_token:
-          type: string
-          description: The generated user token.
   securitySchemes:
     basicAuth:
       type: http

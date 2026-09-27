@@ -95,6 +95,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ClientSessionConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
+    ClientSession:
+      type: object
+      description: Client connection session object.
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: Verification ID associated with the session.
+        configuration:
+          $ref: '#/components/schemas/ClientSessionConfiguration'
+        link:
+          type: string
+          description: URL used to launch the payroll or banking frontend experience. For payroll, use it as `connectUrl` when initializing the [Web SDK](/link/initialization/web#initialize-with-connecturl); the returned session URL already determines whether the session runs in Sandbox or Production. Alternatively, open it directly for [Hosted Link](/link/initialization/hosted-link). For banking, use it to launch either an Embedded banking session or a Hosted banking session. Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
+        data_source:
+          type: string
+          enum:
+          - payroll
+          - banking
+          description: Source of connection data.
     ClientSessionCreateConfiguration:
       type: object
       description: Connection session configuration for payroll and banking verifications.
@@ -133,25 +155,6 @@ components:
         mobile_app:
           type: boolean
           description: Payroll only. Set to `true` when the session is used in a mobile app, including Hosted Link opened in a secure browser context.
-    ClientSession:
-      type: object
-      description: Client connection session object.
-      properties:
-        verification:
-          type: string
-          format: uuid
-          description: Verification ID associated with the session.
-        configuration:
-          $ref: '#/components/schemas/ClientSessionConfiguration'
-        link:
-          type: string
-          description: URL used to launch the payroll or banking frontend experience. For payroll, use it as `connectUrl` when initializing the [Web SDK](/link/initialization/web#initialize-with-connecturl); the returned session URL already determines whether the session runs in Sandbox or Production. Alternatively, open it directly for [Hosted Link](/link/initialization/hosted-link). For banking, use it to launch either an Embedded banking session or a Hosted banking session. Session links expire after one hour. A new session link can be created at any time by creating another session for the active verification.
-        data_source:
-          type: string
-          enum:
-          - payroll
-          - banking
-          description: Source of connection data.
     ClientSessionCreateRequest:
       type: object
       properties:
@@ -163,9 +166,6 @@ components:
           $ref: '#/components/schemas/ClientSessionCreateConfiguration'
       required:
       - verification
-    ClientSessionConfiguration:
-      allOf:
-      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
   securitySchemes:
     basicAuth:
       type: http
