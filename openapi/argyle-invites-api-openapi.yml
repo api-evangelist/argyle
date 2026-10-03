@@ -399,180 +399,6 @@ components:
           type: string
           format: date-time
           description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the delivery status was last updated.
-    SendInviteRequest:
-      type: object
-      required:
-      - first_name
-      - last_name
-      example:
-        first_name: Sarah
-        last_name: Longfield
-        phone_number: 212-555-5555
-        email: sarah@email.com
-      properties:
-        first_name:
-          type: string
-          description: First name of the invite recipient.
-        last_name:
-          type: string
-          description: Last name of the invite recipient.
-        full_name:
-          type: string
-          deprecated: true
-          description: 'Full name of the invite recipient.
-
-
-            **Required when** `first_name` and `last_name` are empty.
-
-            '
-        phone_number:
-          type: string
-          description: 'Phone number of the invite recipient.
-
-
-            **Required when** `email` is empty.
-
-            '
-        email:
-          type: string
-          description: 'Email address of the invite recipient.
-
-
-            **Required when** `phone_number` is empty.
-
-            '
-        external_id:
-          type: string
-          description: '[External identifier](/overview/data-structure/users#external-identifiers) often used to group users.
-
-            Will populate the `external_id` property of the [user object](/api-reference/users#object-external_id),
-
-            and can be used to search for users within the [Connections](https://console.argyle.com/connections) section of Console.
-
-            '
-        flow_id:
-          type: string
-          description: 'ID used to [customize](/console/flows/email-sms-templates) the user''s experience in Link.
-
-
-            **Warning:**
-
-            Must be the ID of an [Email/SMS Template](/console/flows/email-sms-templates).
-
-            '
-        flow_items:
-          type: array
-          items:
-            type: string
-          description: 'List of specific Items to display to the invite recipient. Instead of full search, [direct login](/workflows/account-connections#direct-login) will be used (one Item) or [list](/workflows/account-connections#list) (multiple Items).
-
-
-            **Warning:**
-
-            `flow_items` will override direct login Items associated with the `flow_id`.
-
-            '
-        dds_config:
-          type: object
-          description: 'Unencrypted target deposit destination configuration.
-
-            Adds a deposit switching flow after the user connects their payroll accounts.
-
-            '
-        override_invite_template:
-          type: object
-          deprecated: true
-          description: 'Overrides the text and branding of the email/SMS template specified via the [`flow_id`](/api-reference/invites#send-flow_id) property (or default invite settings, if no templates exist).
-
-
-            Also provides a way to Cc members of your team to be notified by email when the user has connected their payroll account(s) by using the `reply_to` parameter.
-
-            '
-          properties:
-            brand:
-              type: object
-              properties:
-                color:
-                  type: string
-                  description: HEX color code.
-                logo:
-                  type: string
-                  description: URL to a logo.
-            email:
-              type: object
-              properties:
-                reply_to:
-                  type: array
-                  items:
-                    type: string
-                  description: Emails to notify after a user connects an account.
-                subject:
-                  type: string
-                sender:
-                  type: string
-                header:
-                  type: string
-                subheader:
-                  type: string
-                body_text_icon_1:
-                  type: string
-                  description: URL to an icon.
-                body_text_header_1:
-                  type: string
-                body_text_subheader_1:
-                  type: string
-                body_text_icon_2:
-                  type: string
-                  description: URL to an icon.
-                body_text_header_2:
-                  type: string
-                body_text_subheader_2:
-                  type: string
-                body_text_icon_3:
-                  type: string
-                  description: URL to an icon.
-                body_text_header_3:
-                  type: string
-                body_text_subheader_3:
-                  type: string
-            sms_text:
-              type: string
-            landing_page:
-              type: object
-              properties:
-                header:
-                  type: string
-                subheader:
-                  type: string
-                step_1:
-                  type: string
-                step_2:
-                  type: string
-                step_3:
-                  type: string
-            flow_id:
-              type: string
-              description: 'ID used to [customize](/console/flows/embedded-experiences) the user''s experience in Link.
-
-
-                **Warning:**
-
-                Must be the ID of an [embedded experience](/console/flows/embedded-experiences).
-
-                Any `flow_id` included outside of this object will take priority.
-
-                '
-            success_page:
-              type: object
-              properties:
-                header:
-                  type: string
-                subheader:
-                  type: string
-                button_text:
-                  type: string
-                button_url:
-                  type: string
     InviteObject:
       type: object
       example:
@@ -770,6 +596,180 @@ components:
 
             - Deprecated in favor of [`override_invite_template`](/api-reference/invites#send-override_invite_template).'
           example: null
+    SendInviteRequest:
+      type: object
+      required:
+      - first_name
+      - last_name
+      example:
+        first_name: Sarah
+        last_name: Longfield
+        phone_number: 212-555-5555
+        email: sarah@email.com
+      properties:
+        first_name:
+          type: string
+          description: First name of the invite recipient.
+        last_name:
+          type: string
+          description: Last name of the invite recipient.
+        full_name:
+          type: string
+          deprecated: true
+          description: 'Full name of the invite recipient.
+
+
+            **Required when** `first_name` and `last_name` are empty.
+
+            '
+        phone_number:
+          type: string
+          description: 'Phone number of the invite recipient.
+
+
+            **Required when** `email` is empty.
+
+            '
+        email:
+          type: string
+          description: 'Email address of the invite recipient.
+
+
+            **Required when** `phone_number` is empty.
+
+            '
+        external_id:
+          type: string
+          description: '[External identifier](/overview/data-structure/users#external-identifiers) often used to group users.
+
+            Will populate the `external_id` property of the [user object](/api-reference/users#object-external_id),
+
+            and can be used to search for users within the [Connections](https://console.argyle.com/connections) section of Console.
+
+            '
+        flow_id:
+          type: string
+          description: 'ID used to [customize](/console/flows/email-sms-templates) the user''s experience in Link.
+
+
+            **Warning:**
+
+            Must be the ID of an [Email/SMS Template](/console/flows/email-sms-templates).
+
+            '
+        flow_items:
+          type: array
+          items:
+            type: string
+          description: 'List of specific Items to display to the invite recipient. Instead of full search, [direct login](/workflows/account-connections#direct-login) will be used (one Item) or [list](/workflows/account-connections#list) (multiple Items).
+
+
+            **Warning:**
+
+            `flow_items` will override direct login Items associated with the `flow_id`.
+
+            '
+        dds_config:
+          type: object
+          description: 'Unencrypted target deposit destination configuration.
+
+            Adds a deposit switching flow after the user connects their payroll accounts.
+
+            '
+        override_invite_template:
+          type: object
+          deprecated: true
+          description: 'Overrides the text and branding of the email/SMS template specified via the [`flow_id`](/api-reference/invites#send-flow_id) property (or default invite settings, if no templates exist).
+
+
+            Also provides a way to Cc members of your team to be notified by email when the user has connected their payroll account(s) by using the `reply_to` parameter.
+
+            '
+          properties:
+            brand:
+              type: object
+              properties:
+                color:
+                  type: string
+                  description: HEX color code.
+                logo:
+                  type: string
+                  description: URL to a logo.
+            email:
+              type: object
+              properties:
+                reply_to:
+                  type: array
+                  items:
+                    type: string
+                  description: Emails to notify after a user connects an account.
+                subject:
+                  type: string
+                sender:
+                  type: string
+                header:
+                  type: string
+                subheader:
+                  type: string
+                body_text_icon_1:
+                  type: string
+                  description: URL to an icon.
+                body_text_header_1:
+                  type: string
+                body_text_subheader_1:
+                  type: string
+                body_text_icon_2:
+                  type: string
+                  description: URL to an icon.
+                body_text_header_2:
+                  type: string
+                body_text_subheader_2:
+                  type: string
+                body_text_icon_3:
+                  type: string
+                  description: URL to an icon.
+                body_text_header_3:
+                  type: string
+                body_text_subheader_3:
+                  type: string
+            sms_text:
+              type: string
+            landing_page:
+              type: object
+              properties:
+                header:
+                  type: string
+                subheader:
+                  type: string
+                step_1:
+                  type: string
+                step_2:
+                  type: string
+                step_3:
+                  type: string
+            flow_id:
+              type: string
+              description: 'ID used to [customize](/console/flows/embedded-experiences) the user''s experience in Link.
+
+
+                **Warning:**
+
+                Must be the ID of an [embedded experience](/console/flows/embedded-experiences).
+
+                Any `flow_id` included outside of this object will take priority.
+
+                '
+            success_page:
+              type: object
+              properties:
+                header:
+                  type: string
+                subheader:
+                  type: string
+                button_text:
+                  type: string
+                button_url:
+                  type: string
   securitySchemes:
     basicAuth:
       type: http

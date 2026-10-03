@@ -124,27 +124,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GrossPayTotal:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Gross pay earned from line items of this type.
-        amount_ytd:
-          type: string
-          description: Total gross pay earned year-to-date from line items of this type, including this paystub.
-        hours:
-          type: string
-          description: Hours worked from line items of this type.
-        hours_ytd:
-          type: string
-          description: Hours worked year-to-date from line items of this type, including this paystub.
-        rate_implied:
-          type: string
-          description: Calculated ratio of `amount` to `hours` of gross pay list totals.
-        rate_implied_ytd:
-          type: string
-          description: Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals.
     Paystub:
       type: object
       example:
@@ -438,6 +417,27 @@ components:
         metadata:
           type: object
           description: Additional, non-categorized information.
+    GrossPayTotal:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Gross pay earned from line items of this type.
+        amount_ytd:
+          type: string
+          description: Total gross pay earned year-to-date from line items of this type, including this paystub.
+        hours:
+          type: string
+          description: Hours worked from line items of this type.
+        hours_ytd:
+          type: string
+          description: Hours worked year-to-date from line items of this type, including this paystub.
+        rate_implied:
+          type: string
+          description: Calculated ratio of `amount` to `hours` of gross pay list totals.
+        rate_implied_ytd:
+          type: string
+          description: Calculated ratio of `amount_ytd` to `hours_ytd` of gross pay list totals.
     FilingStatus:
       type: object
       properties:
@@ -470,30 +470,41 @@ components:
         status:
           type: string
           description: Marital status.
-    Deduction:
+    Tax:
       type: object
       properties:
         amount:
           type: string
-          description: Amount of the deduction.
+          description: Amount of the tax withholding.
         name:
           type: string
-          description: Name or description of the deduction.
-        tax_classification:
+          description: Name or description of the tax withholding.
+        type:
           type: string
           enum:
-          - pre_tax
-          - post_tax
-          description: 'Tax classification.
+          - federal
+          - state
+          - local
+          - fica
+          - other
+          description: 'Payroll tax type.
 
-            - `pre_tax`
+            - `federal`
 
-            - `post_tax`
+            - `state`
+
+            - `local`
+
+            - `fica`
+
+            - `other`
 
             '
         amount_ytd:
           type: string
-          description: Total amount deducted year-to-date, including the amounts from this paystub.
+          description: 'Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.
+
+            '
     GrossPay:
       type: object
       properties:
@@ -559,41 +570,30 @@ components:
         amount_ytd:
           type: string
           description: Total gross pay earned year-to-date related to this gross pay line item, including this paystub.
-    Tax:
+    Deduction:
       type: object
       properties:
         amount:
           type: string
-          description: Amount of the tax withholding.
+          description: Amount of the deduction.
         name:
           type: string
-          description: Name or description of the tax withholding.
-        type:
+          description: Name or description of the deduction.
+        tax_classification:
           type: string
           enum:
-          - federal
-          - state
-          - local
-          - fica
-          - other
-          description: 'Payroll tax type.
+          - pre_tax
+          - post_tax
+          description: 'Tax classification.
 
-            - `federal`
+            - `pre_tax`
 
-            - `state`
-
-            - `local`
-
-            - `fica`
-
-            - `other`
+            - `post_tax`
 
             '
         amount_ytd:
           type: string
-          description: 'Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.
-
-            '
+          description: Total amount deducted year-to-date, including the amounts from this paystub.
     Destination:
       type: object
       properties:

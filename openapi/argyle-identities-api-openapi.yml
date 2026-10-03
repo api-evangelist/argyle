@@ -231,6 +231,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    PlatformIds:
+      type: object
+      properties:
+        employee_id:
+          type: string
+          description: Internal user ID assigned by the employer.
+          example: OB238HDW5
+        position_id:
+          type: string
+          description: Internal position ID assigned by the employer.
+          example: 6ELL4O7PM
+        platform_user_id:
+          type: string
+          description: ID assigned by the payroll system.
+          example: JLH7B9V6O6YGN9O7
     Identity:
       type: object
       example:
@@ -445,21 +460,35 @@ components:
           type: object
           description: Additional, non-categorized information.
           example: {}
-    PlatformIds:
+    Address:
       type: object
       properties:
-        employee_id:
+        city:
           type: string
-          description: Internal user ID assigned by the employer.
-          example: OB238HDW5
-        position_id:
+          description: Name of the city, town, district, or similar regional entity.
+          example: New York
+        line1:
           type: string
-          description: Internal position ID assigned by the employer.
-          example: 6ELL4O7PM
-        platform_user_id:
+          description: Address-Line 1, usually street address or P.O. Box information.
+          example: 852 North W St
+        line2:
           type: string
-          description: ID assigned by the payroll system.
-          example: JLH7B9V6O6YGN9O7
+          description: Address-Line 2, usually the apartment or unit number.
+          example: Apt 221
+        state:
+          type: string
+          description: State, county, province, region, or equivalent.
+          example: NY
+        country:
+          type: string
+          description: 'Two-letter country code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
+
+            '
+          example: US
+        postal_code:
+          type: string
+          description: Zip code, or equivalent.
+          example: '10014'
     BasePay:
       type: object
       properties:
@@ -504,35 +533,6 @@ components:
 
             '
           example: USD
-    Address:
-      type: object
-      properties:
-        city:
-          type: string
-          description: Name of the city, town, district, or similar regional entity.
-          example: New York
-        line1:
-          type: string
-          description: Address-Line 1, usually street address or P.O. Box information.
-          example: 852 North W St
-        line2:
-          type: string
-          description: Address-Line 2, usually the apartment or unit number.
-          example: Apt 221
-        state:
-          type: string
-          description: State, county, province, region, or equivalent.
-          example: NY
-        country:
-          type: string
-          description: 'Two-letter country code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format).
-
-            '
-          example: US
-        postal_code:
-          type: string
-          description: Zip code, or equivalent.
-          example: '10014'
   securitySchemes:
     basicAuth:
       type: http

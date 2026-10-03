@@ -95,9 +95,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ClientSessionConfiguration:
-      allOf:
-      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
     ClientSession:
       type: object
       description: Client connection session object.
@@ -117,6 +114,20 @@ components:
           - payroll
           - banking
           description: Source of connection data.
+    ClientSessionCreateRequest:
+      type: object
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: ID of the verification used to initialize the session.
+        configuration:
+          $ref: '#/components/schemas/ClientSessionCreateConfiguration'
+      required:
+      - verification
+    ClientSessionConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
     ClientSessionCreateConfiguration:
       type: object
       description: Connection session configuration for payroll and banking verifications.
@@ -155,17 +166,6 @@ components:
         mobile_app:
           type: boolean
           description: Payroll only. Set to `true` when the session is used in a mobile app, including Hosted Link opened in a secure browser context.
-    ClientSessionCreateRequest:
-      type: object
-      properties:
-        verification:
-          type: string
-          format: uuid
-          description: ID of the verification used to initialize the session.
-        configuration:
-          $ref: '#/components/schemas/ClientSessionCreateConfiguration'
-      required:
-      - verification
   securitySchemes:
     basicAuth:
       type: http
