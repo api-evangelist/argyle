@@ -124,6 +124,65 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Destination:
+      type: object
+      properties:
+        reference:
+          type: string
+          description: Describes where the payment was sent, such as a checking account or bank name.
+        amount:
+          type: string
+          description: Pay amount sent to the destination.
+        method:
+          type: string
+          description: Payment method, such as direct deposit.
+        ach_deposit_account:
+          type: object
+          properties:
+            bank_name:
+              type: string
+              description: Name of the bank account.
+            routing_number:
+              type: string
+              description: Routing number of the bank account.
+            account_number:
+              type: string
+              description: Account number of the bank account.
+          description: Details for bank account destinations.
+        card:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the card where the payout was sent.
+            number:
+              type: string
+              description: Card number.
+          description: Details for payout card destinations.
+    Deduction:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount of the deduction.
+        name:
+          type: string
+          description: Name or description of the deduction.
+        tax_classification:
+          type: string
+          enum:
+          - pre_tax
+          - post_tax
+          description: 'Tax classification.
+
+            - `pre_tax`
+
+            - `post_tax`
+
+            '
+        amount_ytd:
+          type: string
+          description: Total amount deducted year-to-date, including the amounts from this paystub.
     Paystub:
       type: object
       example:
@@ -470,41 +529,6 @@ components:
         status:
           type: string
           description: Marital status.
-    Tax:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Amount of the tax withholding.
-        name:
-          type: string
-          description: Name or description of the tax withholding.
-        type:
-          type: string
-          enum:
-          - federal
-          - state
-          - local
-          - fica
-          - other
-          description: 'Payroll tax type.
-
-            - `federal`
-
-            - `state`
-
-            - `local`
-
-            - `fica`
-
-            - `other`
-
-            '
-        amount_ytd:
-          type: string
-          description: 'Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.
-
-            '
     GrossPay:
       type: object
       properties:
@@ -570,65 +594,41 @@ components:
         amount_ytd:
           type: string
           description: Total gross pay earned year-to-date related to this gross pay line item, including this paystub.
-    Deduction:
+    Tax:
       type: object
       properties:
         amount:
           type: string
-          description: Amount of the deduction.
+          description: Amount of the tax withholding.
         name:
           type: string
-          description: Name or description of the deduction.
-        tax_classification:
+          description: Name or description of the tax withholding.
+        type:
           type: string
           enum:
-          - pre_tax
-          - post_tax
-          description: 'Tax classification.
+          - federal
+          - state
+          - local
+          - fica
+          - other
+          description: 'Payroll tax type.
 
-            - `pre_tax`
+            - `federal`
 
-            - `post_tax`
+            - `state`
+
+            - `local`
+
+            - `fica`
+
+            - `other`
 
             '
         amount_ytd:
           type: string
-          description: Total amount deducted year-to-date, including the amounts from this paystub.
-    Destination:
-      type: object
-      properties:
-        reference:
-          type: string
-          description: Describes where the payment was sent, such as a checking account or bank name.
-        amount:
-          type: string
-          description: Pay amount sent to the destination.
-        method:
-          type: string
-          description: Payment method, such as direct deposit.
-        ach_deposit_account:
-          type: object
-          properties:
-            bank_name:
-              type: string
-              description: Name of the bank account.
-            routing_number:
-              type: string
-              description: Routing number of the bank account.
-            account_number:
-              type: string
-              description: Account number of the bank account.
-          description: Details for bank account destinations.
-        card:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Name of the card where the payout was sent.
-            number:
-              type: string
-              description: Card number.
-          description: Details for payout card destinations.
+          description: 'Total tax withholdings year-to-date (specific to the tax `type`), including the amounts from this paystub.
+
+            '
   securitySchemes:
     basicAuth:
       type: http

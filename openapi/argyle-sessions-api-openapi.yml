@@ -95,6 +95,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ClientSessionCreateRequest:
+      type: object
+      properties:
+        verification:
+          type: string
+          format: uuid
+          description: ID of the verification used to initialize the session.
+        configuration:
+          $ref: '#/components/schemas/ClientSessionCreateConfiguration'
+      required:
+      - verification
+    ClientSessionConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
     ClientSession:
       type: object
       description: Client connection session object.
@@ -114,20 +128,6 @@ components:
           - payroll
           - banking
           description: Source of connection data.
-    ClientSessionCreateRequest:
-      type: object
-      properties:
-        verification:
-          type: string
-          format: uuid
-          description: ID of the verification used to initialize the session.
-        configuration:
-          $ref: '#/components/schemas/ClientSessionCreateConfiguration'
-      required:
-      - verification
-    ClientSessionConfiguration:
-      allOf:
-      - $ref: '#/components/schemas/ClientSessionCreateConfiguration'
     ClientSessionCreateConfiguration:
       type: object
       description: Connection session configuration for payroll and banking verifications.

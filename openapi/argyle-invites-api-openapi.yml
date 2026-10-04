@@ -370,35 +370,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    InviteDelivery:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique ID of the invite delivery.
-        method:
-          type: string
-          enum:
-          - email
-          - sms
-          description: Invite delivery method.
-        status:
-          type: string
-          enum:
-          - sent
-          - delivered
-          - undelivered
-          - opened
-          description: Status of the invite delivery.
-        sent_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was sent.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the delivery status was last updated.
     InviteObject:
       type: object
       example:
@@ -770,6 +741,35 @@ components:
                   type: string
                 button_url:
                   type: string
+    InviteDelivery:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the invite delivery.
+        method:
+          type: string
+          enum:
+          - email
+          - sms
+          description: Invite delivery method.
+        status:
+          type: string
+          enum:
+          - sent
+          - delivered
+          - undelivered
+          - opened
+          description: Status of the invite delivery.
+        sent_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the invite was sent.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the delivery status was last updated.
   securitySchemes:
     basicAuth:
       type: http

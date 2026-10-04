@@ -333,6 +333,51 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AvailabilityItem:
+      type: object
+      description: 'Status of the account''s most recent data scan (initial data retrieval included) or [document upload](/api-reference/user-uploads) submission.
+
+
+        - `in_progress` — A data scan is in progress, or a document was uploaded but not submitted.
+
+        - `synced` — The most recent data scan of the account was successful, or an uploaded document was submitted.
+
+        - `sync_failed` — Data retrieval during the most recent data scan failed, resulting in an [account connection error](/api-reference/account-connection-errors).
+
+        '
+      properties:
+        status:
+          type: string
+          enum:
+          - in_progress
+          - synced
+          - sync_failed
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the most recent change to available data.
+        available_count:
+          type: integer
+          description: 'Number of gig events, paystubs available, or response form submissions.
+
+
+            During initial data retrieval, the `available_count` will increase until all data has been retrieved and `availability.status` becomes `synced`.
+
+            '
+        files_count:
+          type: integer
+          description: Total number of uploaded documents.
+        in_progress_count:
+          type: integer
+          description: Total number of documents uploaded or response forms in progress but not submitted.
+        available_from:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the earliest gig or paystub available.
+        available_to:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest gig or paystub available.
     Account:
       type: object
       example:
@@ -647,51 +692,6 @@ components:
                 Ongoing refresh can be [disabled manually](/api-reference/accounts#disable) via the API for individual accounts.
 
                 '
-    AvailabilityItem:
-      type: object
-      description: 'Status of the account''s most recent data scan (initial data retrieval included) or [document upload](/api-reference/user-uploads) submission.
-
-
-        - `in_progress` — A data scan is in progress, or a document was uploaded but not submitted.
-
-        - `synced` — The most recent data scan of the account was successful, or an uploaded document was submitted.
-
-        - `sync_failed` — Data retrieval during the most recent data scan failed, resulting in an [account connection error](/api-reference/account-connection-errors).
-
-        '
-      properties:
-        status:
-          type: string
-          enum:
-          - in_progress
-          - synced
-          - sync_failed
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the most recent change to available data.
-        available_count:
-          type: integer
-          description: 'Number of gig events, paystubs available, or response form submissions.
-
-
-            During initial data retrieval, the `available_count` will increase until all data has been retrieved and `availability.status` becomes `synced`.
-
-            '
-        files_count:
-          type: integer
-          description: Total number of uploaded documents.
-        in_progress_count:
-          type: integer
-          description: Total number of documents uploaded or response forms in progress but not submitted.
-        available_from:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the earliest gig or paystub available.
-        available_to:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) of the latest gig or paystub available.
   securitySchemes:
     basicAuth:
       type: http
