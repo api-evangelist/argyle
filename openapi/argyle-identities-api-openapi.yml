@@ -260,21 +260,50 @@ components:
           type: string
           description: Zip code, or equivalent.
           example: '10014'
-    PlatformIds:
+    BasePay:
       type: object
       properties:
-        employee_id:
+        amount:
           type: string
-          description: Internal user ID assigned by the employer.
-          example: OB238HDW5
-        position_id:
+          description: Defined pay amount per period. Does not include bonus, commission or similar incentive-based income.
+          example: '58024.50'
+        period:
           type: string
-          description: Internal position ID assigned by the employer.
-          example: 6ELL4O7PM
-        platform_user_id:
+          enum:
+          - hourly
+          - daily
+          - weekly
+          - biweekly
+          - semimonthly
+          - monthly
+          - annual
+          - salary
+          description: 'Payment interval that specifically corresponds to the base pay `amount`.
+
+            - `hourly`
+
+            - `daily`
+
+            - `weekly`
+
+            - `biweekly` — every two weeks
+
+            - `semimonthly` — twice a month
+
+            - `monthly`
+
+            - `annual`
+
+            - `salary` — only when explicitly mentioned and no other pay period information is present
+
+            '
+          example: annual
+        currency:
           type: string
-          description: ID assigned by the payroll system.
-          example: JLH7B9V6O6YGN9O7
+          description: 'Pay currency ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code).
+
+            '
+          example: USD
     Identity:
       type: object
       example:
@@ -489,50 +518,21 @@ components:
           type: object
           description: Additional, non-categorized information.
           example: {}
-    BasePay:
+    PlatformIds:
       type: object
       properties:
-        amount:
+        employee_id:
           type: string
-          description: Defined pay amount per period. Does not include bonus, commission or similar incentive-based income.
-          example: '58024.50'
-        period:
+          description: Internal user ID assigned by the employer.
+          example: OB238HDW5
+        position_id:
           type: string
-          enum:
-          - hourly
-          - daily
-          - weekly
-          - biweekly
-          - semimonthly
-          - monthly
-          - annual
-          - salary
-          description: 'Payment interval that specifically corresponds to the base pay `amount`.
-
-            - `hourly`
-
-            - `daily`
-
-            - `weekly`
-
-            - `biweekly` — every two weeks
-
-            - `semimonthly` — twice a month
-
-            - `monthly`
-
-            - `annual`
-
-            - `salary` — only when explicitly mentioned and no other pay period information is present
-
-            '
-          example: annual
-        currency:
+          description: Internal position ID assigned by the employer.
+          example: 6ELL4O7PM
+        platform_user_id:
           type: string
-          description: 'Pay currency ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code).
-
-            '
-          example: USD
+          description: ID assigned by the payroll system.
+          example: JLH7B9V6O6YGN9O7
   securitySchemes:
     basicAuth:
       type: http

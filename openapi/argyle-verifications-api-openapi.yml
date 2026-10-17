@@ -761,6 +761,293 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ClientVerificationCreateRequest:
+      type: object
+      description: 'Request body for ordering a verification.
+
+
+        - `user` and `report` are required for all requests.
+
+        - `employments` is required for document verifications only.
+
+        - `report.configuration` is used for banking verifications only.'
+      properties:
+        user:
+          type: string
+          format: uuid
+          description: User ID for the verification.
+        employments:
+          type: array
+          description: 'List of employments for the user.
+
+
+            Required for document verifications only. Not used for payroll or banking verifications.'
+          items:
+            $ref: '#/components/schemas/ClientVerificationEmploymentRequest'
+        report:
+          $ref: '#/components/schemas/ClientVerificationCreateReportRequest'
+        loan:
+          $ref: '#/components/schemas/ClientVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/ClientVerificationBilling'
+      required:
+      - user
+      - report
+    ClientVerificationCreateReportRequest:
+      type: object
+      description: Report request configuration.
+      properties:
+        type:
+          type: string
+          enum:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'The type of report to generate.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        configuration:
+          allOf:
+          - $ref: '#/components/schemas/ClientVerificationReportConfiguration'
+          - description: Optional banking report configurations.
+      required:
+      - type
+    ClientVerificationRefreshRequest:
+      type: object
+      properties:
+        user:
+          type: string
+          format: uuid
+          description: User ID for the verification refresh.
+        report:
+          $ref: '#/components/schemas/ClientVerificationRefreshReportRequest'
+        loan:
+          $ref: '#/components/schemas/ClientVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/ClientVerificationBilling'
+      required:
+      - user
+      - report
+    ClientVerificationBilling:
+      type: object
+      description: Optional billing details.
+      properties:
+        cost_center:
+          type: string
+          description: Cost center identifier.
+    ClientVerificationError:
+      type: object
+      description: Verification error details.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        title:
+          type: string
+          description: Error title.
+        message:
+          type: string
+          description: Error message.
+        resources:
+          type: array
+          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
+          items:
+            $ref: '#/components/schemas/ClientVerificationErrorResource'
+      example:
+        code: self-employed_income
+        title: Self-employed income
+        message: Self-employed income cannot be assessed using Paystub and W2 Data.
+        resources:
+        - id: null
+          type: employments
+          name: Freelance Consulting LLC
+    ClientVerificationReportConfiguration:
+      type: object
+      description: Optional banking report configurations.
+      properties:
+        bank_accounts:
+          type: array
+          items:
+            type: string
+          description: List of [bank account](/api-reference/bank-accounts) IDs to be included in the report.
+        from_date:
+          type: string
+          format: date-time
+          description: 'Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+
+            - `VOAI` reports - controls the length of asset history
+
+            - `VOA` reports - controls the length of asset history
+
+            - `VOI` reports - controls the length of income history
+
+            '
+        income_from_date:
+          type: string
+          format: date-time
+          description: 'Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
+
+
+            - `VOAI` reports - controls the length of income history
+
+            - Does not apply to `VOA` or `VOI` reports.
+
+            '
+        income_stream_confidence_minimum:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 'Limit income streams used in the report to those above this confidence value (`0-100` accepted).
+
+
+            Only available for `VOI` and `VOAI` report types.
+
+            '
+        report_custom_fields:
+          type: array
+          maxItems: 5
+          description: Include up to `5` custom objects in the report metadata. Often used for identifying information.
+          items:
+            $ref: '#/components/schemas/ClientReportCustomField'
+    ClientVerification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the verification.
+        user:
+          type: string
+          format: uuid
+          description: ID of the user associated with the verification.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification was requested.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification object was last updated.
+        channel:
+          type: string
+          enum:
+          - api
+          - encompass
+          example: api
+          description: Origin of the verification order.
+        status:
+          $ref: '#/components/schemas/ClientVerificationStatus'
+        report:
+          $ref: '#/components/schemas/ClientVerificationReport'
+        employments:
+          type: array
+          description: List of employments for the user. Documents only.
+          items:
+            $ref: '#/components/schemas/ClientVerificationEmployment'
+        loan:
+          $ref: '#/components/schemas/ClientVerificationLoan'
+        billing:
+          $ref: '#/components/schemas/ClientVerificationBilling'
+        data_source:
+          type: string
+          enum:
+          - payroll
+          - banking
+          - documents
+          description: Source of verification data.
+    ClientVerificationErrorResource:
+      type: object
+      description: Verification error resource details.
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: ID of the associated resource, if available.
+        type:
+          type: string
+          description: Resource type.
+        name:
+          type: string
+          description: Resource name.
+    ClientVerificationRefreshReportRequest:
+      type: object
+      description: Report request configuration for refresh requests.
+      properties:
+        type:
+          type: string
+          enum:
+          - voie
+          - voe
+          - voa
+          - voi
+          - voai
+          - voe-transactions
+          - doc-voi-mortgage
+          description: 'Payroll, banking, or Doc VOI report type to generate.
+
+
+            Payroll:
+
+            - `voie` - Verification of Income and Employment.
+
+            - `voe` - Verification of Employment.
+
+
+            Banking:
+
+            - `voa` - Banking verification of assets.
+
+            - `voi` - Banking verification of income.
+
+            - `voai` - Banking verification of income and assets.
+
+            - `voe-transactions` - Banking verification of employment.
+
+
+            Documents:
+
+            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
+        configuration:
+          allOf:
+          - $ref: '#/components/schemas/ClientVerificationReportConfiguration'
+          - description: Optional banking report configurations.
+      required:
+      - type
+    ClientVerificationEmploymentRequest:
+      allOf:
+      - $ref: '#/components/schemas/ClientVerificationEmployment'
+      - type: object
+        required:
+        - employer
+        - status
+        - hire_date
     ClientVerificationStatus:
       type: object
       description: Verification status information.
@@ -847,200 +1134,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ClientVerificationError'
-    ClientVerification:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique ID of the verification.
-        user:
-          type: string
-          format: uuid
-          description: ID of the user associated with the verification.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification was requested.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)) when the verification object was last updated.
-        channel:
-          type: string
-          enum:
-          - api
-          - encompass
-          example: api
-          description: Origin of the verification order.
-        status:
-          $ref: '#/components/schemas/ClientVerificationStatus'
-        report:
-          $ref: '#/components/schemas/ClientVerificationReport'
-        employments:
-          type: array
-          description: List of employments for the user. Documents only.
-          items:
-            $ref: '#/components/schemas/ClientVerificationEmployment'
-        loan:
-          $ref: '#/components/schemas/ClientVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/ClientVerificationBilling'
-        data_source:
-          type: string
-          enum:
-          - payroll
-          - banking
-          - documents
-          description: Source of verification data.
-    ClientVerificationRefreshRequest:
-      type: object
-      properties:
-        user:
-          type: string
-          format: uuid
-          description: User ID for the verification refresh.
-        report:
-          $ref: '#/components/schemas/ClientVerificationRefreshReportRequest'
-        loan:
-          $ref: '#/components/schemas/ClientVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/ClientVerificationBilling'
-      required:
-      - user
-      - report
-    ClientVerificationBilling:
-      type: object
-      description: Optional billing details.
-      properties:
-        cost_center:
-          type: string
-          description: Cost center identifier.
-    ClientVerificationCreateReportRequest:
-      type: object
-      description: Report request configuration.
-      properties:
-        type:
-          type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'The type of report to generate.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        configuration:
-          allOf:
-          - $ref: '#/components/schemas/ClientVerificationReportConfiguration'
-          - description: Optional banking report configurations.
-      required:
-      - type
-    ClientVerificationErrorResource:
-      type: object
-      description: Verification error resource details.
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: ID of the associated resource, if available.
-        type:
-          type: string
-          description: Resource type.
-        name:
-          type: string
-          description: Resource name.
-    ClientVerificationEmploymentRequest:
-      allOf:
-      - $ref: '#/components/schemas/ClientVerificationEmployment'
-      - type: object
-        required:
-        - employer
-        - status
-        - hire_date
-    ClientVerificationCreateRequest:
-      type: object
-      description: 'Request body for ordering a verification.
-
-
-        - `user` and `report` are required for all requests.
-
-        - `employments` is required for document verifications only.
-
-        - `report.configuration` is used for banking verifications only.'
-      properties:
-        user:
-          type: string
-          format: uuid
-          description: User ID for the verification.
-        employments:
-          type: array
-          description: 'List of employments for the user.
-
-
-            Required for document verifications only. Not used for payroll or banking verifications.'
-          items:
-            $ref: '#/components/schemas/ClientVerificationEmploymentRequest'
-        report:
-          $ref: '#/components/schemas/ClientVerificationCreateReportRequest'
-        loan:
-          $ref: '#/components/schemas/ClientVerificationLoan'
-        billing:
-          $ref: '#/components/schemas/ClientVerificationBilling'
-      required:
-      - user
-      - report
-    ClientVerificationError:
-      type: object
-      description: Verification error details.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        title:
-          type: string
-          description: Error title.
-        message:
-          type: string
-          description: Error message.
-        resources:
-          type: array
-          description: Additional troubleshooting resources (for example, the ID of an unmatched document).
-          items:
-            $ref: '#/components/schemas/ClientVerificationErrorResource'
-      example:
-        code: self-employed_income
-        title: Self-employed income
-        message: Self-employed income cannot be assessed using Paystub and W2 Data.
-        resources:
-        - id: null
-          type: employments
-          name: Freelance Consulting LLC
     ClientVerificationReport:
       type: object
       description: Report information.
@@ -1114,68 +1207,6 @@ components:
             '
         configuration:
           $ref: '#/components/schemas/ClientVerificationReportConfiguration'
-    ClientVerificationReportConfiguration:
-      type: object
-      description: Optional banking report configurations.
-      properties:
-        bank_accounts:
-          type: array
-          items:
-            type: string
-          description: List of [bank account](/api-reference/bank-accounts) IDs to be included in the report.
-        from_date:
-          type: string
-          format: date-time
-          description: 'Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
-
-
-            - `VOAI` reports - controls the length of asset history
-
-            - `VOA` reports - controls the length of asset history
-
-            - `VOI` reports - controls the length of income history
-
-            '
-        income_from_date:
-          type: string
-          format: date-time
-          description: 'Restrict report to data from on or after this datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)).
-
-
-            - `VOAI` reports - controls the length of income history
-
-            - Does not apply to `VOA` or `VOI` reports.
-
-            '
-        income_stream_confidence_minimum:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: 'Limit income streams used in the report to those above this confidence value (`0-100` accepted).
-
-
-            Only available for `VOI` and `VOAI` report types.
-
-            '
-        report_custom_fields:
-          type: array
-          maxItems: 5
-          description: Include up to `5` custom objects in the report metadata. Often used for identifying information.
-          items:
-            $ref: '#/components/schemas/ClientReportCustomField'
-    ClientReportCustomField:
-      type: object
-      description: Custom field returned in report JSON as a pass-through value.
-      properties:
-        label:
-          type: string
-          description: Custom field name.
-        value:
-          type: string
-          description: Custom field value.
-        shown:
-          type: boolean
-          description: Show custom field on report PDF.
     ClientVerificationUpdateRequest:
       type: object
       description: 'Request body for updating a verification.
@@ -1198,50 +1229,6 @@ components:
           description: Updated list of employments for the user.
           items:
             $ref: '#/components/schemas/ClientVerificationEmploymentRequest'
-    ClientVerificationRefreshReportRequest:
-      type: object
-      description: Report request configuration for refresh requests.
-      properties:
-        type:
-          type: string
-          enum:
-          - voie
-          - voe
-          - voa
-          - voi
-          - voai
-          - voe-transactions
-          - doc-voi-mortgage
-          description: 'Payroll, banking, or Doc VOI report type to generate.
-
-
-            Payroll:
-
-            - `voie` - Verification of Income and Employment.
-
-            - `voe` - Verification of Employment.
-
-
-            Banking:
-
-            - `voa` - Banking verification of assets.
-
-            - `voi` - Banking verification of income.
-
-            - `voai` - Banking verification of income and assets.
-
-            - `voe-transactions` - Banking verification of employment.
-
-
-            Documents:
-
-            - `doc-voi-mortgage` - Mortgage document-based verification of income, integrated with Freddie Mac''s AIM Check.'
-        configuration:
-          allOf:
-          - $ref: '#/components/schemas/ClientVerificationReportConfiguration'
-          - description: Optional banking report configurations.
-      required:
-      - type
     ClientVerificationEmployment:
       type: object
       description: Employment details for the user.
@@ -1281,6 +1268,19 @@ components:
         officer_email:
           type: string
           description: Email of the loan officer requesting the verification.
+    ClientReportCustomField:
+      type: object
+      description: Custom field returned in report JSON as a pass-through value.
+      properties:
+        label:
+          type: string
+          description: Custom field name.
+        value:
+          type: string
+          description: Custom field value.
+        shown:
+          type: boolean
+          description: Show custom field on report PDF.
   securitySchemes:
     basicAuth:
       type: http
